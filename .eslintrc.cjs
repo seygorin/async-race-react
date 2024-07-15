@@ -39,11 +39,11 @@ module.exports = {
         devDependencies: ["vite.config.ts"],
       },
     ],
-    "max-lines-per-function": ["error", 40],
+    "max-lines-per-function": ["error", { max: 40 }],
     "no-magic-numbers": [
       "error",
       {
-        ignore: [-1, 0, 1, 40],
+        ignore: [-1, 0, 1],
         ignoreArrayIndexes: true,
         enforceConst: true,
         detectObjects: false,
