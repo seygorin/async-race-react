@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import testReducer from "../features/TestSlice";
+import garageReducer from "./slices/garageSlice";
+import engineReducer from "./slices/engineSlice";
+import winnersReducer from "./slices/winnersSlice";
 
 export const store = configureStore({
   reducer: {
-    test: testReducer,
+    garage: garageReducer,
+    engine: engineReducer,
+    winners: winnersReducer,
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export default store;

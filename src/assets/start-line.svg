@@ -1,0 +1,16 @@
+<svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="start-pattern" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="5" height="5" fill="black"/>
+      <rect x="5" y="0" width="5" height="5" fill="white"/>
+      <rect x="0" y="5" width="5" height="5" fill="white"/>
+      <rect x="5" y="5" width="5" height="5" fill="black"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="40%" fill="url(#start-pattern)"/>
+  <rect width="100%" height="40%" y="60%" fill="url(#start-pattern)"/>
+  <rect x="25%" y="40%" width="50%" height="20%" fill="white"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="red" font-size="10" font-weight="bold" transform="rotate(-90 50 50)">
+    START
+  </text>
+</svg>
