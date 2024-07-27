@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Form, Input, ColorPicker } from "antd";
 import CustomButton from "../Button/CustomButton";
 
 import useGaragePage from "../../hooks/useGaragePage";
@@ -25,26 +25,11 @@ function CarForm() {
         />
       </Form.Item>
       <Form.Item>
-        <div
-          style={{
-            padding: "5px",
-            background: carColor,
-            border: "1px solid #d9d9d9",
-            cursor: "pointer",
-          }}
-        >
-          <input
-            type="color"
-            value={carColor}
-            onChange={(e) => setCarColor(e.target.value)}
-            style={{
-              opacity: 0,
-              width: "100%",
-              height: "100%",
-              cursor: "pointer",
-            }}
-          />
-        </div>
+        <ColorPicker
+          value={carColor}
+          onChange={(color) => setCarColor(color.toHexString())}
+          format="hex"
+        />
       </Form.Item>
       <Form.Item>
         <CustomButton onClick={handleAddCar}>
