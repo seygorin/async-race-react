@@ -1,15 +1,15 @@
 const columns = [
   {
-    title: "Car Number",
+    title: "Cat Number",
     dataIndex: "id",
     key: "id",
     render: (text) => `#${text}`,
     sorter: (a, b) => a.id - b.id,
   },
   {
-    title: "Car Icon",
+    title: "Cat Icon",
     dataIndex: "id",
-    key: "carIcon",
+    key: "catIcon",
     render: () => "🚗",
   },
   {

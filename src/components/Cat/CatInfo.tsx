@@ -1,4 +1,4 @@
-function CarInfo({ car, position, totalDistance, velocity }) {
+function CatInfo({ cat, position, totalDistance, velocity }) {
   const progress = (position / totalDistance) * 100;
 
   const getColor = (progress) => {
@@ -42,7 +42,7 @@ function CarInfo({ car, position, totalDistance, velocity }) {
         height: "100%",
       }}
     >
-      <span style={{ color: 'white'}}>{car.name}</span>
+      <span style={{ color: "white" }}>{cat.name}</span>
       <span style={{ color: color }}>
         {Math.round(position)} / {totalDistance} (Velocity: {velocity})
       </span>
@@ -50,4 +50,4 @@ function CarInfo({ car, position, totalDistance, velocity }) {
   );
 }
 
-export default CarInfo;
+export default CatInfo;

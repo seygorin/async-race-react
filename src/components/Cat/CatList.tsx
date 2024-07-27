@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import useGaragePage from "../../hooks/useGaragePage";
-import CarTrack from "./CarTrack";
+import CatTrack from "./CatTrack";
 
-function CarList({ trackWidth }) {
+function CatList({ trackWidth }) {
   const { garageContentProps } = useGaragePage();
-  const { cars, isRacing, positions } = garageContentProps;
+  const { cats, isRacing, positions } = garageContentProps;
   const distances = useSelector((state) => state.engine.distances);
   const velocities = useSelector((state) => state.engine.velocities);
 
@@ -16,20 +16,20 @@ function CarList({ trackWidth }) {
 
   return (
     <div>
-      {Array.isArray(cars) &&
-        cars.map((car) => (
-          <CarTrack
-            key={car.id}
-            car={car}
+      {Array.isArray(cats) &&
+        cats.map((cat) => (
+          <CatTrack
+            key={cat.id}
+            cat={cat}
             trackWidth={trackWidth}
             isRacing={isRacing}
-            position={positions[car.id] || 0}
+            position={positions[cat.id] || 0}
             totalDistance={totalDistance}
-            velocity={velocities[car.id] || 0}
+            velocity={velocities[cat.id] || 0}
           />
         ))}
     </div>
   );
 }
 
-export default CarList;
+export default CatList;

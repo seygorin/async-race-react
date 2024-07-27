@@ -3,8 +3,8 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/garage";
 
-export const fetchCars = createAsyncThunk(
-  "garage/fetchCars",
+export const fetchCats = createAsyncThunk(
+  "garage/fetchCats",
   async (params) => {
     const response = await axios.get(API_URL, { params });
     return {
@@ -14,24 +14,24 @@ export const fetchCars = createAsyncThunk(
   },
 );
 
-export const addCar = createAsyncThunk("garage/addCar", async (newCar) => {
-  const response = await axios.post(API_URL, newCar, {
+export const addCat = createAsyncThunk("garage/addCat", async (newCat) => {
+  const response = await axios.post(API_URL, newCat, {
     headers: { "Content-Type": "application/json" },
   });
   return response.data;
 });
 
-export const updateCar = createAsyncThunk(
-  "garage/updateCar",
-  async ({ id, updatedCar }) => {
-    const response = await axios.put(`${API_URL}/${id}`, updatedCar, {
+export const updateCat = createAsyncThunk(
+  "garage/updateCat",
+  async ({ id, updatedCat }) => {
+    const response = await axios.put(`${API_URL}/${id}`, updatedCat, {
       headers: { "Content-Type": "application/json" },
     });
     return response.data;
   },
 );
 
-export const deleteCar = createAsyncThunk("garage/deleteCar", async (id) => {
+export const deleteCat = createAsyncThunk("garage/deleteCat", async (id) => {
   await axios.delete(`${API_URL}/${id}`);
   return id;
 });

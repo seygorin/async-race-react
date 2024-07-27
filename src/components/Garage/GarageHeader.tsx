@@ -1,6 +1,6 @@
 import { Row, Col } from "antd";
-import CarForm from "../Car/CarForm";
-import CarControls from "../Car/CarControls";
+import CatForm from "../Cat/CatForm";
+import CatControls from "../Cat/CatControls";
 import Title from "../Title/Title";
 
 function GarageHeader() {
@@ -9,10 +9,10 @@ function GarageHeader() {
       <Title text="Garage" />
       <Row gutter={[16, 16]} align="stretch">
         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-          <CarForm />
+          <CatForm />
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-          <CarControls />
+          <CatControls />
         </Col>
       </Row>
     </>

@@ -1,38 +1,38 @@
-import useCarList from "./useCarList";
+import useCatList from "./useCatList";
 import useRace from "./useRace";
 import useModal from "./useModal";
-import useCarForm from "./useCarForm";
+import useCatForm from "./useCatForm";
 
 const useGaragePage = () => {
-  const carList = useCarList();
-  const race = useRace(carList.cars);
+  const catList = useCatList();
+  const race = useRace(catList.cats);
   const modal = useModal();
-  const carForm = useCarForm(
-    carList.handleAddCar,
-    carList.handleUpdateCar,
-    carList.cars,
+  const catForm = useCatForm(
+    catList.handleAddCat,
+    catList.handleUpdateCat,
+    catList.cats,
   );
 
-  const carFormProps = {
-    carName: carForm.carName,
-    carColor: carForm.carColor,
-    setCarName: carForm.setCarName,
-    setCarColor: carForm.setCarColor,
-    handleAddCar: carForm.handleAddOrUpdateCar,
-    editingCar: carForm.editingCar,
+  const catFormProps = {
+    catName: catForm.catName,
+    catColor: catForm.catColor,
+    setCatName: catForm.setCatName,
+    setCatColor: catForm.setCatColor,
+    handleAddCat: catForm.handleAddOrUpdateCat,
+    editingCat: catForm.editingCat,
   };
 
   const garageContentProps = {
-    ...carList,
+    ...catList,
     ...race,
-    handleEditCar: carForm.handleEditCar,
+    handleEditCat: catForm.handleEditCat,
     pageSize: 7,
-    onPageChange: carList.handlePageChange,
+    onPageChange: catList.handlePageChange,
   };
 
   return {
     isModalVisible: modal.isModalVisible,
-    carFormProps,
+    catFormProps,
     garageContentProps,
     handleCloseModal: modal.handleCloseModal,
   };

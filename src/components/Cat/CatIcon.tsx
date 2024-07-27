@@ -3,18 +3,18 @@ import CatSitting from "../../assets/CatSitting"; // добавить еще д�
 import CatStanding from "../../assets/CatStanding";
 import CatRunning from "../../assets/CarRunning";
 
-function CarIcon({ car, carRef, velocities }) {
+function CatIcon({ cat, catRef, velocities }) {
   let IconComponent = null;
 
   if (velocities === 0) {
-    IconComponent = <CatStanding color={car.color} />;
+    IconComponent = <CatStanding color={cat.color} />;
   } else if (velocities > 1) {
-    IconComponent = <CatRunning color={car.color} />;
+    IconComponent = <CatRunning color={cat.color} />;
   }
 
   return (
     <div
-      ref={carRef}
+      ref={catRef}
       style={{
         position: "absolute",
         top: "5px",
@@ -30,4 +30,4 @@ function CarIcon({ car, carRef, velocities }) {
   );
 }
 
-export default CarIcon;
+export default CatIcon;

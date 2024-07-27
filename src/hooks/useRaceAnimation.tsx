@@ -5,13 +5,13 @@ import { stopEngine } from "../store/api/engineApi";
 import {
   setPositions,
   setWinner,
-  setStoppedCars,
+  setStoppedCats,
   setIsRacing,
 } from "../store/slices/garageSlice";
 import { addWinner } from "../store/slices/winnersSlice";
 import { showModal } from "../store/slices/modalSlice";
 
-const useRaceAnimation = (cars) => {
+const useRaceAnimation = (cats) => {
   const {
     positions,
     isRacing,
@@ -19,7 +19,7 @@ const useRaceAnimation = (cars) => {
     velocities,
     distances,
     winner,
-    stoppedCars,
+    stoppedCats,
   } = useRaceState();
   const { dispatch, resetRace } = useRaceActions();
   const animationRef = useRef(null);
@@ -31,28 +31,28 @@ const useRaceAnimation = (cars) => {
     lastUpdateTimeRef.current = currentTime;
 
     const newPositions = { ...positions };
-    const newStoppedCars = new Set(stoppedCars);
+    const newStoppedCats = new Set(stoppedCats);
 
-    cars.forEach((car) => {
-      if (!newStoppedCars.has(car.id)) {
-        const velocity = velocities[car.id] * 1000 || 0;
-        const distance = distances[car.id] || 0;
-        const currentDistance = newPositions[car.id] || 0;
+    cats.forEach((cat) => {
+      if (!newStoppedCats.has(cat.id)) {
+        const velocity = velocities[cat.id] * 1000 || 0;
+        const distance = distances[cat.id] || 0;
+        const currentDistance = newPositions[cat.id] || 0;
         const newDistance = Math.min(
           currentDistance + velocity * deltaTime,
           distance,
         );
 
-        newPositions[car.id] = newDistance;
+        newPositions[cat.id] = newDistance;
 
         if (newDistance >= distance) {
-          newStoppedCars.add(car.id);
-          dispatch(stopEngine(car.id));
+          newStoppedCats.add(cat.id);
+          dispatch(stopEngine(cat.id));
           if (!winner) {
-            const raceTime = (currentTime - startTime[car.id]) / 1000;
-            dispatch(setWinner({ ...car, bestTime: raceTime }));
+            const raceTime = (currentTime - startTime[cat.id]) / 1000;
+            dispatch(setWinner({ ...cat, bestTime: raceTime }));
             dispatch(
-              addWinner({ id: car.id, name: car.name, bestTime: raceTime }),
+              addWinner({ id: cat.id, name: cat.name, bestTime: raceTime }),
             );
             dispatch(showModal());
           }
@@ -61,21 +61,21 @@ const useRaceAnimation = (cars) => {
     });
 
     dispatch(setPositions(newPositions));
-    dispatch(setStoppedCars(Array.from(newStoppedCars)));
+    dispatch(setStoppedCats(Array.from(newStoppedCats)));
 
-    if (newStoppedCars.size === cars.length) {
+    if (newStoppedCats.size === cats.length) {
       dispatch(setIsRacing(false));
     } else if (isRacing) {
       animationRef.current = requestAnimationFrame(updatePositions);
     }
   }, [
-    cars,
+    cats,
     dispatch,
     distances,
     isRacing,
     positions,
     startTime,
-    stoppedCars,
+    stoppedCats,
     velocities,
     winner,
   ]);

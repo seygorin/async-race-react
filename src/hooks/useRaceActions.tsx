@@ -6,7 +6,7 @@ import {
   setIsRacing,
   setPositions,
   setWinner,
-  setStoppedCars,
+  setStoppedCats,
 } from "../store/slices/garageSlice";
 
 const useRaceActions = () => {
@@ -31,7 +31,7 @@ const useRaceActions = () => {
     dispatch(setIsRacing(false));
     dispatch(setPositions({}));
     dispatch(setWinner(null));
-    dispatch(setStoppedCars([]));
+    dispatch(setStoppedCats([]));
   }, [dispatch]);
 
   return {

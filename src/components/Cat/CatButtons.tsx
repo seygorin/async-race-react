@@ -1,10 +1,10 @@
 import CustomButton from "../Button/CustomButton";
 
-function CarButtons({
+function CatButtons({
   onStartEngine,
   onStopEngine,
-  onEditCar,
-  onDeleteCar,
+  onEditCat,
+  onDeleteCat,
   isRacing,
   velocity,
 }) {
@@ -27,10 +27,10 @@ function CarButtons({
         </CustomButton>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-        <CustomButton onClick={onEditCar} size="small">
+        <CustomButton onClick={onEditCat} size="small">
           Edit
         </CustomButton>
-        <CustomButton onClick={onDeleteCar} size="small">
+        <CustomButton onClick={onDeleteCat} size="small">
           Delete
         </CustomButton>
       </div>
@@ -38,4 +38,4 @@ function CarButtons({
   );
 }
 
-export default CarButtons;
+export default CatButtons;

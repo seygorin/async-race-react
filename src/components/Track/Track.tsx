@@ -1,7 +1,7 @@
 import { useTrackWidth } from "../../hooks/useTrackWidth";
 import StartLine from "./StartLine";
 import FinishLine from "./FinishLine";
-import CarList from "../Car/CarList";
+import CatList from "../Cat/CatList";
 
 function Track() {
   const trackWidth = useTrackWidth();
@@ -18,7 +18,7 @@ function Track() {
     >
       <StartLine />
       <FinishLine totalDistance={trackWidth} />
-      <CarList trackWidth={trackWidth} />
+      <CatList trackWidth={trackWidth} />
     </div>
   );
 }

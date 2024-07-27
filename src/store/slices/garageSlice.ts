@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCars, addCar, updateCar, deleteCar } from "../api/garageApi";
+import { fetchCats, addCat, updateCat, deleteCat } from "../api/garageApi";
 
 const garageSlice = createSlice({
   name: "garage",
   initialState: {
-    cars: [],
+    cats: [],
     totalCount: 0,
     status: "idle",
     error: null,
@@ -12,7 +12,7 @@ const garageSlice = createSlice({
     positions: {},
     winner: null,
     isRacing: false,
-    stoppedCars: [],
+    stoppedCats: [],
     startTime: {},
   },
   reducers: {
@@ -28,8 +28,8 @@ const garageSlice = createSlice({
     setIsRacing: (state, action) => {
       state.isRacing = action.payload;
     },
-    setStoppedCars: (state, action) => {
-      state.stoppedCars = action.payload;
+    setStoppedCats: (state, action) => {
+      state.stoppedCats = action.payload;
     },
     setStartTime: (state, action) => {
       state.startTime = { ...state.startTime, ...action.payload };
@@ -37,32 +37,32 @@ const garageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCars.pending, (state) => {
+      .addCase(fetchCats.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchCars.fulfilled, (state, action) => {
+      .addCase(fetchCats.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.cars = action.payload.data;
+        state.cats = action.payload.data;
         state.totalCount = action.payload.totalCount;
       })
-      .addCase(fetchCars.rejected, (state, action) => {
+      .addCase(fetchCats.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(addCar.fulfilled, (state, action) => {
-        state.cars.push(action.payload);
+      .addCase(addCat.fulfilled, (state, action) => {
+        state.cats.push(action.payload);
         state.totalCount += 1;
       })
-      .addCase(updateCar.fulfilled, (state, action) => {
-        const index = state.cars.findIndex(
-          (car) => car.id === action.payload.id,
+      .addCase(updateCat.fulfilled, (state, action) => {
+        const index = state.cats.findIndex(
+          (cat) => cat.id === action.payload.id,
         );
         if (index !== -1) {
-          state.cars[index] = action.payload;
+          state.cats[index] = action.payload;
         }
       })
-      .addCase(deleteCar.fulfilled, (state, action) => {
-        state.cars = state.cars.filter((car) => car.id !== action.payload);
+      .addCase(deleteCat.fulfilled, (state, action) => {
+        state.cats = state.cats.filter((cat) => cat.id !== action.payload);
         state.totalCount -= 1;
       });
   },
@@ -73,7 +73,7 @@ export const {
   setPositions,
   setWinner,
   setIsRacing,
-  setStoppedCars,
+  setStoppedCats,
   setStartTime,
 } = garageSlice.actions;
 

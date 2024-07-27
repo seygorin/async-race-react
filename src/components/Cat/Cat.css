@@ -1,18 +1,17 @@
-.car-container {
+.cat-container {
   display: flex;
   align-items: center;
   width: 100%;
 }
 
-.car-content {
+.cat-content {
   position: relative;
   height: 50px;
   flex: 1;
 }
 
-.car-error {
+.cat-error {
   color: red;
   position: absolute;
   bottom: -20px;
 }
-

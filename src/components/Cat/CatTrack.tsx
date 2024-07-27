@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import CarButtons from "./CarButtons";
+import CatButtons from "./CatButtons";
 import useGaragePage from "../../hooks/useGaragePage";
 import useEngineControl from "../../hooks/useEngineControls";
-import Car from "./Car";
+import Cat from "./Cat";
 
-const CarTrack = ({
-  car,
+const CatTrack = ({
+  cat,
   trackWidth,
   isRacing,
   position,
@@ -15,14 +15,14 @@ const CarTrack = ({
 }) => {
   const { garageContentProps } = useGaragePage();
   const {
-    handleEditCar,
-    handleDeleteCar,
+    handleEditCat,
+    handleDeleteCat,
     handleStartEngine,
     handleStopEngine,
   } = garageContentProps;
 
   const { startEngine, stopEngine, error } = useEngineControl(
-    car.id,
+    cat.id,
     handleStartEngine,
     handleStopEngine,
   );
@@ -37,11 +37,11 @@ const CarTrack = ({
           width: "100%",
         }}
       >
-        <CarButtons
+        <CatButtons
           onStartEngine={startEngine}
           onStopEngine={stopEngine}
-          onEditCar={() => handleEditCar(car.id)}
-          onDeleteCar={() => handleDeleteCar(car.id)}
+          onEditCat={() => handleEditCat(cat.id)}
+          onDeleteCat={() => handleDeleteCat(cat.id)}
           isRacing={isRacing}
           velocity={velocity}
         />
@@ -66,8 +66,8 @@ const CarTrack = ({
                 "repeating-linear-gradient(90deg, #fff, #fff 20px, transparent 20px, transparent 40px)",
             }}
           />
-          <Car
-            car={car}
+          <Cat
+            cat={cat}
             velocity={velocity}
             position={position}
             totalDistance={totalDistance}
@@ -82,4 +82,4 @@ const CarTrack = ({
   );
 };
 
-export default CarTrack;
+export default CatTrack;

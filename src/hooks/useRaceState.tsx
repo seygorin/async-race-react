@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 const useRaceState = () => {
-  const { positions, winner, isRacing, stoppedCars, startTime } = useSelector(
+  const { positions, winner, isRacing, stoppedCats, startTime } = useSelector(
     (state) => state.garage,
   );
   const { velocities, distances } = useSelector((state) => state.engine);
@@ -10,7 +10,7 @@ const useRaceState = () => {
     positions,
     winner,
     isRacing,
-    stoppedCars,
+    stoppedCats,
     startTime,
     velocities,
     distances,
