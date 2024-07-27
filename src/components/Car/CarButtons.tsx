@@ -1,4 +1,5 @@
-import { Button } from "antd";
+import React from "react";
+import CustomButton from "../Button/CustomButton";
 
 const CarButtons = ({
   onStartEngine,
@@ -11,28 +12,28 @@ const CarButtons = ({
   return (
     <div style={{ display: "flex", gap: "10px" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-        <Button
+        <CustomButton
           onClick={onStartEngine}
           disabled={isRacing || velocity > 0}
           size="small"
         >
           Start
-        </Button>
-        <Button
+        </CustomButton>
+        <CustomButton
           onClick={onStopEngine}
           disabled={!isRacing || velocity === 0}
           size="small"
         >
           Stop
-        </Button>
+        </CustomButton>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-        <Button onClick={onEditCar}  size="small">
+        <CustomButton onClick={onEditCar} size="small">
           Edit
-        </Button>
-        <Button onClick={onDeleteCar}  size="small">
+        </CustomButton>
+        <CustomButton onClick={onDeleteCar} size="small">
           Delete
-        </Button>
+        </CustomButton>
       </div>
     </div>
   );

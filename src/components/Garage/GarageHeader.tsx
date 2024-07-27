@@ -1,9 +1,10 @@
 import React from "react";
 import CarForm from "../Car/CarForm";
+import Title from "../Title/Title";
 
 const GarageHeader = ({ carFormProps }) => (
   <>
-    <h1>Garage</h1>
+    <Title text="Garage" />
     <CarForm {...carFormProps} />
   </>
 );

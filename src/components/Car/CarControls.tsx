@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import CustomButton from "../Button/CustomButton";
 
 function CarControls({
   handleGenerateRandomCars,
@@ -8,19 +8,15 @@ function CarControls({
 }) {
   return (
     <>
-      <Button type="primary" onClick={handleGenerateRandomCars}>
+      <CustomButton onClick={handleGenerateRandomCars}>
         Generate 100 Random Cars
-      </Button>
-      <Button
-        type="primary"
-        onClick={handleStartRace}
-        style={{ marginLeft: "10px" }}
-      >
+      </CustomButton>
+      <CustomButton onClick={handleStartRace} style={{ marginLeft: "10px" }}>
         Start Race
-      </Button>
-      <Button onClick={handleStopRace} style={{ marginLeft: "10px" }}>
+      </CustomButton>
+      <CustomButton onClick={handleStopRace} style={{ marginLeft: "10px" }}>
         Reset Race
-      </Button>
+      </CustomButton>
     </>
   );
 }

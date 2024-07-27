@@ -1,5 +1,6 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input } from "antd";
+import CustomButton from "../Button/CustomButton";
 
 const CarForm = ({
   carName,
@@ -41,9 +42,9 @@ const CarForm = ({
         </div>
       </Form.Item>
       <Form.Item>
-        <Button type="primary" onClick={handleAddCar}>
+        <CustomButton onClick={handleAddCar}>
           {editingCar !== null ? "Edit Car" : "Add Car"}
-        </Button>
+        </CustomButton>
       </Form.Item>
     </Form>
   );

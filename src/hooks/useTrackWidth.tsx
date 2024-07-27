@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
-
-const MIN_TRACK_WIDTH = 300;
-const MAX_TRACK_WIDTH = 1500;
+import { useSelector } from "react-redux";
 
 export const useTrackWidth = () => {
-  const [trackWidth, setTrackWidth] = useState(MIN_TRACK_WIDTH);
+  const [trackWidth, setTrackWidth] = useState(0);
+  const distances = useSelector((state) => state.engine.distances);
 
   useEffect(() => {
+    const maxDistance = Math.max(...Object.values(distances));
+    
     const updateTrackWidth = () => {
       const windowWidth = window.innerWidth;
-      const newTrackWidth = Math.min(
-        Math.max(windowWidth, MIN_TRACK_WIDTH),
-        MAX_TRACK_WIDTH,
-      );
+      const newTrackWidth =
+        maxDistance > 0 ? (windowWidth / maxDistance) * maxDistance : windowWidth;
       setTrackWidth(newTrackWidth);
     };
 
@@ -23,7 +22,7 @@ export const useTrackWidth = () => {
     return () => {
       window.removeEventListener("resize", updateTrackWidth);
     };
-  }, []);
+  }, [distances]);
 
   return trackWidth;
 };

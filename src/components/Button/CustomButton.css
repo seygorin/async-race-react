@@ -1,0 +1,23 @@
+.custom-button {
+  background-color: #fa94ac;
+  border: none;
+  color: #fff;
+
+  border-radius: 5px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.custom-button:hover,
+.custom-button:focus {
+  background-color: #f5e5ff;
+  color: #638e9e;
+}
+
+.custom-button:disabled,
+.custom-button[disabled] {
+  background-color: #638e9e;
+  color: #fff;
+  cursor: not-allowed;
+}

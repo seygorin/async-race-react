@@ -19,7 +19,7 @@ const Car = ({
 
   useEffect(() => {
     if (carRef.current) {
-      const carWidth = 50;
+      const carWidth = 330;
       const maxPosition = trackWidth - carWidth;
       const scaledPosition = Math.min(
         (position / totalDistance) * maxPosition,
@@ -69,7 +69,7 @@ const Car = ({
             width: "50px",
             height: "30px",
             backgroundColor: car.color,
-            transition: "transform 0.5s linear",
+            transition: "transform s linear",
             zIndex: 1,
           }}
         ></div>

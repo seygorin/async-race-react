@@ -1,0 +1,12 @@
+.winners-table.ant-table-wrapper .ant-table-thead > tr > th,
+.winners-table.ant-table-wrapper .ant-table-tbody > tr > td {
+  background-color: #c0c3f8 
+}
+
+.winners-table.ant-table-wrapper .ant-table-thead > tr > th {
+  background-color: #a8acf3 
+}
+
+.winners-table.ant-table-wrapper .ant-table-tbody > tr:hover > td {
+  background-color: #d1d3fa 
+}

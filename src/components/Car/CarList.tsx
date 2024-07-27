@@ -13,10 +13,6 @@ const CarList = ({
   totalDistance,
   trackWidth,
 }) => {
-  const getCarPosition = (position) => {
-    return (position / totalDistance) * trackWidth;
-  };
-
   return (
     <Row gutter={16} style={{ marginTop: "20px" }}>
       {Array.isArray(cars) &&
@@ -26,7 +22,7 @@ const CarList = ({
               car={car}
               velocity={velocities[car.id] || 0}
               isRacing={isRacing}
-              position={getCarPosition(positions[car.id] || 0)}
+              position={positions[car.id] || 0}
               handleEditCar={handleEditCar}
               handleDeleteCar={handleDeleteCar}
               handleStartEngine={handleStartEngine}

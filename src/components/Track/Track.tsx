@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useTrackWidth } from "../../hooks/useTrackWidth";
 import StartLine from "./StartLine";
 import FinishLine from "./FinishLine";
 import CarList from "../Car/CarList";
-
-const TOTAL_DISTANCE = 1500;
 
 const Track = ({
   cars,
@@ -17,6 +15,13 @@ const Track = ({
   handleStopEngine,
 }) => {
   const velocities = useSelector((state) => state.engine.velocities);
+  const distances = useSelector((state) => state.engine.distances);
+
+  const maxDistance = useMemo(() => {
+    const distanceValues = Object.values(distances);
+    return Math.max(...distanceValues);
+  }, [distances]);
+
   const trackWidth = useTrackWidth();
 
   return (
@@ -30,7 +35,7 @@ const Track = ({
       }}
     >
       <StartLine />
-      <FinishLine totalDistance={TOTAL_DISTANCE} />
+      <FinishLine totalDistance={trackWidth} />
       <CarList
         cars={cars}
         velocities={velocities}
@@ -40,7 +45,7 @@ const Track = ({
         handleDeleteCar={handleDeleteCar}
         handleStartEngine={handleStartEngine}
         handleStopEngine={handleStopEngine}
-        totalDistance={TOTAL_DISTANCE}
+        totalDistance={maxDistance}
         trackWidth={trackWidth}
       />
     </div>
