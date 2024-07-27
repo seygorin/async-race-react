@@ -1,4 +1,3 @@
-import React from "react";
 import startLineSVG from "../../assets/start-line.svg";
 
 const StartLine = () => (

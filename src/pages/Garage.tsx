@@ -1,4 +1,3 @@
-import React from "react";
 import useGaragePage from "../hooks/useGaragePage";
 import WinnerModal from "../components/Winners/WinnerModal";
 import GarageHeader from "../components/Garage/GarageHeader";

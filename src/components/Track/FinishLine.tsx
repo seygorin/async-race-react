@@ -1,4 +1,3 @@
-import React from "react";
 import finishLineSVG from "../../assets/finish-line.svg";
 
 const FinishLine = ({ totalDistance }) => (

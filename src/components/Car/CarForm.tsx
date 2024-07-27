@@ -1,15 +1,14 @@
-import React from "react";
 import { Form, Input } from "antd";
 import CustomButton from "../Button/CustomButton";
 
-const CarForm = ({
+function CarForm({
   carName,
   carColor,
   setCarName,
   setCarColor,
   handleAddCar,
   editingCar,
-}) => {
+}) {
   return (
     <Form layout="inline" style={{ marginBottom: "20px" }}>
       <Form.Item>
@@ -48,6 +47,6 @@ const CarForm = ({
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default CarForm;

@@ -1,4 +1,3 @@
-import React from "react";
 import { Button as AntButton, ButtonProps as AntButtonProps } from "antd";
 import "./CustomButton.css";
 

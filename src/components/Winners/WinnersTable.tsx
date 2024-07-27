@@ -1,4 +1,3 @@
-import React from "react";
 import { Table } from "antd";
 import useWinners from "../../hooks/useWinners";
 import columns from "./WinnersTableColumns";
