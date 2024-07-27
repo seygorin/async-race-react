@@ -11,7 +11,7 @@ import { generateRandomCars } from "../utils/carGenerator";
 
 const CARS_PER_PAGE = 7;
 
-export const useCarList = () => {
+const useCarList = () => {
   const dispatch = useDispatch();
   const { cars, totalCount, currentPage } = useSelector(
     (state) => state.garage,
@@ -68,3 +68,5 @@ export const useCarList = () => {
     handleGenerateRandomCars,
   };
 };
+
+export default useCarList;

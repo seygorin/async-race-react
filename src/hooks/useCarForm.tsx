@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useCarForm = (handleAddCar, handleUpdateCar, cars) => {
+const useCarForm = (handleAddCar, handleUpdateCar, cars) => {
   const [carName, setCarName] = useState("");
   const [carColor, setCarColor] = useState("#000");
   const [editingCar, setEditingCar] = useState(null);
@@ -36,3 +36,5 @@ export const useCarForm = (handleAddCar, handleUpdateCar, cars) => {
     handleEditCar,
   };
 };
+
+export default useCarForm;

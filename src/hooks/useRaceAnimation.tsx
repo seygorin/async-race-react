@@ -1,6 +1,6 @@
 import { useCallback, useRef, useEffect } from "react";
-import { useRaceState } from "./useRaceState";
-import { useRaceActions } from "./useRaceActions";
+import useRaceState from "./useRaceState";
+import useRaceActions from "./useRaceActions";
 import { stopEngine } from "../store/api/engineApi";
 import {
   setPositions,
@@ -11,7 +11,7 @@ import {
 import { addWinner } from "../store/slices/winnersSlice";
 import { showModal } from "../store/slices/modalSlice";
 
-export const useRaceAnimation = (cars) => {
+const useRaceAnimation = (cars) => {
   const {
     positions,
     isRacing,
@@ -100,3 +100,5 @@ export const useRaceAnimation = (cars) => {
 
   return { resetRace };
 };
+
+export default useRaceAnimation;

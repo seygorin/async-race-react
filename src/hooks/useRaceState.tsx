@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-export const useRaceState = () => {
+const useRaceState = () => {
   const { positions, winner, isRacing, stoppedCars, startTime } = useSelector(
     (state) => state.garage,
   );
@@ -16,3 +16,5 @@ export const useRaceState = () => {
     distances,
   };
 };
+
+export default useRaceState;

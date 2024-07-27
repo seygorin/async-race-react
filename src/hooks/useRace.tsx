@@ -1,11 +1,11 @@
 import { useCallback } from "react";
-import { useRaceState } from "./useRaceState";
-import { useRaceActions } from "./useRaceActions";
-import { useRaceAnimation } from "./useRaceAnimation";
+import useRaceState from "./useRaceState";
+import useRaceActions from "./useRaceActions";
+import useRaceAnimation from "./useRaceAnimation";
 
 import { setStartTime, setIsRacing } from "../store/slices/garageSlice";
 
-export const useRace = (cars) => {
+const useRace = (cars) => {
   const raceState = useRaceState();
   const { handleStartEngine, handleStopEngine, resetRace, dispatch } =
     useRaceActions();
@@ -40,3 +40,5 @@ export const useRace = (cars) => {
     handleStopEngine,
   };
 };
+
+export default useRace;

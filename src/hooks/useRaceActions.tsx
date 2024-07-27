@@ -9,7 +9,7 @@ import {
   setStoppedCars,
 } from "../store/slices/garageSlice";
 
-export const useRaceActions = () => {
+const useRaceActions = () => {
   const dispatch = useDispatch();
 
   const handleStartEngine = useCallback(
@@ -41,3 +41,5 @@ export const useRaceActions = () => {
     dispatch,
   };
 };
+
+export default useRaceActions;

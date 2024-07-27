@@ -1,7 +1,7 @@
-import { useCarList } from "./useCarList";
-import { useRace } from "./useRace";
+import useCarList from "./useCarList";
+import useRace from "./useRace";
 import useModal from "./useModal";
-import { useCarForm } from "./useCarForm";
+import useCarForm from "./useCarForm";
 
 const useGaragePage = () => {
   const carList = useCarList();
