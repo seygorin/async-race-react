@@ -1,30 +1,15 @@
 import Track from "../Track/Track";
 import GaragePagination from "./GaragePagination";
+import useGaragePage from "../../hooks/useGaragePage";
 
-function GarageContent({
-  cars,
-  positions,
-  isRacing,
-  handleEditCar,
-  handleDeleteCar,
-  handleStartEngine,
-  handleStopEngine,
-  currentPage,
-  totalCount,
-  pageSize,
-  onPageChange,
-}) {
+function GarageContent() {
+  const { garageContentProps } = useGaragePage();
+  const { currentPage, totalCount, pageSize, onPageChange } =
+    garageContentProps;
+
   return (
     <>
-      <Track
-        cars={cars}
-        positions={positions}
-        handleEditCar={handleEditCar}
-        handleDeleteCar={handleDeleteCar}
-        handleStartEngine={handleStartEngine}
-        handleStopEngine={handleStopEngine}
-        isRacing={isRacing}
-      />
+      <Track />
       <GaragePagination
         currentPage={currentPage}
         totalCount={totalCount}

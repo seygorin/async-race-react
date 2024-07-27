@@ -3,8 +3,8 @@ import "./CustomButton.css";
 
 interface CustomButtonProps extends AntButtonProps {}
 
-const CustomButton: React.FC<CustomButtonProps> = (props) => {
+function CustomButton(props: CustomButtonProps) {
   return <AntButton {...props} className="custom-button" />;
-};
+}
 
 export default CustomButton;

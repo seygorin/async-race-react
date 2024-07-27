@@ -1,15 +1,17 @@
 import { Modal } from "antd";
 import { useSelector } from "react-redux";
+import useGaragePage from "../../hooks/useGaragePage";
 import "./WinnerModal.css";
 
-const WinnerModal = ({ visible, onClose }) => {
+function WinnerModal() {
+  const { isModalVisible, handleCloseModal } = useGaragePage();
   const winner = useSelector((state) => state.garage.winner);
 
   return (
     <Modal
       title="Winner"
-      open={visible}
-      onCancel={onClose}
+      open={isModalVisible}
+      onCancel={handleCloseModal}
       footer={null}
       centered
     >
@@ -25,6 +27,6 @@ const WinnerModal = ({ visible, onClose }) => {
       )}
     </Modal>
   );
-};
+}
 
 export default WinnerModal;

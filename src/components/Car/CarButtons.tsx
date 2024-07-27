@@ -1,13 +1,13 @@
 import CustomButton from "../Button/CustomButton";
 
-const CarButtons = ({
+function CarButtons({
   onStartEngine,
   onStopEngine,
   onEditCar,
   onDeleteCar,
   isRacing,
   velocity,
-}) => {
+}) {
   return (
     <div style={{ display: "flex", gap: "10px" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
@@ -36,6 +36,6 @@ const CarButtons = ({
       </div>
     </div>
   );
-};
+}
 
 export default CarButtons;

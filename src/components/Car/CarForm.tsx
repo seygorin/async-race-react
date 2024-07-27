@@ -1,14 +1,20 @@
 import { Form, Input } from "antd";
 import CustomButton from "../Button/CustomButton";
 
-function CarForm({
-  carName,
-  carColor,
-  setCarName,
-  setCarColor,
-  handleAddCar,
-  editingCar,
-}) {
+import useGaragePage from "../../hooks/useGaragePage";
+
+function CarForm() {
+  const { carFormProps } = useGaragePage();
+
+  const {
+    carName,
+    carColor,
+    setCarName,
+    setCarColor,
+    handleAddCar,
+    editingCar,
+  } = carFormProps;
+
   return (
     <Form layout="inline" style={{ marginBottom: "20px" }}>
       <Form.Item>

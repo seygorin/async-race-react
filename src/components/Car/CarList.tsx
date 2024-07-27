@@ -1,18 +1,22 @@
+import { useMemo } from "react";
 import { Row, Col } from "antd";
-import Car from "./Car";
+import { useSelector } from "react-redux";
 
-const CarList = ({
-  cars,
-  velocities,
-  isRacing,
-  positions,
-  handleEditCar,
-  handleDeleteCar,
-  handleStartEngine,
-  handleStopEngine,
-  totalDistance,
-  trackWidth,
-}) => {
+import Car from "./Car";
+import useGaragePage from "../../hooks/useGaragePage";
+
+function CarList({ trackWidth }) {
+  const { garageContentProps } = useGaragePage();
+  const { cars, isRacing, positions } = garageContentProps;
+  const distances = useSelector((state) => state.engine.distances);
+
+  const totalDistance = useMemo(() => {
+    const distanceValues = Object.values(distances);
+    return Math.max(...distanceValues);
+  }, [distances]);
+
+  const velocities = useSelector((state) => state.engine.velocities);
+
   return (
     <Row gutter={16} style={{ marginTop: "20px" }}>
       {Array.isArray(cars) &&
@@ -23,10 +27,6 @@ const CarList = ({
               velocity={velocities[car.id] || 0}
               isRacing={isRacing}
               position={positions[car.id] || 0}
-              handleEditCar={handleEditCar}
-              handleDeleteCar={handleDeleteCar}
-              handleStartEngine={handleStartEngine}
-              handleStopEngine={handleStopEngine}
               totalDistance={totalDistance}
               trackWidth={trackWidth}
             />
@@ -34,6 +34,6 @@ const CarList = ({
         ))}
     </Row>
   );
-};
+}
 
 export default CarList;

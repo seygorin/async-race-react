@@ -1,22 +1,20 @@
+import { Space } from "antd";
 import CustomButton from "../Button/CustomButton";
+import useGaragePage from "../../hooks/useGaragePage";
 
-function CarControls({
-  handleGenerateRandomCars,
-  handleStartRace,
-  handleStopRace,
-}) {
+function CarControls() {
+  const { garageContentProps } = useGaragePage();
+  const { handleGenerateRandomCars, handleStartRace, handleStopRace } =
+    garageContentProps;
+
   return (
-    <>
+    <Space>
       <CustomButton onClick={handleGenerateRandomCars}>
-        Generate 100 Random Cars
+        Generate Cars
       </CustomButton>
-      <CustomButton onClick={handleStartRace} style={{ marginLeft: "10px" }}>
-        Start Race
-      </CustomButton>
-      <CustomButton onClick={handleStopRace} style={{ marginLeft: "10px" }}>
-        Reset Race
-      </CustomButton>
-    </>
+      <CustomButton onClick={handleStartRace}>Race 👨‍🦽‍➡️ </CustomButton>
+      <CustomButton onClick={handleStopRace}>🦽 Race</CustomButton>
+    </Space>
   );
 }
 
