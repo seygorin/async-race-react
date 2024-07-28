@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import { useSelector } from "react-redux";
-import useGaragePage from "../../hooks/useGaragePage";
+import useGaragePage from "@hooks/useGaragePage";
 import "./index.css";
 
 function WinnerModalContainer() {

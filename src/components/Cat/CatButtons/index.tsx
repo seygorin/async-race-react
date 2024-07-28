@@ -1,4 +1,4 @@
-import CustomButton from "../../common/Button";
+import CustomButton from "@components/common/Button";
 
 function CatButtons({
   onStartEngine,

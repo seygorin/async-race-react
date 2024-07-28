@@ -1,13 +1,13 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { startEngine, stopEngine } from "../store/api/engineApi";
+import { startEngine, stopEngine } from "@store/api/engineApi";
 import {
   setStartTime,
   setIsRacing,
   setPositions,
   setWinner,
   setStoppedCats,
-} from "../store/slices/garageSlice";
+} from "@store/slices/garageSlice";
 
 const useRaceActions = () => {
   const dispatch = useDispatch();

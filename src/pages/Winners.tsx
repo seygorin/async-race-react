@@ -1,5 +1,5 @@
 import WinnersContainer from "@containers/WinnersContainer";
-import Title from "../components/common/Title";
+import Title from "@components/common/Title";
 
 function Winners() {
   return (

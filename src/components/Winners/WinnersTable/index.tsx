@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 import columns from "./WinnersTableColumns";
-import "./WinnersTable.css";
+import "./index.css";
 
 interface WinnersTableProps {
   winners: any[];

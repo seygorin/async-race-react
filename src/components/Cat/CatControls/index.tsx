@@ -1,6 +1,6 @@
 import { Space } from "antd";
-import CustomButton from "../../common/Button";
-import useGaragePage from "../../../hooks/useGaragePage";
+import CustomButton from "@components/common/Button";
+import useGaragePage from "@hooks/useGaragePage";
 
 function CatControls() {
   const { garageContentProps } = useGaragePage();

@@ -1,6 +1,6 @@
-import useCatList from "../containers/CatListContainer/hook/useCatList";
+import useCatList from "@containers/CatListContainer/hook/useCatList";
+import useModal from "@containers/WinnerModalContainer/hook/useModal";
 import useRace from "./useRace";
-import useModal from "../containers/WinnerModalContainer/hook/useModal";
 import useCatForm from "./useCatForm";
 
 const useGaragePage = () => {

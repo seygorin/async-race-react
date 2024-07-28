@@ -1,7 +1,6 @@
-import React from "react";
-import CatSitting from "../../../assets/CatSitting";
-import CatStanding from "../../../assets/CatStanding";
-import CatRunning from "../../../assets/CarRunning";
+import CatSitting from "@assets/CatSitting";
+import CatStanding from "@assets/CatStanding";
+import CatRunning from "@assets/CatRunning";
 import "./index.css";
 
 function CatIcon({ position, totalDistance, cat, catRef, velocities }) {

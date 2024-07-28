@@ -1,6 +1,5 @@
-import React from "react";
-import CatButtons from "../CatButtons";
-import Cat from "../../../containers/CatContainer";
+import CatButtons from "@components/Cat/CatButtons";
+import Cat from "@containers/CatContainer";
 
 const CatTrack = ({
   cat,

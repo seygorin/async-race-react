@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "../store/slices/winnersSlice";
+import { setPage } from "@store/slices/winnersSlice";
 
 const useWinners = () => {
   const dispatch = useDispatch();

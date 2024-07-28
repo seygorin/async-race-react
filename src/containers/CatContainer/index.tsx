@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
-import CatIcon from "../../components/Cat/CatIcon";
-import CatInfo from "../../components/Cat/CatInfo";
+import CatIcon from "@components/Cat/CatIcon";
+import CatInfo from "@components/Cat/CatInfo";
 import "./index.css";
 
 function Cat({ cat, position, totalDistance, trackWidth, velocity }) {

@@ -1,15 +1,15 @@
 import { useCallback, useRef, useEffect } from "react";
-import useRaceState from "./useRaceState";
-import useRaceActions from "./useRaceActions";
-import { stopEngine } from "../store/api/engineApi";
+import { stopEngine } from "@store/api/engineApi";
 import {
   setPositions,
   setWinner,
   setStoppedCats,
   setIsRacing,
-} from "../store/slices/garageSlice";
-import { addWinner } from "../store/slices/winnersSlice";
-import { showModal } from "../store/slices/modalSlice";
+} from "@store/slices/garageSlice";
+import { addWinner } from "@store/slices/winnersSlice";
+import { showModal } from "@store/slices/modalSlice";
+import useRaceState from "./useRaceState";
+import useRaceActions from "./useRaceActions";
 
 const useRaceAnimation = (cats) => {
   const {

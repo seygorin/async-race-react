@@ -1,13 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCats,
-  addCat,
-  updateCat,
-  deleteCat,
-} from "../../../store/api/garageApi";
-import { setCurrentPage } from "../../../store/slices/garageSlice";
-import { generateRandomCats } from "../../../utils/catGenerator";
+import { fetchCats, addCat, updateCat, deleteCat } from "@store/api/garageApi";
+import { setCurrentPage } from "@store/slices/garageSlice";
+import { generateRandomCats } from "@utils/catGenerator";
 
 const CARS_PER_PAGE = 7;
 

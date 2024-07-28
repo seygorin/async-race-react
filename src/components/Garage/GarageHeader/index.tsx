@@ -1,7 +1,7 @@
 import { Row, Col } from "antd";
-import CatForm from "../../Cat/CatForm";
-import CatControls from "../../Cat/CatControls";
-import Title from "../../common/Title";
+import CatForm from "@components/Cat/CatForm";
+import CatControls from "@components/Cat/CatControls";
+import Title from "@components/common/Title";
 
 function GarageHeader() {
   return (

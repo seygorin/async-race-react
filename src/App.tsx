@@ -3,10 +3,10 @@ import { Layout } from "antd";
 import "antd/dist/reset.css";
 import "./App.css";
 
-import Garage from "./pages/Garage";
-import Winners from "./pages/Winners";
-import CustomMenu from "./components/Header";
-import CustomFooter from "./components/Footer";
+import Garage from "@pages/Garage";
+import Winners from "@pages/Winners";
+import CustomMenu from "@components/Header";
+import CustomFooter from "@components/Footer";
 
 const { Content } = Layout;
 

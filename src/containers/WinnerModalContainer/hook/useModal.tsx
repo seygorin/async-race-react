@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { hideModal } from "../../../store/slices/modalSlice";
+import { hideModal } from "@store/slices/modalSlice";
 
 const useModal = () => {
   const dispatch = useDispatch();
