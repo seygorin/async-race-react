@@ -18,7 +18,7 @@ function WinnerModalContainer() {
       {winner ? (
         <div className="modal-content">
           <p>Name: {winner.name}</p>
-          <p>Time: {winner.bestTime.toFixed(2)} seconds</p>
+          <p>Time: {winner.bestTime.toFixed(1)} seconds</p>
         </div>
       ) : (
         <div className="modal-content">

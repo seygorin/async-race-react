@@ -9,15 +9,23 @@ const winnersSlice = createSlice({
   reducers: {
     addWinner: (state, action) => {
       const { id, name, color, bestTime } = action.payload;
+      const roundedBestTime = Number(bestTime.toFixed(1));
+
       const existingWinner = state.winners.find((winner) => winner.id === id);
 
       if (existingWinner) {
         existingWinner.wins += 1;
-        if (bestTime < existingWinner.bestTime) {
-          existingWinner.bestTime = bestTime;
+        if (roundedBestTime < existingWinner.bestTime) {
+          existingWinner.bestTime = roundedBestTime;
         }
       } else {
-        state.winners.push({ id, name, color, wins: 1, bestTime });
+        state.winners.push({
+          id,
+          name,
+          color,
+          wins: 1,
+          bestTime: roundedBestTime,
+        });
       }
     },
     setPage: (state, action) => {
