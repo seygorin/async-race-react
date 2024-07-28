@@ -1,3 +1,5 @@
+import CatSitting from "../../assets/CatSitting";
+
 const columns = [
   {
     title: "Cat Number",
@@ -8,9 +10,9 @@ const columns = [
   },
   {
     title: "Cat Icon",
-    dataIndex: "id",
-    key: "catIcon",
-    render: () => "🐈",
+    dataIndex: "color",
+    key: "color",
+    render: (color) => <CatSitting size={30} color={color} />,
   },
   {
     title: "Name",

@@ -1,12 +1,22 @@
 .winners-table.ant-table-wrapper .ant-table-thead > tr > th,
 .winners-table.ant-table-wrapper .ant-table-tbody > tr > td {
-  background-color: #c0c3f8 
+  background-color: #c0c3f8;
+  color: white;
+  text-align: center;
 }
 
 .winners-table.ant-table-wrapper .ant-table-thead > tr > th {
-  background-color: #a8acf3 
+  background-color: #a8acf3;
 }
 
 .winners-table.ant-table-wrapper .ant-table-tbody > tr:hover > td {
-  background-color: #d1d3fa 
+  background-color: #d1d3fa;
+}
+
+.winners-table.ant-table-wrapper .ant-table-thead > tr > th:hover {
+  background-color: #d1d3fa;
+}
+
+.winners-table.ant-table-wrapper .ant-table-thead > tr > th:nth-child(2):hover {
+  background-color: #a8acf3;
 }

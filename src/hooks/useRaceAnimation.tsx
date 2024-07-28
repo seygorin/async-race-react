@@ -52,7 +52,12 @@ const useRaceAnimation = (cats) => {
             const raceTime = (currentTime - startTime[cat.id]) / 1000;
             dispatch(setWinner({ ...cat, bestTime: raceTime }));
             dispatch(
-              addWinner({ id: cat.id, name: cat.name, bestTime: raceTime }),
+              addWinner({
+                id: cat.id,
+                name: cat.name,
+                color: cat.color,
+                bestTime: raceTime,
+              }),
             );
             dispatch(showModal());
           }

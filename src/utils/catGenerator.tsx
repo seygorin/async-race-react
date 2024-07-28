@@ -8,6 +8,7 @@ const breeds = [
   "Abyssinian",
   "Savannah",
   "Streeters",
+  "Cat",
 ];
 const catNames = [
   "Whiskers",

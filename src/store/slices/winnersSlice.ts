@@ -8,7 +8,7 @@ const winnersSlice = createSlice({
   },
   reducers: {
     addWinner: (state, action) => {
-      const { id, name, bestTime } = action.payload;
+      const { id, name, color, bestTime } = action.payload;
       const existingWinner = state.winners.find((winner) => winner.id === id);
 
       if (existingWinner) {
@@ -17,7 +17,7 @@ const winnersSlice = createSlice({
           existingWinner.bestTime = bestTime;
         }
       } else {
-        state.winners.push({ id, name, wins: 1, bestTime });
+        state.winners.push({ id, name, color, wins: 1, bestTime });
       }
     },
     setPage: (state, action) => {

@@ -42,9 +42,10 @@ function CatInfo({ cat, position, totalDistance, velocity }) {
         height: "100%",
       }}
     >
-      <span style={{ color: "white" }}>{cat.name}</span>
+      <span style={{ color: cat.color }}>{cat.name}</span>
       <span style={{ color: color }}>
-        {Math.round(position)} / {totalDistance} (Velocity: {velocity})
+        {Math.round(position / 100)} / {totalDistance / 100} (Velocity:{" "}
+        {velocity})
       </span>
     </div>
   );
