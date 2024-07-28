@@ -4,9 +4,7 @@
   text-align: center;
 }
 
-.app-header {
-  padding: 0px;
-}
+
 
 .app-content {
   padding: 50px;
@@ -15,7 +13,3 @@
   background: #f5e5ff;
 }
 
-.app-footer {
-	background: #323582;
-	color: #c0c3f8;
-}

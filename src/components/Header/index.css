@@ -1,0 +1,35 @@
+.custom-menu {
+  display: flex;
+  justify-content: space-between;
+  background: #323582;
+
+  transition:
+    color 1s ease,
+    background-color 1s ease;
+}
+
+.custom-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.custom-menu-item a {
+  color: #c0c3f8;
+  text-decoration: none;
+}
+
+.custom-menu-item:hover,
+.custom-menu-item:focus {
+  transition: 1s ease;
+  background-color: #c0c3f8;
+}
+
+.custom-menu-item-active {
+  background-color: #f5e5ff;
+}
+
+.header {
+  padding: 0px;
+}

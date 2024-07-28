@@ -21,6 +21,19 @@ module.exports = {
     react: {
       version: "detect",
     },
+    "import/resolver": {
+      typescript: {
+        project: "./tsconfig.json",
+      },
+      alias: {
+        map: [
+          ["@containers", "./src/containers"],
+          ["@components", "./src/components"],
+          ["@hooks", "./src/hooks"],
+        ],
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
+      },
+    },
   },
   rules: {
     "react/jsx-filename-extension": [1, { extensions: [".tsx"] }],

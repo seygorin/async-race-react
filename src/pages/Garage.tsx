@@ -1,13 +1,13 @@
-import WinnerModal from "../components/Winners/WinnerModal";
+import WinnerModalContainer from "../containers/WinnerModalContainer";
 import GarageHeader from "../components/Garage/GarageHeader";
-import GarageContent from "../components/Garage/GarageContent";
+import GarageContent from "../containers/GarageContnentContainer";
 
 function Garage() {
   return (
     <div>
       <GarageHeader />
       <GarageContent />
-      <WinnerModal />
+      <WinnerModalContainer />
     </div>
   );
 }

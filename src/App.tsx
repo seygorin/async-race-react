@@ -5,17 +5,16 @@ import "./App.css";
 
 import Garage from "./pages/Garage";
 import Winners from "./pages/Winners";
-import CustomMenu from "./components/Menu/CustomMenu";
+import CustomMenu from "./components/Header";
+import CustomFooter from "./components/Footer";
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 function App(): JSX.Element {
   return (
     <Router>
       <Layout>
-        <Header className="app-header">
-          <CustomMenu />
-        </Header>
+        <CustomMenu />
         <Content className="app-content">
           <Routes>
             <Route path="/" element={<Garage />} />
@@ -23,7 +22,7 @@ function App(): JSX.Element {
             <Route path="/winners" element={<Winners />} />
           </Routes>
         </Content>
-        <Footer className="app-footer">GitHub: seygorin</Footer>
+        <CustomFooter />
       </Layout>
     </Router>
   );
