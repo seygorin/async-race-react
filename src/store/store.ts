@@ -3,6 +3,7 @@ import garageReducer from "./slices/garageSlice";
 import engineReducer from "./slices/engineSlice";
 import winnersReducer from "./slices/winnersSlice";
 import modalReducer from "./slices/modalSlice";
+import catFormReducer from "./slices/catFormSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     engine: engineReducer,
     winners: winnersReducer,
     modal: modalReducer,
+    catForm: catFormReducer,
   },
 });
 

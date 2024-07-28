@@ -1,4 +1,6 @@
-import { Form, Input, ColorPicker } from "antd";
+import React from "react";
+import { Form, Input } from "antd";
+import { ColorPicker } from "antd";
 import CustomButton from "@components/common/Button";
 import useGaragePage from "@hooks/useGaragePage";
 
@@ -10,7 +12,7 @@ function CatForm() {
     catColor,
     setCatName,
     setCatColor,
-    handleAddCat,
+    handleAddOrUpdateCat,
     editingCat,
   } = catFormProps;
 
@@ -31,8 +33,8 @@ function CatForm() {
         />
       </Form.Item>
       <Form.Item>
-        <CustomButton onClick={handleAddCat}>
-          {editingCat !== null ? "Edit Cat" : "Add Cat"}
+        <CustomButton onClick={handleAddOrUpdateCat}>
+          {editingCat !== null ? "Update Cat" : "Add Cat"}
         </CustomButton>
       </Form.Item>
     </Form>

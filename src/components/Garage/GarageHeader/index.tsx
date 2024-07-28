@@ -4,6 +4,7 @@ import CatControls from "@components/Cat/CatControls";
 import Title from "@components/common/Title";
 
 function GarageHeader() {
+	
   return (
     <>
       <Title text="Garage" />

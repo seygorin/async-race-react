@@ -1,4 +1,5 @@
-import React from "react";
+import { useDispatch } from "react-redux";
+import { setEditingCat } from "@store/slices/catFormSlice";
 import useGaragePage from "../../hooks/useGaragePage";
 import useEngineControl from "../../hooks/useEngineControls";
 import CatTrack from "../../components/Cat/CatTrack";
@@ -11,19 +12,29 @@ const CatTrackContainer = ({
   totalDistance,
   velocity,
 }) => {
+  const dispatch = useDispatch();
   const { garageContentProps } = useGaragePage();
-  const {
-    handleEditCat,
-    handleDeleteCat,
-    handleStartEngine,
-    handleStopEngine,
-  } = garageContentProps;
+  const { handleDeleteCat, handleStartEngine, handleStopEngine } =
+    garageContentProps;
 
   const { startEngine, stopEngine, error } = useEngineControl(
     cat.id,
     handleStartEngine,
     handleStopEngine,
   );
+
+  const handleEditCat = (id) => {
+    const catToEdit = garageContentProps.cats.find((cat) => cat.id === id);
+    if (catToEdit) {
+      dispatch(
+        setEditingCat({
+          id: catToEdit.id,
+          name: catToEdit.name,
+          color: catToEdit.color,
+        }),
+      );
+    }
+  };
 
   const catControlProps = {
     onStartEngine: startEngine,
