@@ -1,15 +1,22 @@
 import React from "react";
-import CatSitting from "../../assets/CatSitting"; // добавить еще две иконки для финиша и для сломанной машины
+import CatSitting from "../../assets/CatSitting";
 import CatStanding from "../../assets/CatStanding";
 import CatRunning from "../../assets/CarRunning";
+import "./CatIcon.css";
 
-function CatIcon({ cat, catRef, velocities }) {
+function CatIcon({ position, totalDistance, cat, catRef, velocities }) {
   let IconComponent = null;
 
-  if (velocities === 0) {
+  if (position >= totalDistance) {
+    IconComponent = <CatSitting color={cat.color} />;
+  } else if (velocities === 0) {
     IconComponent = <CatStanding color={cat.color} />;
   } else if (velocities > 1) {
-    IconComponent = <CatRunning color={cat.color} />;
+    IconComponent = (
+      <div className="cat-running">
+        <CatRunning color={cat.color} />
+      </div>
+    );
   }
 
   return (
@@ -20,7 +27,6 @@ function CatIcon({ cat, catRef, velocities }) {
         top: "5px",
         left: "10px",
         width: "50px",
-        height: "30px",
         transition: "transform 0.1s linear",
         zIndex: 1,
       }}

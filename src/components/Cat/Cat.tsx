@@ -21,7 +21,13 @@ function Cat({ cat, position, totalDistance, trackWidth, velocity }) {
 
   return (
     <div className="cat-content">
-      <CatIcon velocities={velocity} cat={cat} catRef={catRef} />
+      <CatIcon
+        totalDistance={totalDistance}
+        velocities={velocity}
+        cat={cat}
+        catRef={catRef}
+        position={position}
+      />
       <CatInfo
         cat={cat}
         position={position}

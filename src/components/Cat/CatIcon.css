@@ -1,0 +1,27 @@
+@keyframes runRight {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes runLeft {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.cat-running {
+  animation: runRight 0.6s infinite, runLeft 0.6s infinite 0.6s;
+}

@@ -3,9 +3,7 @@ function CatRunning({ color }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      x="0px"
-      y="0px"
-      viewBox="0 0 107.194 66.87375"
+      viewBox="10 -5 100 900"
     >
       <g>
         <path

@@ -10,7 +10,7 @@ const columns = [
     title: "Cat Icon",
     dataIndex: "id",
     key: "catIcon",
-    render: () => "🚗",
+    render: () => "🐈",
   },
   {
     title: "Name",
