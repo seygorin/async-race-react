@@ -4,7 +4,6 @@ import Cat from "@containers/CatContainer";
 const CatTrack = ({
   cat,
   trackWidth,
-  isRacing,
   position,
   totalDistance,
   velocity,
@@ -20,11 +19,7 @@ const CatTrack = ({
         width: "100%",
       }}
     >
-      <CatButtons
-        {...catControlProps}
-        isRacing={isRacing}
-        velocity={velocity}
-      />
+      <CatButtons {...catControlProps} velocity={velocity} />
       <div
         style={{
           width: `${trackWidth}px`,

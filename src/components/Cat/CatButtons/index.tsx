@@ -5,7 +5,6 @@ function CatButtons({
   onStopEngine,
   onEditCat,
   onDeleteCat,
-  isRacing,
   velocity,
 }) {
   return (
@@ -13,14 +12,14 @@ function CatButtons({
       <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
         <CustomButton
           onClick={onStartEngine}
-          disabled={isRacing || velocity > 0}
+          disabled={velocity > 0}
           size="small"
         >
           Start
         </CustomButton>
         <CustomButton
           onClick={onStopEngine}
-          disabled={!isRacing || velocity === 0}
+          disabled={velocity === 0}
           size="small"
         >
           Stop

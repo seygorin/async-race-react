@@ -20,43 +20,36 @@ const useGaragePage = () => {
 
   const handleAddOrUpdateCat = () => {
     const newCat = { name: catName, color: catColor };
-    if (editingCat !== null) {
-      catList.handleUpdateCat(editingCat, newCat);
-    } else {
-      catList.handleAddCat(newCat);
-    }
+    editingCat
+      ? catList.handleUpdateCat(editingCat, newCat)
+      : catList.handleAddCat(newCat);
     dispatch(clearForm());
   };
 
   const handleEditCat = (id) => {
     const cat = catList.cats.find((cat) => cat.id === id);
-    if (cat) {
+    if (cat)
       dispatch(setEditingCat({ id: cat.id, name: cat.name, color: cat.color }));
-    }
-  };
-
-  const catFormProps = {
-    catName,
-    catColor,
-    setCatName: (name) => dispatch(setCatName(name)),
-    setCatColor: (color) => dispatch(setCatColor(color)),
-    handleAddOrUpdateCat,
-    editingCat,
-    handleEditCat,
-  };
-
-  const garageContentProps = {
-    ...catList,
-    ...race,
-    handleEditCat,
-    pageSize: 7,
-    onPageChange: catList.handlePageChange,
   };
 
   return {
     isModalVisible: modal.isModalVisible,
-    catFormProps,
-    garageContentProps,
+    catFormProps: {
+      catName,
+      catColor,
+      setCatName: (name) => dispatch(setCatName(name)),
+      setCatColor: (color) => dispatch(setCatColor(color)),
+      handleAddOrUpdateCat,
+      editingCat,
+      handleEditCat,
+    },
+    garageContentProps: {
+      ...catList,
+      ...race,
+      handleEditCat,
+      pageSize: 7,
+      onPageChange: catList.handlePageChange,
+    },
     handleCloseModal: modal.handleCloseModal,
   };
 };
