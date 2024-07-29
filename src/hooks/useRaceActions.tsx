@@ -23,7 +23,7 @@ const useRaceActions = () => {
   const handleStartEngine = useCallback(
     async (id) => {
       await handleEngineAction(startEngine, id);
-      dispatch(setIsRacing({ [id]: true })); // Добавлено обновление isRacing
+      dispatch(setIsRacing({ [id]: true }));
     },
     [handleEngineAction, dispatch],
   );

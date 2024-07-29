@@ -1,4 +1,13 @@
 import CustomButton from "@components/common/Button";
+import "./index.css";
+
+interface CatButtonsProps {
+  onStartEngine: () => void;
+  onStopEngine: () => void;
+  onEditCat: () => void;
+  onDeleteCat: () => void;
+  velocity: number;
+}
 
 function CatButtons({
   onStartEngine,
@@ -6,10 +15,18 @@ function CatButtons({
   onEditCat,
   onDeleteCat,
   velocity,
-}) {
+}: CatButtonsProps) {
   return (
-    <div style={{ display: "flex", gap: "10px" }}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+    <div className="cat-buttons-container">
+      <div className="cat-buttons-column">
+        <CustomButton onClick={onEditCat} size="small">
+          Edit
+        </CustomButton>
+        <CustomButton onClick={onDeleteCat} size="small">
+          Delete
+        </CustomButton>
+      </div>
+      <div className="cat-buttons-column">
         <CustomButton
           onClick={onStartEngine}
           disabled={velocity > 0}
@@ -23,14 +40,6 @@ function CatButtons({
           size="small"
         >
           Stop
-        </CustomButton>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-        <CustomButton onClick={onEditCat} size="small">
-          Edit
-        </CustomButton>
-        <CustomButton onClick={onDeleteCat} size="small">
-          Delete
         </CustomButton>
       </div>
     </div>

@@ -1,7 +1,11 @@
 import "./index.css";
 
-function Title({ text, className = "" }) {
-  return <h1 className={`title ${className}`}>{text}</h1>;
+interface TitleProps {
+  text: string;
+}
+
+function Title({ text }: TitleProps) {
+  return <h1 className="title">{text}</h1>;
 }
 
 export default Title;

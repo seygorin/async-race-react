@@ -9,8 +9,7 @@
     color 0.3s ease;
 }
 
-.custom-button:hover,
-.custom-button:focus {
+.custom-button:hover {
   background-color: #f5e5ff;
   color: #638e9e;
 }

@@ -1,6 +1,5 @@
 #root {
   margin: 0 auto;
-
   text-align: center;
 }
 
@@ -11,3 +10,20 @@
   background: #f5e5ff;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Caveat", sans-serif;
+}
+
+p,
+span,
+div,
+a,
+li,
+button {
+  font-family: "Caveat", sans-serif;
+}

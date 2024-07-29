@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export interface ModalState {
+  isModalVisible: boolean;
+}
+
+const initialState: ModalState = {
   isModalVisible: false,
 };
 
@@ -9,10 +13,10 @@ const modalSlice = createSlice({
   initialState,
   reducers: {
     showModal: (state) => {
-      state.isModalVisible = true;
+      return { ...state, isModalVisible: true };
     },
     hideModal: (state) => {
-      state.isModalVisible = false;
+      return { ...state, isModalVisible: false };
     },
   },
 });

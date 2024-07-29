@@ -1,4 +1,12 @@
-function CatSitting({ color, size = 50 }) {
+interface CatSittingProps {
+  color: string;
+  /* eslint-disable react/require-default-props */
+  size?: number;
+}
+
+const DEFAULT_SIZE = 50;
+
+function CatSitting({ color, size = DEFAULT_SIZE }: CatSittingProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

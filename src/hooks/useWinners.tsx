@@ -1,12 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@store/store";
 import { setPage } from "@store/slices/winnersSlice";
 
 const useWinners = () => {
   const dispatch = useDispatch();
-  const winners = useSelector((state) => state.winners.winners);
-  const currentPage = useSelector((state) => state.winners.currentPage);
+  const winners = useSelector((state: RootState) => state.winners.winners);
+  const currentPage = useSelector(
+    (state: RootState) => state.winners.currentPage,
+  );
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     dispatch(setPage(page));
   };
 

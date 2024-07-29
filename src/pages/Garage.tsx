@@ -4,11 +4,11 @@ import GarageContent from "@containers/GarageContnentContainer";
 
 function Garage() {
   return (
-    <div>
+    <>
       <GarageHeader />
       <GarageContent />
       <WinnerModalContainer />
-    </div>
+    </>
   );
 }
 

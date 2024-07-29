@@ -1,70 +1,108 @@
-// store/slices/garageSlice.js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchCats, addCat, updateCat, deleteCat } from "../api/garageApi";
+
+export interface Cat {
+  id: number;
+  name: string;
+  color: string;
+}
+
+export interface GarageState {
+  cats: Cat[];
+  totalCount: number;
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
+  currentPage: number;
+  positions: Record<number, number>;
+  winner: Cat | null;
+  isRacing: Record<number, boolean>;
+  stoppedCats: number[];
+  startTime: Record<number, number>;
+}
+
+const initialState: GarageState = {
+  cats: [],
+  totalCount: 0,
+  status: "idle",
+  error: null,
+  currentPage: 1,
+  positions: {},
+  winner: null,
+  isRacing: {},
+  stoppedCats: [],
+  startTime: {},
+};
 
 const garageSlice = createSlice({
   name: "garage",
-  initialState: {
-    cats: [],
-    totalCount: 0,
-    status: "idle",
-    error: null,
-    currentPage: 1,
-    positions: {},
-    winner: null,
-    isRacing: {}, // Обновлено
-    stoppedCats: [],
-    startTime: {},
-  },
+  initialState,
   reducers: {
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload;
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      return { ...state, currentPage: action.payload };
     },
-    setPositions: (state, action) => {
-      state.positions = action.payload;
+    setPositions: (state, action: PayloadAction<Record<number, number>>) => {
+      return { ...state, positions: action.payload };
     },
-    setWinner: (state, action) => {
-      state.winner = action.payload;
+    setWinner: (state, action: PayloadAction<Cat | null>) => {
+      return { ...state, winner: action.payload };
     },
-    setIsRacing: (state, action) => {
-      state.isRacing = { ...state.isRacing, ...action.payload }; // Обновлено
+    setIsRacing: (state, action: PayloadAction<Record<number, boolean>>) => {
+      return { ...state, isRacing: { ...state.isRacing, ...action.payload } };
     },
-    setStoppedCats: (state, action) => {
-      state.stoppedCats = action.payload;
+    setStoppedCats: (state, action: PayloadAction<number[]>) => {
+      return { ...state, stoppedCats: action.payload };
     },
-    setStartTime: (state, action) => {
-      state.startTime = { ...state.startTime, ...action.payload };
+    setStartTime: (state, action: PayloadAction<Record<number, number>>) => {
+      return { ...state, startTime: { ...state.startTime, ...action.payload } };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCats.pending, (state) => {
-        state.status = "loading";
+        return { ...state, status: "loading" };
       })
-      .addCase(fetchCats.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.cats = action.payload.data;
-        state.totalCount = action.payload.totalCount;
-      })
+      .addCase(
+        fetchCats.fulfilled,
+        (state, action: PayloadAction<{ data: Cat[]; totalCount: number }>) => {
+          return {
+            ...state,
+            status: "succeeded",
+            cats: action.payload.data,
+            totalCount: action.payload.totalCount,
+          };
+        },
+      )
       .addCase(fetchCats.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
+        return {
+          ...state,
+          status: "failed",
+          error: action.error.message || null,
+        };
       })
-      .addCase(addCat.fulfilled, (state, action) => {
-        state.cats.push(action.payload);
-        state.totalCount += 1;
+      .addCase(addCat.fulfilled, (state, action: PayloadAction<Cat>) => {
+        return {
+          ...state,
+          cats: [...state.cats, action.payload],
+          totalCount: state.totalCount + 1,
+        };
       })
-      .addCase(updateCat.fulfilled, (state, action) => {
+      .addCase(updateCat.fulfilled, (state, action: PayloadAction<Cat>) => {
         const index = state.cats.findIndex(
           (cat) => cat.id === action.payload.id,
         );
         if (index !== -1) {
-          state.cats[index] = action.payload;
+          const newCats = [...state.cats];
+          newCats[index] = action.payload;
+          return { ...state, cats: newCats };
         }
+        return state;
       })
-      .addCase(deleteCat.fulfilled, (state, action) => {
-        state.cats = state.cats.filter((cat) => cat.id !== action.payload);
-        state.totalCount -= 1;
+      .addCase(deleteCat.fulfilled, (state, action: PayloadAction<number>) => {
+        return {
+          ...state,
+          cats: state.cats.filter((cat) => cat.id !== action.payload),
+          totalCount: state.totalCount - 1,
+        };
       });
   },
 });

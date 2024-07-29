@@ -1,34 +1,28 @@
-import { useDispatch } from "react-redux";
-import { setEditingCat } from "@store/slices/catFormSlice";
 import useGaragePage from "@hooks/useGaragePage";
 import useRaceActions from "@hooks/useRaceActions";
+import useEditCat from "@hooks/useEditCat";
 import CatTrack from "@components/Cat/CatTrack";
+import { Cat as CatType } from "@store/slices/garageSlice";
 
-const CatTrackContainer = ({
+interface CatTrackContainerProps {
+  cat: CatType;
+  position: number;
+  totalDistance: number;
+  velocity: number;
+  trackWidth: number;
+}
+
+function CatTrackContainer({
   cat,
   trackWidth,
-  isRacing,
   position,
   totalDistance,
   velocity,
-}) => {
-  const dispatch = useDispatch();
+}: CatTrackContainerProps) {
   const { garageContentProps } = useGaragePage();
   const { handleDeleteCat } = garageContentProps;
   const { handleStartEngine, handleStopEngine } = useRaceActions();
-
-  const handleEditCat = (id) => {
-    const catToEdit = garageContentProps.cats.find((cat) => cat.id === id);
-    if (catToEdit) {
-      dispatch(
-        setEditingCat({
-          id: catToEdit.id,
-          name: catToEdit.name,
-          color: catToEdit.color,
-        }),
-      );
-    }
-  };
+  const handleEditCat = useEditCat(garageContentProps.cats);
 
   const catControlProps = {
     onStartEngine: () => handleStartEngine(cat.id),
@@ -41,13 +35,12 @@ const CatTrackContainer = ({
     <CatTrack
       cat={cat}
       trackWidth={trackWidth}
-      isRacing={isRacing}
       position={position}
       totalDistance={totalDistance}
       velocity={velocity}
       catControlProps={catControlProps}
     />
   );
-};
+}
 
 export default CatTrackContainer;

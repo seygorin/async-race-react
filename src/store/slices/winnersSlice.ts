@@ -1,13 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+export interface Winner {
+  id: number;
+  name: string;
+  color: string;
+  wins: number;
+  bestTime: number;
+}
+
+export interface WinnersState {
+  winners: Winner[];
+  currentPage: number;
+}
+
+const initialState: WinnersState = {
+  winners: [],
+  currentPage: 1,
+};
 
 const winnersSlice = createSlice({
   name: "winners",
-  initialState: {
-    winners: [],
-    currentPage: 1,
-  },
+  initialState,
   reducers: {
-    addWinner: (state, action) => {
+    addWinner: (
+      state,
+      action: PayloadAction<Omit<Winner, "wins"> & { bestTime: number }>,
+    ) => {
       const { id, name, color, bestTime } = action.payload;
       const roundedBestTime = Number(bestTime.toFixed(1));
 
@@ -28,8 +46,8 @@ const winnersSlice = createSlice({
         });
       }
     },
-    setPage: (state, action) => {
-      state.currentPage = action.payload;
+    setPage: (state, action: PayloadAction<number>) => {
+      return { ...state, currentPage: action.payload };
     },
   },
 });

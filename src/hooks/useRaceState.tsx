@@ -1,13 +1,16 @@
 import { useSelector } from "react-redux";
+import { RootState } from "@store/store";
 
 const useRaceState = () => {
-  const positions = useSelector((state) => state.garage.positions);
-  const isRacing = useSelector((state) => state.garage.isRacing);
-  const startTime = useSelector((state) => state.garage.startTime);
-  const velocities = useSelector((state) => state.engine.velocities);
-  const distances = useSelector((state) => state.engine.distances);
-  const winner = useSelector((state) => state.garage.winner);
-  const stoppedCats = useSelector((state) => state.garage.stoppedCats);
+  const positions = useSelector((state: RootState) => state.garage.positions);
+  const isRacing = useSelector((state: RootState) => state.garage.isRacing);
+  const startTime = useSelector((state: RootState) => state.garage.startTime);
+  const velocities = useSelector((state: RootState) => state.engine.velocities);
+  const distances = useSelector((state: RootState) => state.engine.distances);
+  const winner = useSelector((state: RootState) => state.garage.winner);
+  const stoppedCats = useSelector(
+    (state: RootState) => state.garage.stoppedCats,
+  );
 
   return {
     positions,

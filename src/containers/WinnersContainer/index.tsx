@@ -1,9 +1,8 @@
-import React from "react";
 import useWinners from "@hooks/useWinners";
 import WinnersTable from "@components/Winners/WinnersTable";
 import WinnersPagination from "@components/Winners/WinnersPagination";
 
-const WinnersContainer: React.FC = () => {
+function WinnersContainer() {
   const { winners, currentPage, handlePageChange } = useWinners();
 
   return (
@@ -16,6 +15,6 @@ const WinnersContainer: React.FC = () => {
       />
     </>
   );
-};
+}
 
 export default WinnersContainer;

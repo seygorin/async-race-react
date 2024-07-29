@@ -1,3 +1,6 @@
+const HEX_COLOR_LENGTH = 6;
+const HEX_BASE = 16;
+
 const breeds = [
   "Siamese",
   "Persian",
@@ -10,6 +13,7 @@ const breeds = [
   "Streeters",
   "Cat",
 ];
+
 const catNames = [
   "Whiskers",
   "Mittens",
@@ -33,13 +37,13 @@ export const generateRandomName = () => {
 export const generateRandomColor = () => {
   const letters = "0123456789ABCDEF";
   let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+  for (let i = 0; i < HEX_COLOR_LENGTH; i += 1) {
+    color += letters[Math.floor(Math.random() * HEX_BASE)];
   }
   return color;
 };
 
-export const generateRandomCats = (count) => {
+export const generateRandomCats = (count: number) => {
   return Array.from({ length: count }, () => ({
     name: generateRandomName(),
     color: generateRandomColor(),

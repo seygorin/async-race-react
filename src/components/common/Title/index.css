@@ -1,7 +1,31 @@
 .title {
-  font-size: 2rem;
-  color: #333;
+  font-size: 3rem;
+  color: #fa94ac;
   margin-bottom: 1rem;
   font-weight: bold;
   text-align: center;
+  text-shadow:
+    2px 2px #f5e5ff,
+    4px 4px #638e9e;
+  animation: wave 30s ease-in-out infinite;
+  transition:
+    color 5 ease-in-out,
+    transform 5 ease-in-out;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-40%) translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateX(40%) translateY(-10px) rotate(10deg);
+  }
+  100% {
+    transform: translateX(-40%) translateY(0) rotate(0);
+  }
+}
+
+.title:hover {
+	cursor: pointer;	
+  color: #323582;
 }

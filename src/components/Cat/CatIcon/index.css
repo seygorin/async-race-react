@@ -23,5 +23,16 @@
 }
 
 .cat-running {
-  animation: runRight 0.6s infinite, runLeft 0.6s infinite 0.6s;
+  animation:
+    runRight 0.6s infinite,
+    runLeft 0.6s infinite 0.6s;
+}
+
+.cat-icon {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 50px;
+  transition: transform 0.1s linear;
+  z-index: 1;
 }

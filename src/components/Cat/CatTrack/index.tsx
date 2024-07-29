@@ -1,57 +1,61 @@
+import React from "react";
 import CatButtons from "@components/Cat/CatButtons";
 import Cat from "@containers/CatContainer";
+import { Cat as CatType } from "@store/slices/garageSlice";
+import "./index.css";
 
-const CatTrack = ({
+interface CatControlProps {
+  onStartEngine: () => void;
+  onStopEngine: () => void;
+  onEditCat: () => void;
+  onDeleteCat: () => void;
+}
+
+interface CatTrackProps {
+  cat: CatType;
+  trackWidth: number;
+  position: number;
+  totalDistance: number;
+  velocity: number;
+  catControlProps: CatControlProps;
+}
+
+function CatTrack({
   cat,
   trackWidth,
   position,
   totalDistance,
   velocity,
-  error,
   catControlProps,
-}) => (
-  <div style={{ marginBottom: "20px" }}>
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        marginBottom: "10px",
-        width: "100%",
-      }}
-    >
-      <CatButtons {...catControlProps} velocity={velocity} />
-      <div
-        style={{
-          width: `${trackWidth}px`,
-          height: "50px",
-          position: "relative",
-          background: "#638e9e",
-          overflow: "hidden",
-          marginLeft: "20px",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: 0,
-            right: 0,
-            height: "4px",
-            background:
-              "repeating-linear-gradient(90deg, #fff, #fff 20px, transparent 20px, transparent 40px)",
-          }}
-        />
-        <Cat
-          cat={cat}
+}: CatTrackProps) {
+  return (
+    <div className="cat-track-container">
+      <div className="cat-track-controls">
+        <CatButtons
+          onStartEngine={catControlProps.onStartEngine}
+          onStopEngine={catControlProps.onStopEngine}
+          onEditCat={catControlProps.onEditCat}
+          onDeleteCat={catControlProps.onDeleteCat}
           velocity={velocity}
-          position={position}
-          totalDistance={totalDistance}
-          trackWidth={trackWidth}
         />
+        <div
+          className="cat-track"
+          style={{
+            width: `${trackWidth}px`,
+          }}
+        >
+          <div className="cat-track-line" />
+          <Cat
+            cat={cat}
+            velocity={velocity}
+            position={position}
+            totalDistance={totalDistance}
+            trackWidth={trackWidth}
+          />
+        </div>
       </div>
-      {error && <div style={{ marginLeft: "10px", color: "red" }}>{error}</div>}
     </div>
-  </div>
-);
+  );
+}
 
 export default CatTrack;

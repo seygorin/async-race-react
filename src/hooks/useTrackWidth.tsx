@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "@store/store";
 
-export const useTrackWidth = () => {
-  const [trackWidth, setTrackWidth] = useState(0);
-  const distances = useSelector((state) => state.engine.distances);
+const useTrackWidth = (): number => {
+  const [trackWidth, setTrackWidth] = useState<number>(0);
+  const distances = useSelector((state: RootState) => state.engine.distances);
 
   useEffect(() => {
     const maxDistance = Math.max(...Object.values(distances));
-    
+
     const updateTrackWidth = () => {
       const windowWidth = window.innerWidth;
       const newTrackWidth =
-        maxDistance > 0 ? (windowWidth / maxDistance) * maxDistance : windowWidth;
+        maxDistance > 0
+          ? (windowWidth / maxDistance) * maxDistance
+          : windowWidth;
       setTrackWidth(newTrackWidth);
     };
 
@@ -26,3 +29,5 @@ export const useTrackWidth = () => {
 
   return trackWidth;
 };
+
+export default useTrackWidth;

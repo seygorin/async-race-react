@@ -8,7 +8,7 @@ export const startEngine = createAsyncThunk(
   async (id) => {
     const response = await axios.patch(`${ENGINE_URL}?id=${id}&status=started`);
     return { id, ...response.data };
-  }
+  },
 );
 
 export const stopEngine = createAsyncThunk("engine/stopEngine", async (id) => {

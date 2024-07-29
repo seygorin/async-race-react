@@ -1,13 +1,13 @@
-import React from "react";
 import { Table } from "antd";
+import { Winner } from "@store/slices/winnersSlice";
 import columns from "./WinnersTableColumns";
 import "./index.css";
 
 interface WinnersTableProps {
-  winners: any[];
+  winners: Winner[];
 }
 
-const WinnersTable: React.FC<WinnersTableProps> = ({ winners }) => {
+function WinnersTable({ winners }: WinnersTableProps) {
   return (
     <Table
       className="winners-table"
@@ -17,6 +17,6 @@ const WinnersTable: React.FC<WinnersTableProps> = ({ winners }) => {
       rowKey="id"
     />
   );
-};
+}
 
 export default WinnersTable;

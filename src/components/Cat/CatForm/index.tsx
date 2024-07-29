@@ -1,8 +1,7 @@
-import React from "react";
-import { Form, Input } from "antd";
-import { ColorPicker } from "antd";
+import { Form, Input, ColorPicker } from "antd";
 import CustomButton from "@components/common/Button";
 import useGaragePage from "@hooks/useGaragePage";
+import "./index.css";
 
 function CatForm() {
   const { catFormProps } = useGaragePage();
@@ -17,7 +16,7 @@ function CatForm() {
   } = catFormProps;
 
   return (
-    <Form layout="inline" style={{ marginBottom: "20px" }}>
+    <Form layout="inline" className="cat-form">
       <Form.Item>
         <Input
           placeholder="Cat Name"

@@ -1,4 +1,8 @@
-function CatRunning({ color }) {
+interface CatRunningProps {
+  color: string;
+}
+
+function CatRunning({ color }: CatRunningProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

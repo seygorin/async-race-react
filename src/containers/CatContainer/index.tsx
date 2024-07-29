@@ -1,11 +1,19 @@
 import React, { useEffect, useRef } from "react";
-
 import CatIcon from "@components/Cat/CatIcon";
 import CatInfo from "@components/Cat/CatInfo";
+import { Cat as CatType } from "@store/slices/garageSlice";
 import "./index.css";
 
-function Cat({ cat, position, totalDistance, trackWidth, velocity }) {
-  const catRef = useRef(null);
+interface CatProps {
+  cat: CatType;
+  position: number;
+  totalDistance: number;
+  trackWidth: number;
+  velocity: number;
+}
+
+function Cat({ cat, position, totalDistance, trackWidth, velocity }: CatProps) {
+  const catRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (catRef.current) {

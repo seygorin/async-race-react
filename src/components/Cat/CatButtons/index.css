@@ -1,0 +1,10 @@
+.cat-buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.cat-buttons-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

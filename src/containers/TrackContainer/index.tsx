@@ -1,19 +1,17 @@
-import { useTrackWidth } from "@hooks/useTrackWidth";
+import useTrackWidth from "@hooks/useTrackWidth";
 import StartLine from "@components/Track/StartLine";
 import FinishLine from "@components/Track/FinishLine";
 import CatListContainer from "@containers/CatListContainer";
+import "./index.css";
 
-function Track() {
+function TrackContainer() {
   const trackWidth = useTrackWidth();
 
   return (
     <div
+      className="track-container"
       style={{
-        position: "relative",
-        marginTop: "20px",
         width: `${trackWidth}px`,
-        maxWidth: "100%",
-        overflow: "hidden",
       }}
     >
       <StartLine />
@@ -23,4 +21,4 @@ function Track() {
   );
 }
 
-export default Track;
+export default TrackContainer;

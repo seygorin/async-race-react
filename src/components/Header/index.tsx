@@ -1,27 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { Layout } from "antd";
+import { menuItems, MenuItem } from "./data";
 import "./index.css";
 
 const { Header } = Layout;
-
-const menuItems = [
-  {
-    key: "1",
-    label: "Garage",
-    to: "/garage",
-  },
-  {
-    key: "2",
-    label: "Winners",
-    to: "/winners",
-  },
-];
 
 function CustomMenu() {
   return (
     <Header className="header">
       <nav className="custom-menu">
-        {menuItems.map((item) => (
+        {menuItems.map((item: MenuItem) => (
           <NavLink
             key={item.key}
             to={item.to}

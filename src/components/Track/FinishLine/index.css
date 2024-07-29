@@ -1,0 +1,32 @@
+.finish-line {
+  position: absolute;
+  z-index: 1;
+  right: 30px;
+  top: 0;
+  bottom: 0;
+  width: 25px;
+}
+
+.finish-line-inner {
+  position: relative;
+  width: 4px;
+  height: 96%;
+  background-color: #fa94ac;
+  display: flex;
+  align-items: center;
+}
+
+.finish-line-text {
+  position: absolute;
+  transform: translateX(-50%) rotate(90deg);
+  white-space: nowrap;
+  color: #fa94ac;
+  right: -45px;
+  font-size: 22px;
+  font-weight: bold;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}

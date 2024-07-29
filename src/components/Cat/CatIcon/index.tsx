@@ -1,9 +1,25 @@
+import { RefObject } from "react";
 import CatSitting from "@assets/CatSitting";
 import CatStanding from "@assets/CatStanding";
 import CatRunning from "@assets/CatRunning";
+import { Cat as CatType } from "@store/slices/garageSlice";
 import "./index.css";
 
-function CatIcon({ position, totalDistance, cat, catRef, velocities }) {
+interface CatIconProps {
+  position: number;
+  totalDistance: number;
+  cat: CatType;
+  catRef: RefObject<HTMLDivElement>;
+  velocities: number;
+}
+
+function CatIcon({
+  position,
+  totalDistance,
+  cat,
+  catRef,
+  velocities,
+}: CatIconProps) {
   let IconComponent = null;
 
   if (position >= totalDistance) {
@@ -19,17 +35,7 @@ function CatIcon({ position, totalDistance, cat, catRef, velocities }) {
   }
 
   return (
-    <div
-      ref={catRef}
-      style={{
-        position: "absolute",
-        top: "5px",
-        left: "10px",
-        width: "50px",
-        transition: "transform 0.1s linear",
-        zIndex: 1,
-      }}
-    >
+    <div ref={catRef} className="cat-icon">
       {IconComponent}
     </div>
   );

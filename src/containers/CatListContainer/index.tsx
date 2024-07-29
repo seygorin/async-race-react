@@ -1,14 +1,19 @@
-// components/CatListContainer.js
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import useGaragePage from "../../hooks/useGaragePage";
-import CatTrack from "../CatTrackContainer";
+import useGaragePage from "@hooks/useGaragePage";
+import CatTrackContainer from "@containers/CatTrackContainer";
+import { RootState } from "@store/store";
+import { Cat as CatType } from "@store/slices/garageSlice";
 
-function CatListContainer({ trackWidth }) {
+interface CatListContainerProps {
+  trackWidth: number;
+}
+
+function CatListContainer({ trackWidth }: CatListContainerProps) {
   const { garageContentProps } = useGaragePage();
-  const { cats, isRacing, positions } = garageContentProps;
-  const distances = useSelector((state) => state.engine.distances);
-  const velocities = useSelector((state) => state.engine.velocities);
+  const { cats, positions } = garageContentProps;
+  const distances = useSelector((state: RootState) => state.engine.distances);
+  const velocities = useSelector((state: RootState) => state.engine.velocities);
 
   const totalDistance = useMemo(() => {
     const distanceValues = Object.values(distances);
@@ -18,12 +23,11 @@ function CatListContainer({ trackWidth }) {
   return (
     <div>
       {Array.isArray(cats) &&
-        cats.map((cat) => (
-          <CatTrack
+        cats.map((cat: CatType) => (
+          <CatTrackContainer
             key={cat.id}
             cat={cat}
             trackWidth={trackWidth}
-            isRacing={isRacing[cat.id]}
             position={positions[cat.id] || 0}
             totalDistance={totalDistance}
             velocity={velocities[cat.id] || 0}

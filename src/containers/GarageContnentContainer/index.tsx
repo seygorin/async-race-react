@@ -1,15 +1,20 @@
-import Track from "../TrackContainer";
-import GaragePagination from "../../components/Garage/GaragePagination";
-import useGaragePage from "../../hooks/useGaragePage";
+import { useSelector } from "react-redux";
+import TrackContainer from "@containers/TrackContainer";
+import GaragePagination from "@components/Garage/GaragePagination";
+import useGaragePage from "@hooks/useGaragePage";
+import { RootState } from "@store/store";
 
-function GarageContent() {
+function GarageContentContainer() {
+  const { totalCount, currentPage } = useSelector(
+    (state: RootState) => state.garage,
+  );
+
   const { garageContentProps } = useGaragePage();
-  const { currentPage, totalCount, pageSize, onPageChange } =
-    garageContentProps;
+  const { pageSize, onPageChange } = garageContentProps;
 
   return (
     <>
-      <Track />
+      <TrackContainer />
       <GaragePagination
         currentPage={currentPage}
         totalCount={totalCount}
@@ -20,4 +25,4 @@ function GarageContent() {
   );
 }
 
-export default GarageContent;
+export default GarageContentContainer;

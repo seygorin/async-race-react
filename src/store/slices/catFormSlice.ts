@@ -1,6 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+export interface CatFormState {
+  catName: string;
+  catColor: string;
+  editingCat: number | null;
+}
+
+const initialState: CatFormState = {
   catName: "",
   catColor: "#000",
   editingCat: null,
@@ -10,30 +16,34 @@ const catFormSlice = createSlice({
   name: "catForm",
   initialState,
   reducers: {
-    setCatName: (state, action) => {
-      state.catName = action.payload;
+    setCatName: (state, action: PayloadAction<string>) => {
+      return { ...state, catName: action.payload };
     },
-    setCatColor: (state, action) => {
-      state.catColor = action.payload;
+    setCatColor: (state, action: PayloadAction<string>) => {
+      return { ...state, catColor: action.payload };
     },
-    setEditingCat: (state, action) => {
-      state.editingCat = action.payload.id;
-      state.catName = action.payload.name;
-      state.catColor = action.payload.color;
+    setEditingCat: (
+      state,
+      action: PayloadAction<{ id: number; name: string; color: string }>,
+    ) => {
+      return {
+        ...state,
+        editingCat: action.payload.id,
+        catName: action.payload.name,
+        catColor: action.payload.color,
+      };
     },
     clearForm: (state) => {
-      state.catName = "";
-      state.catColor = "#000";
-      state.editingCat = null;
+      return {
+        ...state,
+        catName: "",
+        catColor: "#000",
+        editingCat: null,
+      };
     },
   },
 });
 
-export const {
-  setCatName,
-  setCatColor,
-
-  setEditingCat,
-  clearForm,
-} = catFormSlice.actions;
+export const { setCatName, setCatColor, setEditingCat, clearForm } =
+  catFormSlice.actions;
 export default catFormSlice.reducer;
