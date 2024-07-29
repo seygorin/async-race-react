@@ -1,19 +1,22 @@
 import { useSelector } from "react-redux";
 
 const useRaceState = () => {
-  const { positions, winner, isRacing, stoppedCats, startTime } = useSelector(
-    (state) => state.garage,
-  );
-  const { velocities, distances } = useSelector((state) => state.engine);
+  const positions = useSelector((state) => state.garage.positions);
+  const isRacing = useSelector((state) => state.garage.isRacing);
+  const startTime = useSelector((state) => state.garage.startTime);
+  const velocities = useSelector((state) => state.engine.velocities);
+  const distances = useSelector((state) => state.engine.distances);
+  const winner = useSelector((state) => state.garage.winner);
+  const stoppedCats = useSelector((state) => state.garage.stoppedCats);
 
   return {
     positions,
-    winner,
     isRacing,
-    stoppedCats,
     startTime,
     velocities,
     distances,
+    winner,
+    stoppedCats,
   };
 };
 

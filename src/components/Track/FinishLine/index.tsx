@@ -3,16 +3,16 @@ const FinishLine = () => (
     style={{
       position: "absolute",
       zIndex: "1",
-      right: "0",
+      right: "50px",
       top: "0",
-      bottom: "0",
+      bottom: "20px",
     }}
   >
     <div
       style={{
         position: "relative",
         width: "4px",
-        height: "96%",
+        height: "100%",
         backgroundColor: "#fa94ac",
         display: "flex",
         alignItems: "center",

@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import useRaceState from "./useRaceState";
 import useRaceActions from "./useRaceActions";
 import useRaceAnimation from "./useRaceAnimation";
-
 import { setStartTime, setIsRacing } from "../store/slices/garageSlice";
 
 const useRace = (cats) => {
@@ -14,23 +13,31 @@ const useRace = (cats) => {
   const handleStartRace = useCallback(async () => {
     resetRace();
     const newStartTimes = {};
-    const startEnginePromises = cats.map((cat) => {
-      return handleStartEngine(cat.id).then(() => {
+    const newIsRacingState = {};
+
+    const startEnginePromises = cats.map((cat) =>
+      handleStartEngine(cat.id).then(() => {
         newStartTimes[cat.id] = performance.now();
-      });
-    });
+        newIsRacingState[cat.id] = true;
+      }),
+    );
 
     await Promise.all(startEnginePromises);
     dispatch(setStartTime(newStartTimes));
-    dispatch(setIsRacing(true));
+    dispatch(setIsRacing(newIsRacingState));
   }, [cats, dispatch, handleStartEngine, resetRace]);
 
   const handleStopRace = useCallback(() => {
     resetRace();
+    const newIsRacingState = {};
+
     cats.forEach((cat) => {
       handleStopEngine(cat.id);
+      newIsRacingState[cat.id] = false;
     });
-  }, [cats, handleStopEngine, resetRace]);
+
+    dispatch(setIsRacing(newIsRacingState));
+  }, [cats, dispatch, handleStopEngine, resetRace]);
 
   return {
     ...raceState,

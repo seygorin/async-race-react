@@ -1,34 +1,40 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { startEngine, stopEngine } from "@store/api/engineApi";
+import { startEngine, stopEngine } from "../store/api/engineApi";
 import {
-  setStartTime,
   setIsRacing,
   setPositions,
   setWinner,
   setStoppedCats,
-} from "@store/slices/garageSlice";
+} from "../store/slices/garageSlice";
 
 const useRaceActions = () => {
   const dispatch = useDispatch();
 
-  const handleStartEngine = useCallback(
-    async (id) => {
-      await dispatch(startEngine(id));
-      dispatch(setStartTime({ [id]: performance.now() }));
+  const handleEngineAction = useCallback(
+    (action, id) => {
+      return dispatch(action(id))
+        .unwrap()
+        .catch((err) => console.error(`Failed to ${action.name} engine:`, err));
     },
     [dispatch],
+  );
+
+  const handleStartEngine = useCallback(
+    async (id) => {
+      await handleEngineAction(startEngine, id);
+      dispatch(setIsRacing({ [id]: true })); // Добавлено обновление isRacing
+    },
+    [handleEngineAction, dispatch],
   );
 
   const handleStopEngine = useCallback(
-    (id) => {
-      dispatch(stopEngine(id));
-    },
-    [dispatch],
+    (id) => handleEngineAction(stopEngine, id),
+    [handleEngineAction],
   );
 
   const resetRace = useCallback(() => {
-    dispatch(setIsRacing(false));
+    dispatch(setIsRacing({}));
     dispatch(setPositions({}));
     dispatch(setWinner(null));
     dispatch(setStoppedCats([]));

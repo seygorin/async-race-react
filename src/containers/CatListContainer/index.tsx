@@ -1,3 +1,4 @@
+// components/CatListContainer.js
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import useGaragePage from "../../hooks/useGaragePage";
@@ -22,7 +23,7 @@ function CatListContainer({ trackWidth }) {
             key={cat.id}
             cat={cat}
             trackWidth={trackWidth}
-            isRacing={isRacing}
+            isRacing={isRacing[cat.id]}
             position={positions[cat.id] || 0}
             totalDistance={totalDistance}
             velocity={velocities[cat.id] || 0}

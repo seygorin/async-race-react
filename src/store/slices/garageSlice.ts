@@ -1,3 +1,4 @@
+// store/slices/garageSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCats, addCat, updateCat, deleteCat } from "../api/garageApi";
 
@@ -11,7 +12,7 @@ const garageSlice = createSlice({
     currentPage: 1,
     positions: {},
     winner: null,
-    isRacing: false,
+    isRacing: {}, // Обновлено
     stoppedCats: [],
     startTime: {},
   },
@@ -26,7 +27,7 @@ const garageSlice = createSlice({
       state.winner = action.payload;
     },
     setIsRacing: (state, action) => {
-      state.isRacing = action.payload;
+      state.isRacing = { ...state.isRacing, ...action.payload }; // Обновлено
     },
     setStoppedCats: (state, action) => {
       state.stoppedCats = action.payload;
