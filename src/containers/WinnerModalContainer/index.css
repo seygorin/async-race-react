@@ -1,3 +1,65 @@
 .modal-content {
   text-align: center;
 }
+
+.custom-modal .ant-modal-content {
+  background-color: #fa94ac;
+  box-shadow:
+    3px 3px 0 #f5e5ff,
+    6px 6px 0 #638e9e;
+  border-radius: 10px;
+}
+
+.custom-modal .ant-modal-header {
+  background-color: #c0c3f8;
+  border-radius: 10px 10px;
+  padding: 1rem;
+}
+
+.custom-modal .ant-modal-title {
+  color: #fff;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.custom-modal .ant-modal-title {
+  font-size: 2rem;
+  color: #fa94ac;
+  text-shadow:
+    2px 2px #f5e5ff,
+    4px 4px #638e9e;
+}
+
+.custom-modal .ant-modal-body {
+  padding: 2rem;
+}
+
+.custom-modal .modal-content {
+  color: #323582;
+  text-shadow: 1px 1px #c0c3f8;
+}
+
+.custom-modal .ant-modal-close {
+  color: #638e9e;
+  margin: 1rem;
+}
+
+.winner-name,
+.winner-time {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.winner-label {
+  font-weight: bold;
+  color: #f5e5ff;
+  font-size: 1.2rem;
+}
+
+.winner-time {
+  color: #323582;
+}
+
+.winner-name {
+  color: #323582;
+}

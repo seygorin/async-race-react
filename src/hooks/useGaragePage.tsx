@@ -33,7 +33,6 @@ interface UseGaragePageResult {
     handleStartRace: () => void;
     handleStopRace: () => void;
     handleEditCat: (id: string) => void;
-    pageSize: number;
     onPageChange: (page: number) => void;
   };
   handleCloseModal: () => void;
@@ -86,7 +85,7 @@ const useGaragePage = (): UseGaragePageResult => {
       ...catList,
       ...race,
       handleEditCat,
-      pageSize: 7,
+
       onPageChange: catList.handlePageChange,
     },
     handleCloseModal: modal.handleCloseModal,

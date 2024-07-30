@@ -1,16 +1,30 @@
-import { useSelector } from "react-redux";
-import TrackContainer from "@containers/TrackContainer";
-import GaragePagination from "@components/Garage/GaragePagination";
-import useGaragePage from "@hooks/useGaragePage";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@store/store";
+import GaragePagination from "@components/Garage/GaragePagination";
+import CustomButton from "@components/common/Button";
+import TrackContainer from "@containers/TrackContainer";
+import WinnerModalContainer from "@containers/WinnerModalContainer";
+import useGaragePage from "@hooks/useGaragePage";
+
+import "./index.css";
 
 function GarageContentContainer() {
+  const dispatch = useDispatch();
   const { totalCount, currentPage } = useSelector(
     (state: RootState) => state.garage,
   );
 
-  const { garageContentProps } = useGaragePage();
-  const { pageSize, onPageChange } = garageContentProps;
+  const { garageContentProps, isModalVisible, handleCloseModal } =
+    useGaragePage();
+  const { onPageChange } = garageContentProps;
+
+  const toggleModal = () => {
+    if (isModalVisible) {
+      handleCloseModal();
+    } else {
+      dispatch({ type: "modal/showModal" });
+    }
+  };
 
   return (
     <>
@@ -18,9 +32,12 @@ function GarageContentContainer() {
       <GaragePagination
         currentPage={currentPage}
         totalCount={totalCount}
-        pageSize={pageSize}
         onPageChange={onPageChange}
       />
+      <CustomButton onClick={toggleModal}>
+        {isModalVisible ? "Close Winner" : "Show Winner"}
+      </CustomButton>
+      <WinnerModalContainer />
     </>
   );
 }

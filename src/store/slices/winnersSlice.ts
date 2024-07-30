@@ -11,11 +11,13 @@ export interface Winner {
 export interface WinnersState {
   winners: Winner[];
   currentPage: number;
+  itemsPerPage: number;
 }
 
 const initialState: WinnersState = {
   winners: [],
   currentPage: 1,
+  itemsPerPage: 10,
 };
 
 const winnersSlice = createSlice({

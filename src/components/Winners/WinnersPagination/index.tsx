@@ -1,5 +1,5 @@
-import React from "react";
 import { Pagination } from "antd";
+import "./index.css";
 
 interface WinnersPaginationProps {
   currentPage: number;
@@ -7,20 +7,20 @@ interface WinnersPaginationProps {
   onChange: (page: number) => void;
 }
 
-const WinnersPagination: React.FC<WinnersPaginationProps> = ({
+function WinnersPagination({
   currentPage,
   total,
   onChange,
-}) => {
+}: WinnersPaginationProps) {
   return (
     <Pagination
-      style={{ marginTop: "20px" }}
+      className="winners-pagination"
       current={currentPage}
       total={total}
       pageSize={10}
       onChange={onChange}
     />
   );
-};
+}
 
 export default WinnersPagination;
