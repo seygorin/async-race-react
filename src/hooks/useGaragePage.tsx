@@ -50,7 +50,7 @@ const useGaragePage = (): UseGaragePageResult => {
   const handleAddOrUpdateCat = () => {
     const newCat = { name: catName, color: catColor };
     if (editingCat) {
-      catList.handleUpdateCat(editingCat.id, newCat);
+      catList.handleUpdateCat(editingCat, newCat);
     } else {
       catList.handleAddCat(newCat);
     }
