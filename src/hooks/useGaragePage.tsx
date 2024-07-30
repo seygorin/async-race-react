@@ -3,14 +3,14 @@ import useCatForm from "./useCatForm";
 import useGarageContent from "./useGarageContent";
 
 const useGaragePage = () => {
-  const catList = useGarageContent();
-  const catFormProps = useCatForm(catList);
+  const garageContentProps = useGarageContent();
+  const catFormProps = useCatForm(garageContentProps);
   const modal = useModal();
 
   return {
     isModalVisible: modal.isModalVisible,
     catFormProps,
-    garageContentProps: catList,
+    garageContentProps,
     handleCloseModal: modal.handleCloseModal,
   };
 };

@@ -14,6 +14,7 @@ const useGarageContent = () => {
     handleUpdateCat,
     handleDeleteCat,
   } = useCatList();
+
   const { handlePageChange } = usePageChange();
   const { handleGenerateRandomCats } = useGenerateRandomCats();
   const race = useRace(cats);
@@ -25,7 +26,7 @@ const useGarageContent = () => {
     handleAddCat,
     handleUpdateCat,
     handleDeleteCat,
-    handlePageChange,
+    onPageChange: handlePageChange,
     handleGenerateRandomCats,
     ...race,
   };
