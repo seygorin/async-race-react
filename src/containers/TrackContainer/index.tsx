@@ -14,9 +14,10 @@ function TrackContainer() {
         width: `${trackWidth}px`,
       }}
     >
-      <StartLine />
-      <FinishLine />
-      <CatListContainer trackWidth={trackWidth} />
+      <CatListContainer trackWidth={trackWidth}>
+        <StartLine />
+        <FinishLine />
+      </CatListContainer>
     </div>
   );
 }

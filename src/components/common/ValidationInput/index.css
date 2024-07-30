@@ -1,0 +1,10 @@
+.custom-tooltip .ant-tooltip-inner {
+  background-color: #323582 !important;
+  color: #f5e5ff !important;
+  font-size: 0.8rem;
+  padding: 4px 12px;
+}
+
+.custom-tooltip .ant-tooltip-arrow {
+  border-top-color: #323582 !important;
+}

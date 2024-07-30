@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { fetchCats, addCat, updateCat, deleteCat } from "../api/garageApi";
 
 export interface Cat {
@@ -33,77 +33,97 @@ const initialState: GarageState = {
   startTime: {},
 };
 
+const handleFetchCatsPending = (state: GarageState): GarageState => ({
+  ...state,
+  status: "loading",
+});
+
+const handleFetchCatsFulfilled = (
+  state: GarageState,
+  action: PayloadAction<{ data: Cat[]; totalCount: number }>,
+): GarageState => ({
+  ...state,
+  status: "succeeded",
+  cats: action.payload.data,
+  totalCount: action.payload.totalCount,
+});
+
+const handleFetchCatsRejected = (
+  state: GarageState,
+  action: PayloadAction<unknown, string, unknown, SerializedError>,
+): GarageState => ({
+  ...state,
+  status: "failed",
+  error: action.error.message || null,
+});
+
+const handleAddCatFulfilled = (
+  state: GarageState,
+  action: PayloadAction<Cat>,
+): GarageState => ({
+  ...state,
+  cats: [...state.cats, action.payload],
+  totalCount: state.totalCount + 1,
+});
+
+const handleUpdateCatFulfilled = (
+  state: GarageState,
+  action: PayloadAction<Cat>,
+): GarageState => {
+  const newCats = [...state.cats];
+  const index = newCats.findIndex((cat) => cat.id === action.payload.id);
+  if (index !== -1) {
+    newCats[index] = action.payload;
+  }
+  return { ...state, cats: newCats };
+};
+
+const handleDeleteCatFulfilled = (
+  state: GarageState,
+  action: PayloadAction<number>,
+): GarageState => ({
+  ...state,
+  cats: state.cats.filter((cat) => cat.id !== action.payload),
+  totalCount: state.totalCount - 1,
+});
+
 const garageSlice = createSlice({
   name: "garage",
   initialState,
   reducers: {
-    setCurrentPage: (state, action: PayloadAction<number>) => {
-      return { ...state, currentPage: action.payload };
-    },
-    setPositions: (state, action: PayloadAction<Record<number, number>>) => {
-      return { ...state, positions: action.payload };
-    },
-    setWinner: (state, action: PayloadAction<Cat | null>) => {
-      return { ...state, winner: action.payload };
-    },
-    setIsRacing: (state, action: PayloadAction<Record<number, boolean>>) => {
-      return { ...state, isRacing: { ...state.isRacing, ...action.payload } };
-    },
-    setStoppedCats: (state, action: PayloadAction<number[]>) => {
-      return { ...state, stoppedCats: action.payload };
-    },
-    setStartTime: (state, action: PayloadAction<Record<number, number>>) => {
-      return { ...state, startTime: { ...state.startTime, ...action.payload } };
-    },
+    setCurrentPage: (state, action: PayloadAction<number>) => ({
+      ...state,
+      currentPage: action.payload,
+    }),
+    setPositions: (state, action: PayloadAction<Record<number, number>>) => ({
+      ...state,
+      positions: action.payload,
+    }),
+    setWinner: (state, action: PayloadAction<Cat | null>) => ({
+      ...state,
+      winner: action.payload,
+    }),
+    setIsRacing: (state, action: PayloadAction<Record<number, boolean>>) => ({
+      ...state,
+      isRacing: { ...state.isRacing, ...action.payload },
+    }),
+    setStoppedCats: (state, action: PayloadAction<number[]>) => ({
+      ...state,
+      stoppedCats: action.payload,
+    }),
+    setStartTime: (state, action: PayloadAction<Record<number, number>>) => ({
+      ...state,
+      startTime: { ...state.startTime, ...action.payload },
+    }),
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCats.pending, (state) => {
-        return { ...state, status: "loading" };
-      })
-      .addCase(
-        fetchCats.fulfilled,
-        (state, action: PayloadAction<{ data: Cat[]; totalCount: number }>) => {
-          return {
-            ...state,
-            status: "succeeded",
-            cats: action.payload.data,
-            totalCount: action.payload.totalCount,
-          };
-        },
-      )
-      .addCase(fetchCats.rejected, (state, action) => {
-        return {
-          ...state,
-          status: "failed",
-          error: action.error.message || null,
-        };
-      })
-      .addCase(addCat.fulfilled, (state, action: PayloadAction<Cat>) => {
-        return {
-          ...state,
-          cats: [...state.cats, action.payload],
-          totalCount: state.totalCount + 1,
-        };
-      })
-      .addCase(updateCat.fulfilled, (state, action: PayloadAction<Cat>) => {
-        const index = state.cats.findIndex(
-          (cat) => cat.id === action.payload.id,
-        );
-        if (index !== -1) {
-          const newCats = [...state.cats];
-          newCats[index] = action.payload;
-          return { ...state, cats: newCats };
-        }
-        return state;
-      })
-      .addCase(deleteCat.fulfilled, (state, action: PayloadAction<number>) => {
-        return {
-          ...state,
-          cats: state.cats.filter((cat) => cat.id !== action.payload),
-          totalCount: state.totalCount - 1,
-        };
-      });
+      .addCase(fetchCats.pending, handleFetchCatsPending)
+      .addCase(fetchCats.fulfilled, handleFetchCatsFulfilled)
+      .addCase(fetchCats.rejected, handleFetchCatsRejected)
+      .addCase(addCat.fulfilled, handleAddCatFulfilled)
+      .addCase(updateCat.fulfilled, handleUpdateCatFulfilled)
+      .addCase(deleteCat.fulfilled, handleDeleteCatFulfilled);
   },
 });
 

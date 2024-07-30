@@ -52,7 +52,6 @@ export const updateCat = createAsyncThunk(
   },
 );
 
-
 export const deleteCat = createAsyncThunk("garage/deleteCat", async (id) => {
   try {
     await axios.delete(`${API_URL}/${id}`);

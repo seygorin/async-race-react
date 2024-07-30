@@ -1,28 +1,68 @@
-import { Form, Input, ColorPicker } from "antd";
+import { Form, ColorPicker } from "antd";
 import CustomButton from "@components/common/Button";
-import useGaragePage from "@hooks/useGaragePage";
+import CustomValidationInput from "@components/common/ValidationInput";
+import { Cat as CatType } from "@store/slices/garageSlice";
 import "./index.css";
 
-function CatForm() {
-  const { catFormProps } = useGaragePage();
+const VALIDATION_MIN_LENGTH = 3;
+const VALIDATION_MAX_LENGTH = 15;
 
-  const {
-    catName,
-    catColor,
-    setCatName,
-    setCatColor,
-    handleAddOrUpdateCat,
-    editingCat,
-  } = catFormProps;
+const nameValidator = (name: string) =>
+  name.length >= VALIDATION_MIN_LENGTH && name.length <= VALIDATION_MAX_LENGTH;
+
+interface CatNameInputProps {
+  catName: string;
+  setCatName: (name: string) => void;
+  setIsNameValid: (isValid: boolean) => void;
+}
+
+function CatNameInput({
+  catName,
+  setCatName,
+  setIsNameValid,
+}: CatNameInputProps) {
+  return (
+    <CustomValidationInput
+      placeholder="Cat Name"
+      value={catName}
+      onChange={(e) => setCatName(e.target.value)}
+      errorMessage="Name must be between 3 and 15 characters"
+      validator={nameValidator}
+      onValidStateChange={setIsNameValid}
+    />
+  );
+}
+
+interface CatFormProps {
+  catFormProps: {
+    catName: string;
+    catColor: string;
+    setCatName: (name: string) => void;
+    setCatColor: (color: string) => void;
+    handleAddOrUpdateCat: () => void;
+    editingCat: CatType | null;
+  };
+  isNameValid: boolean;
+  setIsNameValid: (isValid: boolean) => void;
+  handleFormSubmit: () => void;
+}
+
+function CatForm({
+  catFormProps,
+  isNameValid,
+  setIsNameValid,
+  handleFormSubmit,
+}: CatFormProps) {
+  const { catName, catColor, setCatName, setCatColor, editingCat } =
+    catFormProps;
 
   return (
     <Form layout="inline" className="cat-form">
       <Form.Item>
-        <Input
-          placeholder="Cat Name"
-          value={catName}
-          onChange={(e) => setCatName(e.target.value)}
-          className="cat-form-input"
+        <CatNameInput
+          catName={catName}
+          setCatName={setCatName}
+          setIsNameValid={setIsNameValid}
         />
       </Form.Item>
       <Form.Item>
@@ -34,7 +74,7 @@ function CatForm() {
         />
       </Form.Item>
       <Form.Item>
-        <CustomButton onClick={handleAddOrUpdateCat}>
+        <CustomButton onClick={handleFormSubmit} disabled={!isNameValid}>
           {editingCat !== null ? "Update Cat" : "Add Cat"}
         </CustomButton>
       </Form.Item>

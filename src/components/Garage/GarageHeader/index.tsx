@@ -1,5 +1,5 @@
 import { Row, Col } from "antd";
-import CatForm from "@components/Cat/CatForm";
+import CatFormContainer from "@containers/CatFormContainer";
 import CatControls from "@components/Cat/CatControls";
 import CatGenerate from "@components/Cat/CatGenerate";
 import Title from "@components/common/Title";
@@ -12,7 +12,7 @@ function GarageHeader() {
       <Title text="Catage" />
       <Row className="garage-header">
         <Col>
-          <CatForm />
+          <CatFormContainer />
         </Col>
         <Col flex={1}>
           <CatGenerate />

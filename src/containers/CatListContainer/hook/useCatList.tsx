@@ -5,6 +5,7 @@ import { setCurrentPage } from "@store/slices/garageSlice";
 import { generateRandomCats } from "@utils/catGenerator";
 
 const CARS_PER_PAGE = 7;
+const CHUCNK_OF_CATS = 100;
 
 const useCatList = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,19 @@ const useCatList = () => {
     [dispatch],
   );
 
+  return {
+    cats,
+    totalCount,
+    currentPage,
+    handleAddCat,
+    handleUpdateCat,
+    handleDeleteCat,
+  };
+};
+
+const usePageChange = () => {
+  const dispatch = useDispatch();
+
   const handlePageChange = useCallback(
     (page) => {
       dispatch(setCurrentPage(page));
@@ -45,23 +59,20 @@ const useCatList = () => {
     [dispatch],
   );
 
+  return { handlePageChange };
+};
+
+const useGenerateRandomCats = () => {
+  const dispatch = useDispatch();
+
   const handleGenerateRandomCats = useCallback(() => {
-    const randomCats = generateRandomCats(100);
+    const randomCats = generateRandomCats(CHUCNK_OF_CATS);
     randomCats.forEach((cat) => {
       dispatch(addCat(cat));
     });
   }, [dispatch]);
 
-  return {
-    cats,
-    totalCount,
-    currentPage,
-    handleAddCat,
-    handleUpdateCat,
-    handleDeleteCat,
-    handlePageChange,
-    handleGenerateRandomCats,
-  };
+  return { handleGenerateRandomCats };
 };
 
-export default useCatList;
+export { useCatList, usePageChange, useGenerateRandomCats };

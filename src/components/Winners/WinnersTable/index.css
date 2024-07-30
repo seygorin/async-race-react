@@ -5,6 +5,9 @@
   text-align: center;
 }
 
+.winners-table.ant-table-wrapper .ant-table-tbody > tr > td:nth-child(2) > svg {
+	margin-top: 0.5rem;
+}
 .winners-table.ant-table-wrapper .ant-table-thead > tr > th {
   background-color: #a8acf3;
 }
@@ -22,5 +25,5 @@
 }
 
 .winners-table {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }

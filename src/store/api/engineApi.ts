@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import mockData from "../../mocks";
 
-
 const ENGINE_URL = "http://localhost:3000/engine";
 
 const handleApiError = (error, mockResponse) => {
