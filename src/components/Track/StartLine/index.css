@@ -1,16 +1,16 @@
 .start-line {
   position: absolute;
-  left: 200px;
+  left: 195px;
   top: 0;
   bottom: 0;
-  width: 25px;
+
 }
 
 .start-line-inner {
   position: relative;
   z-index: 1;
   width: 4px;
-  height: 96%;
+  height: 96.5%;
   background-color: #f5e5ff;
   display: flex;
   align-items: center;

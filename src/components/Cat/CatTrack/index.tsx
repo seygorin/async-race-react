@@ -1,4 +1,3 @@
-import React from "react";
 import CatButtons from "@components/Cat/CatButtons";
 import Cat from "@containers/CatContainer";
 import { Cat as CatType } from "@store/slices/garageSlice";

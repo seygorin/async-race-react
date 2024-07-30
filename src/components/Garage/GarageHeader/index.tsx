@@ -9,9 +9,9 @@ import "./index.css";
 function GarageHeader() {
   return (
     <>
-      <Title text="Garage" />
-      <Row>
-        <Col className="garage-header">
+      <Title text="Catage" />
+      <Row className="garage-header">
+        <Col>
           <CatForm />
         </Col>
         <Col flex={1}>

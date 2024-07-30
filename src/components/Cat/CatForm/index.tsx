@@ -22,6 +22,7 @@ function CatForm() {
           placeholder="Cat Name"
           value={catName}
           onChange={(e) => setCatName(e.target.value)}
+          className="cat-form-input"
         />
       </Form.Item>
       <Form.Item>
@@ -29,6 +30,7 @@ function CatForm() {
           value={catColor}
           onChange={(color) => setCatColor(color.toHexString())}
           format="hex"
+          className="cat-form-color-picker"
         />
       </Form.Item>
       <Form.Item>

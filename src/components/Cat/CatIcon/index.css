@@ -33,6 +33,6 @@
   top: 5px;
   left: 10px;
   width: 50px;
-  transition: transform 0.1s linear;
+  filter: drop-shadow(1px 1px 0 #f5e5ff) drop-shadow(2px 2px 0 #323582);
   z-index: 1;
 }

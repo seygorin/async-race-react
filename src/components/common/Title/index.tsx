@@ -5,7 +5,13 @@ interface TitleProps {
 }
 
 function Title({ text }: TitleProps) {
-  return <h1 className="title">{text}</h1>;
+  return (
+    <div className="title-container">
+      <h1 className="title" data-text={text}>
+        {text}
+      </h1>
+    </div>
+  );
 }
 
 export default Title;

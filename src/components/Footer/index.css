@@ -1,4 +1,56 @@
 .footer {
-  background: #323582;
-  color: #c0c3f8;
+  background: #f5e5ff;
+  padding: 20px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 40px;
+  color: #fa94ac;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background-color: #323582;
+  border-radius: 10px;
+  box-shadow:
+    2px 2px #f5e5ff,
+    4px 4px #638e9e;
+}
+
+.link-text {
+  font-size: 1.2rem;
+  text-shadow: 1px 1px #638e9e;
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.github-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.github-link:hover::before {
+  transform: translateY(0);
+}
+
+.github-link:hover .link-text {
+  color: #323582;
 }

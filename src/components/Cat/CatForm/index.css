@@ -1,3 +1,19 @@
-.cat-form {
+.cat-form .ant-input,
+.cat-form .ant-color-picker-trigger {
   margin-bottom: 1rem;
+  font-family: inherit;
+  box-shadow:
+    2px 2px #f5e5ff,
+    4px 4px #638e9e;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.cat-form .ant-input:focus {
+  box-shadow: none;
+  box-shadow:
+    1px 1px #f5e5ff,
+    2px 2px #638e9e;
+  transform: translate(1px, 1px);
 }

@@ -19,7 +19,7 @@ function CustomMenu() {
                 : "custom-menu-item"
             }
           >
-            {item.label}
+            <span className="menu-item-text">{item.label}</span>
           </NavLink>
         ))}
       </nav>

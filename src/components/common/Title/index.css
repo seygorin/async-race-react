@@ -1,31 +1,76 @@
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .title {
   font-size: 3rem;
   color: #fa94ac;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  text-align: center;
+  margin-bottom: 2rem;
   text-shadow:
     2px 2px #f5e5ff,
     4px 4px #638e9e;
-  animation: wave 30s ease-in-out infinite;
+  animation: float 12s ease-in-out infinite alternate;
   transition:
-    color 5 ease-in-out,
-    transform 5 ease-in-out;
+    transform 0.5s ease-in-out,
+    color 0.5s ease-in-out;
 }
 
-@keyframes wave {
+@keyframes float {
   0% {
-    transform: translateX(-40%) translateY(0) rotate(0);
+    transform: translateY(5px) rotate(-5deg);
   }
-  50% {
-    transform: translateX(40%) translateY(-10px) rotate(10deg);
+
+  100% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+}
+
+.title::before,
+.title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.7;
+  filter: blur(0.04em);
+}
+
+.title::before {
+  animation: glitch 4s infinite;
+  color: #c0c3f8;
+  z-index: -1;
+}
+
+.title::after {
+  animation: glitch 6s infinite;
+  color: #323582;
+  z-index: -2;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-5px, 5px);
+  }
+  40% {
+    transform: translate(-5px, -5px);
+  }
+  60% {
+    transform: translate(5px, 5px);
+  }
+  80% {
+    transform: translate(5px, -5px);
   }
   100% {
-    transform: translateX(-40%) translateY(0) rotate(0);
+    transform: translate(0);
   }
 }
 
 .title:hover {
-	cursor: pointer;	
+  cursor: pointer;
   color: #323582;
 }

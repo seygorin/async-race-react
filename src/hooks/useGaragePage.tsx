@@ -26,7 +26,7 @@ interface UseGaragePageResult {
     cats: CatType[];
     handleAddCat: (cat: Omit<CatType, "id">) => void;
     handleUpdateCat: (id: string, updatedCat: Omit<CatType, "id">) => void;
-    handleDeleteCat: (id: string) => void;
+    handleDeleteCat: (id: number) => void;
     handlePageChange: (page: number) => void;
     isRacing: { [key: string]: boolean };
     positions: { [key: string]: number };

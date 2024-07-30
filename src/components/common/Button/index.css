@@ -2,21 +2,43 @@
   background-color: #fa94ac;
   border: none;
   color: #fff;
-
   border-radius: 5px;
   transition:
     background-color 0.3s ease,
-    color 0.3s ease;
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+  box-shadow:
+    2px 2px 0 #f5e5ff,
+    4px 4px 0 #638e9e;
+  padding: 10px 10px;
+  font-size: 1rem;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
 }
 
 .custom-button:hover {
   background-color: #f5e5ff;
   color: #638e9e;
+  box-shadow:
+    1px 1px 0 #f5e5ff,
+    2px 2px 0 #638e9e;
+  transform: translate(2px, 2px);
 }
 
-.custom-button:disabled,
-.custom-button[disabled] {
+.custom-button:active {
+  box-shadow: none;
+  transform: translate(4px, 4px);
+}
+
+.custom-button:disabled {
   background-color: #638e9e;
   color: #fff;
   cursor: not-allowed;
+  box-shadow:
+    2px 2px 0 rgba(245, 229, 255, 0.5),
+    4px 4px 0 rgba(99, 142, 158, 0.5);
+  transform: translate(0, 0);
 }

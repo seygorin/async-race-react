@@ -5,3 +5,20 @@
   align-items: center;
   height: 100%;
 }
+
+.cat-name,
+.cat-progress {
+  display: inline-block;
+  text-shadow:
+    1px 1px #323582;
+  transition: all 0.3s ease;
+}
+
+.cat-name {
+  font-weight: bold;
+}
+
+.cat-name:hover,
+.cat-progress:hover {
+  transform: translateY(-1px);
+}

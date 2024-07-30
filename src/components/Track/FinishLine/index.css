@@ -1,16 +1,16 @@
 .finish-line {
   position: absolute;
   z-index: 1;
-  right: 30px;
+  right: 40px;
   top: 0;
   bottom: 0;
-  width: 25px;
+
 }
 
 .finish-line-inner {
   position: relative;
   width: 4px;
-  height: 96%;
+  height: 96.5%;
   background-color: #fa94ac;
   display: flex;
   align-items: center;
@@ -21,7 +21,7 @@
   transform: translateX(-50%) rotate(90deg);
   white-space: nowrap;
   color: #fa94ac;
-  right: -45px;
+  right: -30px;
   font-size: 22px;
   font-weight: bold;
   text-shadow:

@@ -6,7 +6,16 @@ const { Footer } = Layout;
 function CustomFooter() {
   return (
     <Footer className="footer">
-      <p>GitHub: seygorin</p>
+      <div className="footer-content">
+        <a
+          href="https://github.com/seygorin"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="github-link"
+        >
+          <span className="link-text">GitHub: seygorin</span>
+        </a>
+      </div>
     </Footer>
   );
 }
