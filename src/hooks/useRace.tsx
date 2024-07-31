@@ -13,7 +13,7 @@ const useStartEngines = (handleStartEngine) => {
       const startEnginePromises = cats.map((cat) =>
         handleStartEngine(cat.id).then((result) => {
           newStartTimes[cat.id] = performance.now();
-          newIsRacingState[cat.id] = true;
+          newIsRacingState[cat.id] = !result.error;
           return result;
         }),
       );

@@ -6,10 +6,6 @@ export interface EngineState {
   error: string | null;
   velocities: Record<number, number>;
   distances: Record<number, number>;
-  drivingStatus: Record<
-    number,
-    "idle" | "driving" | "stopped" | "broken" | "finished"
-  >;
 }
 
 const initialState: EngineState = {
@@ -17,7 +13,6 @@ const initialState: EngineState = {
   error: null,
   velocities: {},
   distances: {},
-  drivingStatus: {},
 };
 
 const setLoading = (state: EngineState): EngineState => ({
@@ -50,10 +45,6 @@ const handleStartEngineFulfilled = (
     ...state.distances,
     [action.payload.id]: action.payload.distance,
   },
-  drivingStatus: {
-    ...state.drivingStatus,
-    [action.payload.id]: action.payload.error ? "stopped" : "driving",
-  },
 });
 
 const handleStartEngineRejected = (
@@ -69,10 +60,6 @@ const handleStopEngineFulfilled = (
   ...state,
   status: "succeeded",
   velocities: { ...state.velocities, [action.payload.id]: 0 },
-  drivingStatus: {
-    ...state.drivingStatus,
-    [action.payload.id]: "stopped",
-  },
 });
 
 const handleStopEngineRejected = (
@@ -81,28 +68,9 @@ const handleStopEngineRejected = (
 ): EngineState =>
   setFailed(state, action.error.message || "Failed to stop engine");
 
-const handleDriveEngineFulfilled = (
-  state: EngineState,
-  action: PayloadAction<{
-    id: number;
-    success: boolean;
-    broken?: boolean;
-    error?: boolean;
-    stopped?: boolean;
-  }>,
-): EngineState => ({
+const handleDriveEngineFulfilled = (state: EngineState): EngineState => ({
   ...state,
   status: "succeeded",
-  drivingStatus: {
-    ...state.drivingStatus,
-    [action.payload.id]: action.payload.stopped
-      ? "stopped"
-      : action.payload.broken || action.payload.error
-        ? "broken"
-        : action.payload.success
-          ? "finished"
-          : "driving",
-  },
 });
 
 const handleDriveEngineRejected = (
