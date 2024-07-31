@@ -33,9 +33,24 @@ const useCatList = () => {
 
   const handleDeleteCat = useCallback(
     (id) => {
-      dispatch(deleteCat(id));
+      dispatch(deleteCat(id)).then(() => {
+        const newTotalCount = totalCount - 1;
+        const totalPages = Math.ceil(newTotalCount / CARS_PER_PAGE);
+
+        if (cats.length === 1 && currentPage > 1) {
+          dispatch(setCurrentPage(currentPage - 1));
+          dispatch(
+            fetchCats({ _page: currentPage - 1, _limit: CARS_PER_PAGE }),
+          );
+        } else if (currentPage > totalPages) {
+          dispatch(setCurrentPage(totalPages));
+          dispatch(fetchCats({ _page: totalPages, _limit: CARS_PER_PAGE }));
+        } else {
+          dispatch(fetchCats({ _page: currentPage, _limit: CARS_PER_PAGE }));
+        }
+      });
     },
-    [dispatch],
+    [dispatch, cats.length, currentPage, totalCount],
   );
 
   return {
