@@ -1,11 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { startEngine, stopEngine } from "../api/engineApi";
+import { startEngine, stopEngine, driveEngine } from "../api/engineApi";
 
 export interface EngineState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   velocities: Record<number, number>;
   distances: Record<number, number>;
+  drivingStatus: Record<
+    number,
+    "idle" | "driving" | "stopped" | "broken" | "finished"
+  >;
 }
 
 const initialState: EngineState = {
@@ -13,6 +17,7 @@ const initialState: EngineState = {
   error: null,
   velocities: {},
   distances: {},
+  drivingStatus: {},
 };
 
 const setLoading = (state: EngineState): EngineState => ({
@@ -28,7 +33,12 @@ const setFailed = (state: EngineState, error: string): EngineState => ({
 
 const handleStartEngineFulfilled = (
   state: EngineState,
-  action: PayloadAction<{ id: number; velocity: number; distance: number }>,
+  action: PayloadAction<{
+    id: number;
+    velocity: number;
+    distance: number;
+    error?: boolean;
+  }>,
 ): EngineState => ({
   ...state,
   status: "succeeded",
@@ -40,6 +50,10 @@ const handleStartEngineFulfilled = (
     ...state.distances,
     [action.payload.id]: action.payload.distance,
   },
+  drivingStatus: {
+    ...state.drivingStatus,
+    [action.payload.id]: action.payload.error ? "stopped" : "driving",
+  },
 });
 
 const handleStartEngineRejected = (
@@ -50,11 +64,15 @@ const handleStartEngineRejected = (
 
 const handleStopEngineFulfilled = (
   state: EngineState,
-  action: PayloadAction<{ id: number }>,
+  action: PayloadAction<{ id: number; error?: boolean }>,
 ): EngineState => ({
   ...state,
   status: "succeeded",
   velocities: { ...state.velocities, [action.payload.id]: 0 },
+  drivingStatus: {
+    ...state.drivingStatus,
+    [action.payload.id]: "stopped",
+  },
 });
 
 const handleStopEngineRejected = (
@@ -62,6 +80,36 @@ const handleStopEngineRejected = (
   action: PayloadAction<unknown, string, unknown, { message?: string }>,
 ): EngineState =>
   setFailed(state, action.error.message || "Failed to stop engine");
+
+const handleDriveEngineFulfilled = (
+  state: EngineState,
+  action: PayloadAction<{
+    id: number;
+    success: boolean;
+    broken?: boolean;
+    error?: boolean;
+    stopped?: boolean;
+  }>,
+): EngineState => ({
+  ...state,
+  status: "succeeded",
+  drivingStatus: {
+    ...state.drivingStatus,
+    [action.payload.id]: action.payload.stopped
+      ? "stopped"
+      : action.payload.broken || action.payload.error
+        ? "broken"
+        : action.payload.success
+          ? "finished"
+          : "driving",
+  },
+});
+
+const handleDriveEngineRejected = (
+  state: EngineState,
+  action: PayloadAction<unknown, string, unknown, { message?: string }>,
+): EngineState =>
+  setFailed(state, action.error.message || "Failed to drive engine");
 
 const engineSlice = createSlice({
   name: "engine",
@@ -72,6 +120,9 @@ const engineSlice = createSlice({
       .addCase(startEngine.pending, setLoading)
       .addCase(startEngine.fulfilled, handleStartEngineFulfilled)
       .addCase(startEngine.rejected, handleStartEngineRejected)
+      .addCase(driveEngine.pending, setLoading)
+      .addCase(driveEngine.fulfilled, handleDriveEngineFulfilled)
+      .addCase(driveEngine.rejected, handleDriveEngineRejected)
       .addCase(stopEngine.pending, setLoading)
       .addCase(stopEngine.fulfilled, handleStopEngineFulfilled)
       .addCase(stopEngine.rejected, handleStopEngineRejected);

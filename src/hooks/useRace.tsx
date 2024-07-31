@@ -11,14 +11,15 @@ const useStartEngines = (handleStartEngine) => {
       const newIsRacingState = {};
 
       const startEnginePromises = cats.map((cat) =>
-        handleStartEngine(cat.id).then(() => {
+        handleStartEngine(cat.id).then((result) => {
           newStartTimes[cat.id] = performance.now();
           newIsRacingState[cat.id] = true;
+          return result;
         }),
       );
 
-      await Promise.all(startEnginePromises);
-      return { newStartTimes, newIsRacingState };
+      const results = await Promise.all(startEnginePromises);
+      return { newStartTimes, newIsRacingState, results };
     },
     [handleStartEngine],
   );
@@ -49,9 +50,16 @@ const useRace = (cats) => {
 
   const handleStartRace = useCallback(async () => {
     resetRace();
-    const { newStartTimes, newIsRacingState } = await startEngines(cats);
+    const { newStartTimes, newIsRacingState, results } =
+      await startEngines(cats);
     dispatch(setStartTime(newStartTimes));
     dispatch(setIsRacing(newIsRacingState));
+
+    results.forEach((result) => {
+      if (result.broken) {
+        console.log(`Car ${result.id} broke down!`);
+      }
+    });
   }, [cats, dispatch, resetRace, startEngines]);
 
   const handleStopRace = useCallback(() => {

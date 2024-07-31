@@ -21,6 +21,17 @@ const mockData = {
     ],
   },
   stopEngine: { velocity: 0, distance: 0 },
+  driveEngine: {
+    cats: [
+      { id: 0, distance: 0, success: false },
+      { id: 1, distance: 0, success: false },
+      { id: 2, distance: 0, success: false },
+      { id: 3, distance: 0, success: false },
+      { id: 4, distance: 0, success: false },
+      { id: 5, distance: 0, success: false },
+      { id: 6, distance: 0, success: false },
+    ],
+  },
 };
 
 export default mockData;

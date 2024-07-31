@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { startEngine, stopEngine } from "../store/api/engineApi";
+import { startEngine, stopEngine, driveEngine } from "../store/api/engineApi";
 import {
   setIsRacing,
   setPositions,
@@ -12,25 +12,49 @@ const useRaceActions = () => {
   const dispatch = useDispatch();
 
   const handleEngineAction = useCallback(
-    (action, id) => {
-      return dispatch(action(id))
-        .unwrap()
-        .catch((err) => console.error(`Failed to ${action.name} engine:`, err));
+    async (action, id) => {
+      try {
+        const result = await dispatch(action(id)).unwrap();
+        if (result.error || result.broken) {
+          console.error(`Error in ${action.name} for car ${id}`);
+          dispatch(setIsRacing({ [id]: false }));
+          if (action !== stopEngine) {
+            await dispatch(stopEngine(id));
+          }
+          return { ...result, stopped: true };
+        }
+        return result;
+      } catch (err) {
+        console.error(`Failed to ${action.name} engine:`, err);
+        dispatch(setIsRacing({ [id]: false }));
+        if (action !== stopEngine) {
+          await dispatch(stopEngine(id));
+        }
+        return { error: true, stopped: true };
+      }
     },
     [dispatch],
   );
 
   const handleStartEngine = useCallback(
     async (id) => {
-      await handleEngineAction(startEngine, id);
-      dispatch(setIsRacing({ [id]: true }));
+      const startResult = await handleEngineAction(startEngine, id);
+      if (!startResult.error && !startResult.broken) {
+        dispatch(setIsRacing({ [id]: true }));
+        return handleEngineAction(driveEngine, id);
+      }
+      return startResult;
     },
     [handleEngineAction, dispatch],
   );
 
   const handleStopEngine = useCallback(
-    (id) => handleEngineAction(stopEngine, id),
-    [handleEngineAction],
+    async (id) => {
+      const result = await handleEngineAction(stopEngine, id);
+      dispatch(setIsRacing({ [id]: false }));
+      return result;
+    },
+    [handleEngineAction, dispatch],
   );
 
   const resetRace = useCallback(() => {
