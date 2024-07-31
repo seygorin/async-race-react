@@ -48,12 +48,18 @@ const winnersSlice = createSlice({
         });
       }
     },
+    removeWinner: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        winners: state.winners.filter((winner) => winner.id !== action.payload),
+      };
+    },
     setPage: (state, action: PayloadAction<number>) => {
       return { ...state, currentPage: action.payload };
     },
   },
 });
 
-export const { addWinner, setPage } = winnersSlice.actions;
+export const { addWinner, removeWinner, setPage } = winnersSlice.actions;
 
 export default winnersSlice.reducer;

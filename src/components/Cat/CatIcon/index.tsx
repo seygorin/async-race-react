@@ -2,6 +2,7 @@ import { RefObject } from "react";
 import CatSitting from "@assets/CatSitting";
 import CatStanding from "@assets/CatStanding";
 import CatRunning from "@assets/CatRunning";
+import CatCrashing from "@assets/CatCrashing";
 import { Cat as CatType } from "@store/slices/garageSlice";
 import "./index.css";
 

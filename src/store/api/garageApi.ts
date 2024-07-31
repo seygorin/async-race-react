@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { removeWinner } from "@store/slices/winnersSlice";
 import handleApiError from "./apiErrorUtils";
 import mockData from "../../mocks";
 
@@ -52,11 +53,15 @@ export const updateCat = createAsyncThunk(
   },
 );
 
-export const deleteCat = createAsyncThunk("garage/deleteCat", async (id) => {
-  try {
-    await axios.delete(`${API_URL}/${id}`);
-    return id;
-  } catch (error) {
-    return handleApiError(error, id);
-  }
-});
+export const deleteCat = createAsyncThunk(
+  "garage/deleteCat",
+  async (id: number, { dispatch }) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      dispatch(removeWinner(id));
+      return id;
+    } catch (error) {
+      return handleApiError(error, id);
+    }
+  },
+);
