@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import useGaragePage from "@hooks/useGaragePage";
 import CatTrackContainer from "@containers/CatTrackContainer";
@@ -11,31 +11,35 @@ interface CatListContainerProps {
   children: React.ReactNode;
 }
 
+const HEIGHT_FOR_CAT_TRACK = 70;
+
 function CatListContainer({ trackWidth, children }: CatListContainerProps) {
   const { garageContentProps } = useGaragePage();
   const { cats, positions } = garageContentProps;
   const distances = useSelector((state: RootState) => state.engine.distances);
   const velocities = useSelector((state: RootState) => state.engine.velocities);
 
-  const totalDistance = useMemo(() => {
-    const distanceValues = Object.values(distances);
-    return Math.max(...distanceValues);
-  }, [distances]);
+  const totalDistance = Math.max(...Object.values(distances));
 
   return (
     <div>
       {Array.isArray(cats) && cats.length > 0 ? (
-        <div>
+        <div className="cat-list-container">
           {children}
-          {cats.map((cat: CatType) => (
-            <CatTrackContainer
+          {cats.map((cat: CatType, index: number) => (
+            <div
               key={cat.id}
-              cat={cat}
-              trackWidth={trackWidth}
-              position={positions[cat.id] || 0}
-              totalDistance={totalDistance}
-              velocity={velocities[cat.id] || 0}
-            />
+              className="cat-track-wrapper"
+              style={{ top: `${index * HEIGHT_FOR_CAT_TRACK}px` }}
+            >
+              <CatTrackContainer
+                cat={cat}
+                trackWidth={trackWidth}
+                position={positions[cat.id] || 0}
+                totalDistance={totalDistance}
+                velocity={velocities[cat.id] || 0}
+              />
+            </div>
           ))}
         </div>
       ) : (
