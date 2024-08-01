@@ -34,28 +34,26 @@ function CatNameInput({
 }
 
 interface CatFormProps {
-  catFormProps: {
-    catName: string;
-    catColor: string;
-    setCatName: (name: string) => void;
-    setCatColor: (color: string) => void;
-    handleAddOrUpdateCat: () => void;
-    editingCat: CatType | null;
-  };
+  catName: string;
+  catColor: string;
+  setCatName: (name: string) => void;
+  setCatColor: (color: string) => void;
+  editingCat: CatType | null;
   isNameValid: boolean;
   setIsNameValid: (isValid: boolean) => void;
   handleFormSubmit: () => void;
 }
 
 function CatForm({
-  catFormProps,
+  catName,
+  catColor,
+  setCatName,
+  setCatColor,
+  editingCat,
   isNameValid,
   setIsNameValid,
   handleFormSubmit,
 }: CatFormProps) {
-  const { catName, catColor, setCatName, setCatColor, editingCat } =
-    catFormProps;
-
   return (
     <Form layout="inline" className="cat-form">
       <Form.Item>

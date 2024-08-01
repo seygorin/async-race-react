@@ -16,7 +16,12 @@ function CatFormContainer() {
 
   return (
     <CatForm
-      catFormProps={catFormProps}
+      catName={catFormProps.catName}
+      catColor={catFormProps.catColor}
+      setCatName={catFormProps.setCatName}
+      setCatColor={catFormProps.setCatColor}
+      handleAddOrUpdateCat={catFormProps.handleAddOrUpdateCat}
+      editingCat={catFormProps.editingCat}
       isNameValid={isNameValid}
       setIsNameValid={setIsNameValid}
       handleFormSubmit={handleFormSubmit}

@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@store/store";
+import { useNavigate } from "react-router-dom";
 import GaragePagination from "@components/Garage/GaragePagination";
 import CustomButton from "@components/common/Button";
 import TrackContainer from "@containers/TrackContainer";
@@ -10,6 +11,7 @@ import "./index.css";
 
 function GarageContentContainer() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { totalCount, currentPage } = useSelector(
     (state: RootState) => state.garage,
   );
@@ -17,6 +19,15 @@ function GarageContentContainer() {
   const { garageContentProps, isModalVisible, handleCloseModal } =
     useGaragePage();
   const { onPageChange } = garageContentProps;
+
+  const handlePageChange = (page: number) => {
+    onPageChange(page);
+    if (page === 1) {
+      navigate("/garage");
+    } else {
+      navigate(`/garage/${page}`);
+    }
+  };
 
   const toggleModal = () => {
     if (isModalVisible) {
@@ -32,7 +43,7 @@ function GarageContentContainer() {
       <GaragePagination
         currentPage={currentPage}
         totalCount={totalCount}
-        onPageChange={onPageChange}
+        onPageChange={handlePageChange}
       />
       <CustomButton onClick={toggleModal}>
         {isModalVisible ? "Close Winner" : "Show Winner"}

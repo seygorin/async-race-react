@@ -1,4 +1,3 @@
-import React from "react";
 import { Space } from "antd";
 import CustomButton from "@components/common/Button";
 import useGaragePage from "@hooks/useGaragePage";

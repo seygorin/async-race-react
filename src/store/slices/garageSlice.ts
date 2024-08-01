@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { catsApi } from "../api/catsApi";
+import { apiBuilder } from "../api/apiBuilder";
 
 export interface Cat {
   id: number;
@@ -56,11 +56,11 @@ const garageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(catsApi.endpoints.getCats.matchPending, (state) => {
+      .addMatcher(apiBuilder.endpoints.getCats.matchPending, (state) => {
         return state;
       })
       .addMatcher(
-        catsApi.endpoints.getCats.matchFulfilled,
+        apiBuilder.endpoints.getCats.matchFulfilled,
         (state, action: PayloadAction<{ data: Cat[]; totalCount: number }>) => {
           return {
             ...state,
@@ -69,11 +69,11 @@ const garageSlice = createSlice({
           };
         },
       )
-      .addMatcher(catsApi.endpoints.getCats.matchRejected, (state, action) => {
+      .addMatcher(apiBuilder.endpoints.getCats.matchRejected, (state, action) => {
         return { ...state, error: action.error.message || null };
       })
       .addMatcher(
-        catsApi.endpoints.addCat.matchFulfilled,
+        apiBuilder.endpoints.addCat.matchFulfilled,
         (state, action: PayloadAction<Cat>) => {
           return {
             ...state,
@@ -83,7 +83,7 @@ const garageSlice = createSlice({
         },
       )
       .addMatcher(
-        catsApi.endpoints.updateCat.matchFulfilled,
+        apiBuilder.endpoints.updateCat.matchFulfilled,
         (state, action: PayloadAction<Cat>) => {
           const newCats = state.cats.map((cat) =>
             cat.id === action.payload.id ? action.payload : cat,
@@ -92,7 +92,7 @@ const garageSlice = createSlice({
         },
       )
       .addMatcher(
-        catsApi.endpoints.deleteCat.matchFulfilled,
+        apiBuilder.endpoints.deleteCat.matchFulfilled,
         (state, action: PayloadAction<number>) => {
           return {
             ...state,

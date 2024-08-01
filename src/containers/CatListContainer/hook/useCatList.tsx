@@ -7,7 +7,7 @@ import {
   useAddCatMutation,
   useUpdateCatMutation,
   useDeleteCatMutation,
-} from "@store/api/catsApi";
+} from "@store/api/apiBuilder";
 
 const CATS_PER_PAGE = 7;
 const CHUNK_OF_CATS = 100;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { engineApi } from "../api/engineApi";
+import { apiBuilder } from "../api/apiBuilder";
 
 export interface EngineState {
   statuses: Record<number, "idle" | "loading" | "succeeded" | "failed">;
@@ -25,7 +25,7 @@ const engineSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        engineApi.endpoints.startEngine.matchPending,
+        apiBuilder.endpoints.startEngine.matchPending,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
           return {
@@ -35,7 +35,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.startEngine.matchFulfilled,
+        apiBuilder.endpoints.startEngine.matchFulfilled,
         (state, action) => {
           const { id, velocity, distance } = action.payload;
           return {
@@ -50,7 +50,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.startEngine.matchRejected,
+        apiBuilder.endpoints.startEngine.matchRejected,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
           return {
@@ -61,7 +61,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.stopEngine.matchPending,
+        apiBuilder.endpoints.stopEngine.matchPending,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
           return {
@@ -71,7 +71,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.stopEngine.matchFulfilled,
+        apiBuilder.endpoints.stopEngine.matchFulfilled,
         (state, action) => {
           const { id } = action.payload;
           return {
@@ -85,7 +85,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.stopEngine.matchRejected,
+        apiBuilder.endpoints.stopEngine.matchRejected,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
           return {
@@ -96,7 +96,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.driveEngine.matchPending,
+        apiBuilder.endpoints.driveEngine.matchPending,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
           return {
@@ -106,7 +106,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.driveEngine.matchFulfilled,
+        apiBuilder.endpoints.driveEngine.matchFulfilled,
         (state, action) => {
           const { id } = action.payload;
           return {
@@ -116,7 +116,7 @@ const engineSlice = createSlice({
         },
       )
       .addMatcher(
-        engineApi.endpoints.driveEngine.matchRejected,
+        apiBuilder.endpoints.driveEngine.matchRejected,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
           return {
