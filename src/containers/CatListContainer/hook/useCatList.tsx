@@ -1,62 +1,72 @@
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCats, addCat, updateCat, deleteCat } from "@store/api/garageApi";
 import { setCurrentPage } from "@store/slices/garageSlice";
 import { generateRandomCats } from "@utils/catGenerator";
+import {
+  useGetCatsQuery,
+  useAddCatMutation,
+  useUpdateCatMutation,
+  useDeleteCatMutation,
+} from "@store/api/catsApi";
 
-const CARS_PER_PAGE = 7;
-const CHUCNK_OF_CATS = 100;
+const CATS_PER_PAGE = 7;
+const CHUNK_OF_CATS = 100;
 
 const useCatList = () => {
   const dispatch = useDispatch();
-  const { cats, totalCount, currentPage } = useSelector(
-    (state) => state.garage,
-  );
+  const { currentPage } = useSelector((state) => state.garage);
 
-  useEffect(() => {
-    dispatch(fetchCats({ _page: currentPage, _limit: CARS_PER_PAGE }));
-  }, [dispatch, currentPage]);
+  const {
+    data: responseData,
+    error,
+    isLoading,
+  } = useGetCatsQuery({
+    page: currentPage,
+    limit: CATS_PER_PAGE,
+  });
+
+  const cats = responseData?.data || [];
+  const totalCount = responseData?.totalCount || 0;
+
+  const [addCatMutation] = useAddCatMutation();
+  const [updateCatMutation] = useUpdateCatMutation();
+  const [deleteCatMutation] = useDeleteCatMutation();
 
   const handleAddCat = useCallback(
-    (newCat) => {
-      dispatch(addCat(newCat));
+    async (newCat) => {
+      await addCatMutation(newCat);
     },
-    [dispatch],
+    [addCatMutation],
   );
 
   const handleUpdateCat = useCallback(
-    (id, updatedCat) => {
-      dispatch(updateCat({ id, updatedCat }));
+    async (id, updatedCat) => {
+      await updateCatMutation({ id, ...updatedCat });
     },
-    [dispatch],
+    [updateCatMutation],
   );
 
   const handleDeleteCat = useCallback(
-    (id) => {
-      dispatch(deleteCat(id)).then(() => {
-        const newTotalCount = totalCount - 1;
-        const totalPages = Math.ceil(newTotalCount / CARS_PER_PAGE);
+    async (id) => {
+      await deleteCatMutation(id);
+      const newTotalCount = totalCount - 1;
+      const totalPages = Math.ceil(newTotalCount / CATS_PER_PAGE);
 
-        if (cats.length === 1 && currentPage > 1) {
-          dispatch(setCurrentPage(currentPage - 1));
-          dispatch(
-            fetchCats({ _page: currentPage - 1, _limit: CARS_PER_PAGE }),
-          );
-        } else if (currentPage > totalPages) {
-          dispatch(setCurrentPage(totalPages));
-          dispatch(fetchCats({ _page: totalPages, _limit: CARS_PER_PAGE }));
-        } else {
-          dispatch(fetchCats({ _page: currentPage, _limit: CARS_PER_PAGE }));
-        }
-      });
+      if (cats.length === 1 && currentPage > 1) {
+        dispatch(setCurrentPage(currentPage - 1));
+      } else if (currentPage > totalPages) {
+        dispatch(setCurrentPage(totalPages));
+      }
     },
-    [dispatch, cats.length, currentPage, totalCount],
+    [deleteCatMutation, dispatch, currentPage, totalCount, cats],
   );
 
   return {
     cats,
     totalCount,
     currentPage,
+    isLoading,
+    error,
     handleAddCat,
     handleUpdateCat,
     handleDeleteCat,
@@ -69,7 +79,6 @@ const usePageChange = () => {
   const handlePageChange = useCallback(
     (page) => {
       dispatch(setCurrentPage(page));
-      dispatch(fetchCats({ _page: page, _limit: CARS_PER_PAGE }));
     },
     [dispatch],
   );
@@ -78,14 +87,13 @@ const usePageChange = () => {
 };
 
 const useGenerateRandomCats = () => {
-  const dispatch = useDispatch();
+  const [addCatMutation] = useAddCatMutation();
 
-  const handleGenerateRandomCats = useCallback(() => {
-    const randomCats = generateRandomCats(CHUCNK_OF_CATS);
-    randomCats.forEach((cat) => {
-      dispatch(addCat(cat));
-    });
-  }, [dispatch]);
+  const handleGenerateRandomCats = useCallback(async () => {
+    const randomCats = generateRandomCats(CHUNK_OF_CATS);
+
+    await Promise.all(randomCats.map((cat) => addCatMutation(cat)));
+  }, [addCatMutation]);
 
   return { handleGenerateRandomCats };
 };

@@ -1,6 +1,10 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { startEngine, stopEngine, driveEngine } from "../store/api/engineApi";
+import {
+  useStartEngineMutation,
+  useStopEngineMutation,
+  useDriveEngineMutation,
+} from "../store/api/engineApi";
 import {
   setIsRacing,
   setPositions,
@@ -10,49 +14,54 @@ import {
 
 const useRaceActions = () => {
   const dispatch = useDispatch();
+  const [startEngineMutation] = useStartEngineMutation();
+  const [stopEngineMutation] = useStopEngineMutation();
+  const [driveEngineMutation] = useDriveEngineMutation();
 
   const handleEngineAction = useCallback(
     async (action, id) => {
       try {
-        const result = await dispatch(action(id)).unwrap();
+        const result = await action(id).unwrap();
         if (result.error || result.broken) {
           dispatch(setIsRacing({ [id]: false }));
-          if (action !== stopEngine) {
-            await dispatch(stopEngine(id));
+          if (action !== stopEngineMutation) {
+            await stopEngineMutation(id).unwrap();
           }
           return { ...result, stopped: true };
         }
         return result;
       } catch (err) {
+        console.error(`Error in engine action for id ${id}:`, err);
         dispatch(setIsRacing({ [id]: false }));
-        if (action !== stopEngine) {
-          await dispatch(stopEngine(id));
+        if (action !== stopEngineMutation) {
+          try {
+            await stopEngineMutation(id).unwrap();
+          } catch (stopErr) {
+            console.error(`Error stopping engine for id ${id}:`, stopErr);
+          }
         }
-        return { error: true, stopped: true };
+        return { error: true, errorMessage: err.message, stopped: true, id };
       }
     },
-    [dispatch],
+    [dispatch, stopEngineMutation],
   );
 
   const handleStartEngine = useCallback(
     async (id) => {
-      const startResult = await handleEngineAction(startEngine, id);
-      if (!startResult.error && !startResult.broken) {
-        dispatch(setIsRacing({ [id]: true }));
-        return handleEngineAction(driveEngine, id);
-      }
-      return startResult;
+      const startResult = await handleEngineAction(startEngineMutation, id);
+      dispatch(setIsRacing({ [id]: true }));
+      return handleEngineAction(driveEngineMutation, id);
     },
-    [handleEngineAction, dispatch],
+    [handleEngineAction, dispatch, startEngineMutation, driveEngineMutation],
   );
 
   const handleStopEngine = useCallback(
     async (id) => {
-      const result = await handleEngineAction(stopEngine, id);
+      const result = await handleEngineAction(stopEngineMutation, id);
       dispatch(setIsRacing({ [id]: false }));
       return result;
     },
-    [handleEngineAction, dispatch],
+    [handleEngineAction, dispatch, stopEngineMutation],
   );
 
   const resetRace = useCallback(() => {

@@ -1,83 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { startEngine, stopEngine, driveEngine } from "../api/engineApi";
+import { engineApi } from "../api/engineApi";
 
 export interface EngineState {
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
+  statuses: Record<number, "idle" | "loading" | "succeeded" | "failed">;
   velocities: Record<number, number>;
   distances: Record<number, number>;
+  results: Record<
+    number,
+    { error?: boolean; errorMessage?: string; stopped?: boolean }
+  >;
 }
 
 const initialState: EngineState = {
-  status: "idle",
-  error: null,
+  statuses: {},
   velocities: {},
   distances: {},
+  results: {},
 };
-
-const setLoading = (state: EngineState): EngineState => ({
-  ...state,
-  status: "loading",
-});
-
-const setFailed = (state: EngineState, error: string): EngineState => ({
-  ...state,
-  status: "failed",
-  error,
-});
-
-const handleStartEngineFulfilled = (
-  state: EngineState,
-  action: PayloadAction<{
-    id: number;
-    velocity: number;
-    distance: number;
-    error?: boolean;
-  }>,
-): EngineState => ({
-  ...state,
-  status: "succeeded",
-  velocities: {
-    ...state.velocities,
-    [action.payload.id]: action.payload.velocity,
-  },
-  distances: {
-    ...state.distances,
-    [action.payload.id]: action.payload.distance,
-  },
-});
-
-const handleStartEngineRejected = (
-  state: EngineState,
-  action: PayloadAction<unknown, string, unknown, { message?: string }>,
-): EngineState =>
-  setFailed(state, action.error.message || "Failed to start engine");
-
-const handleStopEngineFulfilled = (
-  state: EngineState,
-  action: PayloadAction<{ id: number; error?: boolean }>,
-): EngineState => ({
-  ...state,
-  status: "succeeded",
-  velocities: { ...state.velocities, [action.payload.id]: 0 },
-});
-
-const handleStopEngineRejected = (
-  state: EngineState,
-  action: PayloadAction<unknown, string, unknown, { message?: string }>,
-): EngineState =>
-  setFailed(state, action.error.message || "Failed to stop engine");
-
-const handleDriveEngineFulfilled = (state: EngineState): EngineState => ({
-  ...state,
-  status: "succeeded",
-});
-
-const handleDriveEngineRejected = (
-  state: EngineState,
-  action: PayloadAction<unknown, string, unknown, { message?: string }>,
-): EngineState =>
-  setFailed(state, action.error.message || "Failed to drive engine");
 
 const engineSlice = createSlice({
   name: "engine",
@@ -85,15 +24,88 @@ const engineSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(startEngine.pending, setLoading)
-      .addCase(startEngine.fulfilled, handleStartEngineFulfilled)
-      .addCase(startEngine.rejected, handleStartEngineRejected)
-      .addCase(driveEngine.pending, setLoading)
-      .addCase(driveEngine.fulfilled, handleDriveEngineFulfilled)
-      .addCase(driveEngine.rejected, handleDriveEngineRejected)
-      .addCase(stopEngine.pending, setLoading)
-      .addCase(stopEngine.fulfilled, handleStopEngineFulfilled)
-      .addCase(stopEngine.rejected, handleStopEngineRejected);
+      .addMatcher(
+        engineApi.endpoints.startEngine.matchPending,
+        (state, action) => {
+          const id = Number(action.meta.arg.originalArgs);
+          state.statuses[id] = "loading";
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.startEngine.matchFulfilled,
+        (state, action) => {
+          const { id, velocity, distance } = action.payload;
+          state.velocities[id] = velocity;
+          state.distances[id] = distance;
+          state.results[id] = { error: false, stopped: false };
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.startEngine.matchRejected,
+        (state, action) => {
+          const id = Number(action.meta.arg.originalArgs);
+          const errorData = action.payload?.data || action.error;
+          state.statuses[id] = "failed";
+          state.results[id] = {
+            error: true,
+            stopped: true,
+          };
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.stopEngine.matchPending,
+        (state, action) => {
+          const id = Number(action.meta.arg.originalArgs);
+          state.statuses[id] = "loading";
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.stopEngine.matchFulfilled,
+        (state, action) => {
+          const { id } = action.payload;
+
+          state.velocities[id] = 0;
+          state.results[id] = { ...state.results[id], stopped: true };
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.stopEngine.matchRejected,
+        (state, action) => {
+          const id = Number(action.meta.arg.originalArgs);
+          const errorData = action.payload?.data || action.error;
+          state.statuses[id] = "failed";
+          state.results[id] = {
+            error: true,
+            stopped: true,
+          };
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.driveEngine.matchPending,
+        (state, action) => {
+          const id = Number(action.meta.arg.originalArgs);
+          state.statuses[id] = "loading";
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.driveEngine.matchFulfilled,
+        (state, action) => {
+          const { id } = action.payload;
+          state.statuses[id] = "succeeded";
+        },
+      )
+      .addMatcher(
+        engineApi.endpoints.driveEngine.matchRejected,
+        (state, action) => {
+          const id = Number(action.meta.arg.originalArgs);
+          const errorData = action.payload?.data || action.error;
+          state.statuses[id] = "failed";
+          state.results[id] = {
+            error: true,
+            stopped: true,
+          };
+        },
+      );
   },
 });
 

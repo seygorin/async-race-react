@@ -2,7 +2,7 @@ import { RefObject } from "react";
 import CatSitting from "@assets/CatSitting";
 import CatStanding from "@assets/CatStanding";
 import CatRunning from "@assets/CatRunning";
-import CatCrashing from "@assets/CatCrashing"; // добавить разбитого кота при ошибке
+import CatCrashing from "@assets/CatCrashing";
 import { Cat as CatType } from "@store/slices/garageSlice";
 import "./index.css";
 
@@ -12,6 +12,7 @@ interface CatIconProps {
   cat: CatType;
   catRef: RefObject<HTMLDivElement>;
   velocities: number;
+  result: { error?: boolean; errorMessage?: string; stopped?: boolean };
 }
 
 function CatIcon({
@@ -20,14 +21,17 @@ function CatIcon({
   cat,
   catRef,
   velocities,
+  result,
 }: CatIconProps) {
   let IconComponent = null;
 
-  if (position >= totalDistance) {
+  if (result?.error) {
+    IconComponent = <CatCrashing color={cat.color} />;
+  } else if (position >= totalDistance) {
     IconComponent = <CatSitting color={cat.color} />;
   } else if (velocities === 0) {
     IconComponent = <CatStanding color={cat.color} />;
-  } else if (velocities > 1) {
+  } else if (velocities > 0) {
     IconComponent = (
       <div className="cat-running">
         <CatRunning color={cat.color} />

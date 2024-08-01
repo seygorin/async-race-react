@@ -10,13 +10,23 @@ const useStartEngines = (handleStartEngine) => {
       const newStartTimes = {};
       const newIsRacingState = {};
 
-      const startEnginePromises = cats.map((cat) =>
-        handleStartEngine(cat.id).then((result) => {
+      const startEnginePromises = cats.map(async (cat) => {
+        try {
+          const result = await handleStartEngine(cat.id);
           newStartTimes[cat.id] = performance.now();
-          newIsRacingState[cat.id] = !result.error;
+          newIsRacingState[cat.id] = !result.error && !result.stopped;
           return result;
-        }),
-      );
+        } catch (err) {
+          console.error(`Error starting engine for cat ${cat.id}:`, err);
+          newIsRacingState[cat.id] = false;
+          return {
+            error: true,
+            errorMessage: "hello",
+            id: cat.id,
+            stopped: true,
+          };
+        }
+      });
 
       const results = await Promise.all(startEnginePromises);
       return { newStartTimes, newIsRacingState, results };
@@ -27,12 +37,19 @@ const useStartEngines = (handleStartEngine) => {
 
 const useStopEngines = (handleStopEngine) => {
   return useCallback(
-    (cats) => {
+    async (cats) => {
       const newIsRacingState = {};
-      cats.forEach((cat) => {
-        handleStopEngine(cat.id);
-        newIsRacingState[cat.id] = false;
+      const stopPromises = cats.map(async (cat) => {
+        try {
+          await handleStopEngine(cat.id);
+          newIsRacingState[cat.id] = false;
+        } catch (err) {
+          console.error(`Error stopping engine for cat ${cat.id}:`, err);
+          newIsRacingState[cat.id] = false;
+        }
       });
+
+      await Promise.all(stopPromises);
       return newIsRacingState;
     },
     [handleStopEngine],
@@ -54,12 +71,6 @@ const useRace = (cats) => {
       await startEngines(cats);
     dispatch(setStartTime(newStartTimes));
     dispatch(setIsRacing(newIsRacingState));
-
-    results.forEach((result) => {
-      if (result.broken) {
-        console.log(`Car ${result.id} broke down!`);
-      }
-    });
   }, [cats, dispatch, resetRace, startEngines]);
 
   const handleStopRace = useCallback(() => {
