@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
@@ -19,14 +19,17 @@ function GaragePagination({
   const navigate = useNavigate();
   const pageSize = 7;
 
-  const handlePageChange = (page: number) => {
-    onPageChange(page);
-    if (page === 1) {
-      navigate("/garage");
-    } else {
-      navigate(`/garage/${page}`);
-    }
-  };
+  const handlePageChange = useCallback(
+    (page: number) => {
+      onPageChange(page);
+      if (page === 1) {
+        navigate("/garage");
+      } else {
+        navigate(`/garage/${page}`);
+      }
+    },
+    [navigate, onPageChange],
+  );
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
@@ -36,7 +39,7 @@ function GaragePagination({
     } else if (currentPage > totalPages && totalPages > 0) {
       handlePageChange(totalPages);
     }
-  }, [currentPage, totalPages, catsOnCurrentPage]);
+  }, [currentPage, totalPages, catsOnCurrentPage, handlePageChange]);
 
   if (totalCount === 0) {
     return null;
@@ -54,4 +57,4 @@ function GaragePagination({
   );
 }
 
-export default GaragePagination;
+export default React.memo(GaragePagination);

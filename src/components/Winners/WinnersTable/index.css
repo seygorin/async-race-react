@@ -6,7 +6,7 @@
 }
 
 .winners-table.ant-table-wrapper .ant-table-tbody > tr > td:nth-child(2) > svg {
-	margin-top: 0.5rem;
+  margin-top: 0.5rem;
 }
 .winners-table.ant-table-wrapper .ant-table-thead > tr > th {
   background-color: #a8acf3;

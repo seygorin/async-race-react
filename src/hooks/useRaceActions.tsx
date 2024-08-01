@@ -48,7 +48,7 @@ const useRaceActions = () => {
 
   const handleStartEngine = useCallback(
     async (id) => {
-      const startResult = await handleEngineAction(startEngineMutation, id);
+      const startResult = await handleEngineAction(startEngineMutation, id); // тут какая-то загадочная ошибка
       dispatch(setIsRacing({ [id]: true }));
       return handleEngineAction(driveEngineMutation, id);
     },

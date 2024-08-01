@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { catsApi } from "../api/catsApi";
 
 export interface Cat {
@@ -10,7 +10,6 @@ export interface Cat {
 export interface GarageState {
   cats: Cat[];
   totalCount: number;
-  status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   currentPage: number;
   positions: Record<number, number>;
@@ -23,7 +22,6 @@ export interface GarageState {
 const initialState: GarageState = {
   cats: [],
   totalCount: 0,
-  status: "idle",
   error: null,
   currentPage: 1,
   positions: {},
@@ -38,66 +36,69 @@ const garageSlice = createSlice({
   initialState,
   reducers: {
     setCurrentPage: (state, action: PayloadAction<number>) => {
-      state.currentPage = action.payload;
+      return { ...state, currentPage: action.payload };
     },
     setPositions: (state, action: PayloadAction<Record<number, number>>) => {
-      state.positions = action.payload;
+      return { ...state, positions: action.payload };
     },
     setWinner: (state, action: PayloadAction<Cat | null>) => {
-      state.winner = action.payload;
+      return { ...state, winner: action.payload };
     },
     setIsRacing: (state, action: PayloadAction<Record<number, boolean>>) => {
-      state.isRacing = { ...state.isRacing, ...action.payload };
+      return { ...state, isRacing: { ...state.isRacing, ...action.payload } };
     },
     setStoppedCats: (state, action: PayloadAction<number[]>) => {
-      state.stoppedCats = action.payload;
+      return { ...state, stoppedCats: action.payload };
     },
     setStartTime: (state, action: PayloadAction<Record<number, number>>) => {
-      state.startTime = { ...state.startTime, ...action.payload };
+      return { ...state, startTime: { ...state.startTime, ...action.payload } };
     },
   },
   extraReducers: (builder) => {
     builder
       .addMatcher(catsApi.endpoints.getCats.matchPending, (state) => {
-        state.status = "loading";
+        return state;
       })
-			.addMatcher(
-				catsApi.endpoints.getCats.matchFulfilled,
-				(state, action: PayloadAction<{ data: Cat[]; totalCount: number }>) => {
-					state.status = "succeeded";
-					state.cats = action.payload.data;
-					state.totalCount = action.payload.totalCount;
-				},
+      .addMatcher(
+        catsApi.endpoints.getCats.matchFulfilled,
+        (state, action: PayloadAction<{ data: Cat[]; totalCount: number }>) => {
+          return {
+            ...state,
+            cats: action.payload.data,
+            totalCount: action.payload.totalCount,
+          };
+        },
       )
       .addMatcher(catsApi.endpoints.getCats.matchRejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || null;
+        return { ...state, error: action.error.message || null };
       })
       .addMatcher(
         catsApi.endpoints.addCat.matchFulfilled,
         (state, action: PayloadAction<Cat>) => {
-          state.cats = [...state.cats, action.payload];
-          state.totalCount += 1;
+          return {
+            ...state,
+            cats: [...state.cats, action.payload],
+            totalCount: state.totalCount + 1,
+          };
         },
       )
       .addMatcher(
         catsApi.endpoints.updateCat.matchFulfilled,
         (state, action: PayloadAction<Cat>) => {
-          const newCats = [...state.cats];
-          const index = newCats.findIndex(
-            (cat) => cat.id === action.payload.id,
+          const newCats = state.cats.map((cat) =>
+            cat.id === action.payload.id ? action.payload : cat,
           );
-          if (index !== -1) {
-            newCats[index] = action.payload;
-          }
-          state.cats = newCats;
+          return { ...state, cats: newCats };
         },
       )
       .addMatcher(
         catsApi.endpoints.deleteCat.matchFulfilled,
         (state, action: PayloadAction<number>) => {
-          state.cats = state.cats.filter((cat) => cat.id !== action.payload);
-          state.totalCount -= 1;
+          return {
+            ...state,
+            cats: state.cats.filter((cat) => cat.id !== action.payload),
+            totalCount: state.totalCount - 1,
+          };
         },
       );
   },

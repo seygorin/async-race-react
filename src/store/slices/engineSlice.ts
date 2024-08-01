@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { engineApi } from "../api/engineApi";
 
 export interface EngineState {
@@ -28,27 +28,35 @@ const engineSlice = createSlice({
         engineApi.endpoints.startEngine.matchPending,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
-          state.statuses[id] = "loading";
+          return {
+            ...state,
+            statuses: { ...state.statuses, [id]: "loading" },
+          };
         },
       )
       .addMatcher(
         engineApi.endpoints.startEngine.matchFulfilled,
         (state, action) => {
           const { id, velocity, distance } = action.payload;
-          state.velocities[id] = velocity;
-          state.distances[id] = distance;
-          state.results[id] = { error: false, stopped: false };
+          return {
+            ...state,
+            velocities: { ...state.velocities, [id]: velocity },
+            distances: { ...state.distances, [id]: distance },
+            results: {
+              ...state.results,
+              [id]: { error: false, stopped: false },
+            },
+          };
         },
       )
       .addMatcher(
         engineApi.endpoints.startEngine.matchRejected,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
-          const errorData = action.payload?.data || action.error;
-          state.statuses[id] = "failed";
-          state.results[id] = {
-            error: true,
-            stopped: true,
+          return {
+            ...state,
+            statuses: { ...state.statuses, [id]: "failed" },
+            results: { ...state.results, [id]: { error: true, stopped: true } },
           };
         },
       )
@@ -56,27 +64,34 @@ const engineSlice = createSlice({
         engineApi.endpoints.stopEngine.matchPending,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
-          state.statuses[id] = "loading";
+          return {
+            ...state,
+            statuses: { ...state.statuses, [id]: "loading" },
+          };
         },
       )
       .addMatcher(
         engineApi.endpoints.stopEngine.matchFulfilled,
         (state, action) => {
           const { id } = action.payload;
-
-          state.velocities[id] = 0;
-          state.results[id] = { ...state.results[id], stopped: true };
+          return {
+            ...state,
+            velocities: { ...state.velocities, [id]: 0 },
+            results: {
+              ...state.results,
+              [id]: { ...state.results[id], stopped: true },
+            },
+          };
         },
       )
       .addMatcher(
         engineApi.endpoints.stopEngine.matchRejected,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
-          const errorData = action.payload?.data || action.error;
-          state.statuses[id] = "failed";
-          state.results[id] = {
-            error: true,
-            stopped: true,
+          return {
+            ...state,
+            statuses: { ...state.statuses, [id]: "failed" },
+            results: { ...state.results, [id]: { error: true, stopped: true } },
           };
         },
       )
@@ -84,25 +99,30 @@ const engineSlice = createSlice({
         engineApi.endpoints.driveEngine.matchPending,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
-          state.statuses[id] = "loading";
+          return {
+            ...state,
+            statuses: { ...state.statuses, [id]: "loading" },
+          };
         },
       )
       .addMatcher(
         engineApi.endpoints.driveEngine.matchFulfilled,
         (state, action) => {
           const { id } = action.payload;
-          state.statuses[id] = "succeeded";
+          return {
+            ...state,
+            statuses: { ...state.statuses, [id]: "succeeded" },
+          };
         },
       )
       .addMatcher(
         engineApi.endpoints.driveEngine.matchRejected,
         (state, action) => {
           const id = Number(action.meta.arg.originalArgs);
-          const errorData = action.payload?.data || action.error;
-          state.statuses[id] = "failed";
-          state.results[id] = {
-            error: true,
-            stopped: true,
+          return {
+            ...state,
+            statuses: { ...state.statuses, [id]: "failed" },
+            results: { ...state.results, [id]: { error: true, stopped: true } },
           };
         },
       );

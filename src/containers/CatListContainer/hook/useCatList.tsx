@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPage } from "@store/slices/garageSlice";
 import { generateRandomCats } from "@utils/catGenerator";
@@ -25,8 +25,11 @@ const useCatList = () => {
     limit: CATS_PER_PAGE,
   });
 
-  const cats = responseData?.data || [];
-  const totalCount = responseData?.totalCount || 0;
+  const cats = useMemo(() => responseData?.data || [], [responseData]);
+  const totalCount = useMemo(
+    () => responseData?.totalCount || 0,
+    [responseData],
+  );
 
   const [addCatMutation] = useAddCatMutation();
   const [updateCatMutation] = useUpdateCatMutation();
@@ -58,7 +61,7 @@ const useCatList = () => {
         dispatch(setCurrentPage(totalPages));
       }
     },
-    [deleteCatMutation, dispatch, currentPage, totalCount, cats],
+    [deleteCatMutation, dispatch, currentPage, totalCount, cats.length],
   );
 
   return {
@@ -91,7 +94,6 @@ const useGenerateRandomCats = () => {
 
   const handleGenerateRandomCats = useCallback(async () => {
     const randomCats = generateRandomCats(CHUNK_OF_CATS);
-
     await Promise.all(randomCats.map((cat) => addCatMutation(cat)));
   }, [addCatMutation]);
 

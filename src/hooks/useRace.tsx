@@ -67,15 +67,14 @@ const useRace = (cats) => {
 
   const handleStartRace = useCallback(async () => {
     resetRace();
-    const { newStartTimes, newIsRacingState, results } =
-      await startEngines(cats);
+    const { newStartTimes, newIsRacingState } = await startEngines(cats);
     dispatch(setStartTime(newStartTimes));
     dispatch(setIsRacing(newIsRacingState));
   }, [cats, dispatch, resetRace, startEngines]);
 
-  const handleStopRace = useCallback(() => {
+  const handleStopRace = useCallback(async () => {
     resetRace();
-    const newIsRacingState = stopEngines(cats);
+    const newIsRacingState = await stopEngines(cats);
     dispatch(setIsRacing(newIsRacingState));
   }, [cats, dispatch, resetRace, stopEngines]);
 
