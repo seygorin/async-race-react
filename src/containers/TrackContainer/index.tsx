@@ -1,15 +1,16 @@
 import useTrackWidth from "@hooks/useTrackWidth";
 import StartLine from "@components/Track/StartLine";
-import useGaragePage from "@hooks/useGaragePage";
+
 import FinishLine from "@components/Track/FinishLine";
 import CatListContainer from "@containers/CatListContainer";
+import { useCatList } from "@containers/CatListContainer/hook/useCatList";
 import "./index.css";
 
 function TrackContainer() {
   const trackWidth = useTrackWidth();
+  const { cats } = useCatList();
 
-  const { garageContentProps } = useGaragePage();
-  const catsCount = garageContentProps.cats.length;
+  const catsCount = cats.length;
 
   return (
     <div

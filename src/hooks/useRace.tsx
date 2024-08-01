@@ -1,8 +1,9 @@
 import { useCallback } from "react";
+import { useCatList } from "@containers/CatListContainer/hook/useCatList";
+import { setStartTime, setIsRacing } from "@store/slices/garageSlice";
 import useRaceState from "./useRaceState";
 import useRaceActions from "./useRaceActions";
 import useRaceAnimation from "./useRaceAnimation";
-import { setStartTime, setIsRacing } from "../store/slices/garageSlice";
 
 const useStartEngines = (handleStartEngine) => {
   return useCallback(
@@ -56,10 +57,11 @@ const useStopEngines = (handleStopEngine) => {
   );
 };
 
-const useRace = (cats) => {
+const useRace = () => {
   const raceState = useRaceState();
   const { handleStartEngine, handleStopEngine, resetRace, dispatch } =
     useRaceActions();
+  const { cats } = useCatList();
   useRaceAnimation(cats);
 
   const startEngines = useStartEngines(handleStartEngine);

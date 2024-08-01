@@ -1,8 +1,8 @@
-import useGaragePage from "@hooks/useGaragePage";
 import useRaceActions from "@hooks/useRaceActions";
 import useEditCat from "@hooks/useEditCat";
 import CatTrack from "@components/Cat/CatTrack";
 import { Cat as CatType } from "@store/slices/garageSlice";
+import { useCatList } from "@containers/CatListContainer/hook/useCatList";
 
 interface CatTrackContainerProps {
   cat: CatType;
@@ -19,10 +19,9 @@ function CatTrackContainer({
   totalDistance,
   velocity,
 }: CatTrackContainerProps) {
-  const { garageContentProps } = useGaragePage();
-  const { handleDeleteCat } = garageContentProps;
+  const { handleDeleteCat } = useCatList();
   const { handleStartEngine, handleStopEngine } = useRaceActions();
-  const handleEditCat = useEditCat(garageContentProps.cats);
+  const handleEditCat = useEditCat(useCatList.cats);
 
   const catControlProps = {
     onStartEngine: () => handleStartEngine(cat.id),

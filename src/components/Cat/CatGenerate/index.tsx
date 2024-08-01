@@ -1,10 +1,9 @@
 import { Space } from "antd";
 import CustomButton from "@components/common/Button";
-import useGaragePage from "@hooks/useGaragePage";
+import { useGenerateRandomCats } from "@containers/CatListContainer/hook/useCatList";
 
 function CatGenerate() {
-  const { garageContentProps } = useGaragePage();
-  const { handleGenerateRandomCats } = garageContentProps;
+  const { handleGenerateRandomCats } = useGenerateRandomCats();
 
   return (
     <Space>

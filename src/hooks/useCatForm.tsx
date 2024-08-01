@@ -7,24 +7,27 @@ import {
   clearForm,
 } from "@store/slices/catFormSlice";
 
-const useCatForm = (catList) => {
+import { useCatList } from "@containers/CatListContainer/hook/useCatList";
+
+const useCatForm = () => {
   const dispatch = useDispatch();
   const { catName, catColor, editingCat } = useSelector(
     (state: RootState) => state.catForm,
   );
+  const { handleAddCat, handleUpdateCat, cats } = useCatList();
 
   const handleAddOrUpdateCat = () => {
     const newCat = { name: catName, color: catColor };
     if (editingCat) {
-      catList.handleUpdateCat(editingCat, newCat);
+      handleUpdateCat(editingCat.id, newCat);
     } else {
-      catList.handleAddCat(newCat);
+      handleAddCat(newCat);
     }
     dispatch(clearForm());
   };
 
   const handleEditCat = (id: string) => {
-    const catToEdit = catList.cats.find((cat) => cat.id === id);
+    const catToEdit = cats.find((cat) => cat.id === id);
     if (catToEdit) {
       dispatch(
         setEditingCat({

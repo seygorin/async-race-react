@@ -1,11 +1,10 @@
 import { Space } from "antd";
 import CustomButton from "@components/common/Button";
-import useGaragePage from "@hooks/useGaragePage";
+import useRace from "@hooks/useRace";
 import "./index.css";
 
 function CatControls() {
-  const { garageContentProps } = useGaragePage();
-  const { handleStartRace, handleStopRace, isRacing } = garageContentProps;
+  const { handleStartRace, handleStopRace, isRacing } = useRace();
 
   const isAnyCarRacing = Object.values(isRacing).some((value) => value);
 

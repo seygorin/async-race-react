@@ -1,10 +1,17 @@
 import { useState } from "react";
-import useGaragePage from "@hooks/useGaragePage";
+
 import CatForm from "@components/Cat/CatForm";
+import useCatForm from "@hooks/useCatForm";
 
 function CatFormContainer() {
-  const { catFormProps } = useGaragePage();
-  const { handleAddOrUpdateCat } = catFormProps;
+  const {
+    catName,
+    catColor,
+    setCatName,
+    setCatColor,
+    handleAddOrUpdateCat,
+    editingCat,
+  } = useCatForm();
 
   const [isNameValid, setIsNameValid] = useState(true);
 
@@ -16,12 +23,12 @@ function CatFormContainer() {
 
   return (
     <CatForm
-      catName={catFormProps.catName}
-      catColor={catFormProps.catColor}
-      setCatName={catFormProps.setCatName}
-      setCatColor={catFormProps.setCatColor}
-      handleAddOrUpdateCat={catFormProps.handleAddOrUpdateCat}
-      editingCat={catFormProps.editingCat}
+      catName={catName}
+      catColor={catColor}
+      setCatName={setCatName}
+      setCatColor={setCatColor}
+      handleAddOrUpdateCat={handleAddOrUpdateCat}
+      editingCat={editingCat}
       isNameValid={isNameValid}
       setIsNameValid={setIsNameValid}
       handleFormSubmit={handleFormSubmit}

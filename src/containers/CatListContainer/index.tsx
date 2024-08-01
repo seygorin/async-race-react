@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import useGaragePage from "@hooks/useGaragePage";
+
 import CatTrackContainer from "@containers/CatTrackContainer";
 import { RootState } from "@store/store";
 import { Cat as CatType } from "@store/slices/garageSlice";
+import useRace from "@hooks/useRace";
+import { useCatList } from "@containers/CatListContainer/hook/useCatList";
 import "./index.css";
 
 interface CatListContainerProps {
@@ -14,8 +16,8 @@ interface CatListContainerProps {
 const HEIGHT_FOR_CAT_TRACK = 70;
 
 function CatListContainer({ trackWidth, children }: CatListContainerProps) {
-  const { garageContentProps } = useGaragePage();
-  const { cats, positions } = garageContentProps;
+  const { positions } = useRace();
+  const { cats } = useCatList();
   const distances = useSelector((state: RootState) => state.engine.distances);
   const velocities = useSelector((state: RootState) => state.engine.velocities);
 
