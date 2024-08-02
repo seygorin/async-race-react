@@ -34,7 +34,7 @@ const catFormSlice = createSlice({
     ) => {
       return {
         ...state,
-        editingCat: action.payload.id,
+        editingCat: action.payload,
         catName: action.payload.name,
         catColor: action.payload.color,
       };

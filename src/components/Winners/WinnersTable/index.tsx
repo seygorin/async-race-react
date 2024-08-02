@@ -1,4 +1,3 @@
-import React from "react";
 import { Table } from "antd";
 import { Winner } from "@store/slices/winnersSlice";
 import useWinners from "@hooks/Winners/useWinners";
@@ -24,7 +23,7 @@ function WinnersTable({ winners }: WinnersTableProps) {
   const deleteColumn = {
     title: "Action",
     dataIndex: "action",
-    render: (_: string, record: Winner) => (
+    render: (_: string, record: number) => (
       <Button onClick={() => record !== undefined && handleDelete(record)}>
         Delete
       </Button>

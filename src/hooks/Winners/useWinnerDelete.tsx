@@ -1,16 +1,17 @@
 import { useCallback } from "react";
+import { Winner } from "@store/api/apiTypes";
 import { useDeleteWinner } from "./useMutations";
 
 const useWinnerDelete = (
   currentPageWinners: number,
-  winners,
+  winners: Winner[],
   handlePageChange: (page: number) => void,
   refetch: () => void,
 ) => {
   const [deleteWinner] = useDeleteWinner();
 
   return useCallback(
-    async (id: number) => {
+    async (id: Winner) => {
       await deleteWinner(id);
       if (winners.length === 1 && currentPageWinners > 1) {
         handlePageChange(currentPageWinners - 1);

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { startEngine, stopEngine, EngineResponse } from "./Engine/handleEngine";
+import { startEngine, stopEngine } from "./Engine/handleEngine";
 import driveEngine, { DriveEngineResponse } from "./Engine/driveEngine";
 import getCats from "./Cats/getCats";
 import addCat from "./Cats/addCat";
@@ -47,4 +47,4 @@ export const {
   useUpdateWinnerMutation,
 } = apiBuilder;
 
-export type { EngineResponse, DriveEngineResponse };
+export type { DriveEngineResponse };

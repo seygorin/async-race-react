@@ -57,15 +57,17 @@ export interface MockResponse {
   [key: string]: boolean | string | number;
 }
 
-export interface HandleApiErrorResponse<T> extends MockResponse {
+export type HandleApiErrorResponse<T> = T & {
   error: boolean;
   errorMessage: string;
-}
+};
 
 export interface Winner {
   id: number;
+  name: string;
+  color: string;
   wins: number;
-  time: number;
+  bestTime: number;
 }
 
 export interface GetWinnerParams {
@@ -86,8 +88,10 @@ export interface CreateWinnerParams {
 
 export interface CreateWinnerResponse {
   id: number;
+  name: string;
+  color: string;
   wins: number;
-  time: number;
+  bestTime: number;
 }
 
 export interface DeleteWinnerParams {
@@ -97,13 +101,14 @@ export interface DeleteWinnerParams {
 export interface UpdateWinnerParams {
   id: number;
   wins: number;
-  time: number;
 }
 
 export interface UpdateWinnerResponse {
   id: number;
+  name: string;
+  color: string;
   wins: number;
-  time: number;
+  bestTime: number;
 }
 
 export interface GetWinnersParams {
@@ -115,3 +120,62 @@ export interface GetWinnersResponse {
   winners: Winner[];
   totalCount: number;
 }
+
+export interface Winners {
+  id: number;
+  wins: number;
+  name: string;
+  color: string;
+  bestTime: number;
+}
+
+export interface EngineSuccessResponse {
+  velocity: number;
+  distance: number;
+}
+
+export interface EngineErrorResponse {
+  id: number;
+  velocity: number;
+  distance: number;
+  error: boolean;
+  errorMessage: string;
+}
+
+export type EngineResponse = EngineSuccessResponse & { id: number };
+
+export type EngineResult = EngineResponse | EngineErrorResponse;
+
+export type EngineMutation = (arg: number) => Promise<EngineResult>;
+
+export function handleApiError<T extends MockResponse>(
+  error: ApiError,
+  mockResponse: T,
+): HandleApiErrorResponse<T>;
+
+// Определение типа для мутаций двигателя
+export type EngineMutationDefinition = MutationDefinition<
+  number,
+  ApiBuilder,
+  "Engine" | "Cats" | "Winners",
+  EngineResponse,
+  "api"
+>;
+
+export interface DriveEngineSuccessResponse {
+  success: boolean;
+}
+
+export interface DriveEngineErrorResponse {
+  id: number;
+  success: boolean;
+}
+
+export type DriveEngineResponse = DriveEngineSuccessResponse & { id: number };
+
+type EngineMutationResult = {
+  data?: DriveEngineResponse;
+  error?: FetchBaseQueryError | SerializedError;
+};
+
+type EngineMutation = (id: number) => Promise<EngineMutationResult>;

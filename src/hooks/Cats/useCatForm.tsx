@@ -8,8 +8,19 @@ import {
 import useCatList from "@hooks/Cats/useCatList";
 import useStateApp from "@hooks/useStateApp";
 import { AppDispatch } from "@store/store";
+import { Cat } from "@store/slices/garageSlice";
 
-const useCatForm = () => {
+interface UseCatFormReturn {
+  catName: string;
+  catColor: string;
+  setCatName: (name: string) => void;
+  setCatColor: (color: string) => void;
+  handleAddOrUpdateCat: () => void;
+  editingCat: Cat | null;
+  handleEditCat: (id: number) => void;
+}
+
+const useCatForm = (): UseCatFormReturn => {
   const dispatch = useDispatch<AppDispatch>();
   const { catName, catColor, editingCat } = useStateApp();
   const { handleAddCat, handleUpdateCat, cats } = useCatList();
@@ -17,7 +28,7 @@ const useCatForm = () => {
   const handleAddOrUpdateCat = () => {
     const newCat = { name: catName, color: catColor };
     if (editingCat) {
-      handleUpdateCat(editingCat, newCat);
+      handleUpdateCat(editingCat.id, newCat);
     } else {
       handleAddCat(newCat);
     }

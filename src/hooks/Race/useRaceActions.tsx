@@ -19,6 +19,8 @@ export interface EngineResult {
   stopped?: boolean;
   id?: number;
   errorMessage?: string;
+  velocity?: number;
+  distance?: number;
 }
 
 type EngineMutation = (id: number) => Promise<EngineResult>;

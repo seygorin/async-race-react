@@ -52,7 +52,7 @@ const useStartEnginesEffect = (
 };
 
 const useStopEnginesEffect = (
-  handleStopEngine: (id: number) => Promise<void>,
+  handleStopEngine: (id: number) => Promise<EngineResult>,
 ) => {
   return useCallback(
     async (cats: Cat[]): Promise<IsRacingState> => {

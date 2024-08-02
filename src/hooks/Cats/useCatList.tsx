@@ -24,17 +24,12 @@ interface UseCatListResult {
   totalCount: number;
   currentPage: number;
   isLoading: boolean;
-  error: any;
 }
 
 const useCatData = (): UseCatListResult => {
   const { currentPage } = useStateApp();
 
-  const {
-    data: responseData,
-    error,
-    isLoading,
-  } = useGetCatsQuery({
+  const { data: responseData, isLoading } = useGetCatsQuery({
     page: currentPage,
     limit: CATS_PER_PAGE,
   });
@@ -50,7 +45,6 @@ const useCatData = (): UseCatListResult => {
     totalCount,
     currentPage,
     isLoading,
-    error,
   };
 };
 

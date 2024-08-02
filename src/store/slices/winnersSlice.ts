@@ -22,64 +22,97 @@ const initialState: WinnersState = {
   itemsPerPageWinners: 10,
   error: null,
 };
+const handleGetWinnersFulfilled = (
+  state: WinnersState,
+  action: PayloadAction<{ winners: Winner[] }>,
+) => ({
+  ...state,
+  winners: action.payload.winners,
+});
+
+const handleCreateWinnerFulfilled = (
+  state: WinnersState,
+  action: PayloadAction<Winner>,
+) => ({
+  ...state,
+  winners: [...state.winners, action.payload],
+});
+
+const handleUpdateWinnerFulfilled = (
+  state: WinnersState,
+  action: PayloadAction<Winner>,
+) => {
+  const index = state.winners.findIndex(
+    (winner) => winner.id === action.payload.id,
+  );
+  if (index !== -1) {
+    return {
+      ...state,
+      winners: state.winners.map((winner, i) =>
+        i === index ? action.payload : winner,
+      ),
+    };
+  }
+  return state;
+};
+
+const handleDeleteWinnerFulfilled = (
+  state: WinnersState,
+  action: PayloadAction<number>,
+) => ({
+  ...state,
+  winners: state.winners.filter((winner) => winner.id !== action.payload),
+});
 
 const winnersSlice = createSlice({
   name: "winners",
   initialState,
   reducers: {
-    setPage: (state, action: PayloadAction<number>) => {
-      state.currentPageWinners = action.payload;
-    },
+    setPage: (state, action: PayloadAction<number>) => ({
+      ...state,
+      currentPageWinners: action.payload,
+    }),
     updateWinnerLocally: (state, action: PayloadAction<Winner>) => {
       const index = state.winners.findIndex(
         (winner) => winner.id === action.payload.id,
       );
       if (index !== -1) {
-        state.winners[index] = {
-          ...state.winners[index],
-          wins: action.payload.wins,
-          bestTime: Math.min(
-            state.winners[index].bestTime,
-            action.payload.bestTime,
+        return {
+          ...state,
+          winners: state.winners.map((winner, i) =>
+            i === index
+              ? {
+                  ...winner,
+                  wins: action.payload.wins,
+                  bestTime: Math.min(winner.bestTime, action.payload.bestTime),
+                }
+              : winner,
           ),
         };
-      } else {
-        state.winners.push(action.payload);
       }
+      return {
+        ...state,
+        winners: [...state.winners, action.payload],
+      };
     },
   },
   extraReducers: (builder) => {
     builder
       .addMatcher(
         apiBuilder.endpoints.getWinners.matchFulfilled,
-        (state, action) => {
-          state.winners = action.payload.winners;
-        },
+        handleGetWinnersFulfilled,
       )
       .addMatcher(
         apiBuilder.endpoints.createWinner.matchFulfilled,
-        (state, action) => {
-          state.winners.push(action.payload);
-        },
+        handleCreateWinnerFulfilled,
       )
       .addMatcher(
         apiBuilder.endpoints.updateWinner.matchFulfilled,
-        (state, action) => {
-          const index = state.winners.findIndex(
-            (winner) => winner.id === action.payload.id,
-          );
-          if (index !== -1) {
-            state.winners[index] = action.payload;
-          }
-        },
+        handleUpdateWinnerFulfilled,
       )
       .addMatcher(
         apiBuilder.endpoints.deleteWinner.matchFulfilled,
-        (state, action) => {
-          state.winners = state.winners.filter(
-            (winner) => winner.id !== action.payload,
-          );
-        },
+        handleDeleteWinnerFulfilled,
       );
   },
 });

@@ -16,7 +16,7 @@ const getCats = (
       const totalCount = totalCountHeader ? parseInt(totalCountHeader, 10) : 0;
       return {
         data: response,
-        totalCount: totalCount,
+        totalCount,
       };
     },
     providesTags: ["Cats"],

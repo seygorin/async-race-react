@@ -27,7 +27,6 @@ function CatFormContainer() {
       catColor={catColor}
       setCatName={setCatName}
       setCatColor={setCatColor}
-      handleAddOrUpdateCat={handleAddOrUpdateCat}
       editingCat={editingCat}
       isNameValid={isNameValid}
       setIsNameValid={setIsNameValid}

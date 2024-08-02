@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateWinnerLocally } from "@store/slices/winnersSlice";
 import { RootState } from "@store/store";
+import { Winners } from "@store/api/apiTypes";
 import { useUpdateWinner, useCreateWinner } from "./useMutations";
 
 const useWinnerUpdate = (refetch: () => void) => {
@@ -11,7 +12,7 @@ const useWinnerUpdate = (refetch: () => void) => {
   const [createWinner] = useCreateWinner();
 
   return useCallback(
-    async (winnerData) => {
+    async (winnerData: Winners) => {
       const existingWinner = winners.find((w) => w.id === winnerData.id);
       if (existingWinner) {
         const updatedWinner = {

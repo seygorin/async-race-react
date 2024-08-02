@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { apiBuilder } from "../api/apiBuilder";
+import { Winner } from "./winnersSlice";
 
 export interface Cat {
   id: number;
@@ -13,7 +14,7 @@ export interface GarageState {
   error: string | null;
   currentPage: number;
   positions: Record<number, number>;
-  winner: Cat | null;
+  winner: Winner | null;
   isRacing: Record<number, boolean>;
   stoppedCats: number[];
   startTime: Record<number, number>;

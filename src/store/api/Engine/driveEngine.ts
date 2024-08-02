@@ -24,7 +24,7 @@ const driveEngine = (
     }),
     transformResponse: (
       response: DriveEngineSuccessResponse,
-      meta,
+      _meta,
       arg: number,
     ): DriveEngineResponse => ({
       id: Number(arg),
@@ -32,7 +32,7 @@ const driveEngine = (
     }),
     transformErrorResponse: (
       error: { status: number; data: string },
-      meta,
+      _meta,
       arg: number,
     ): { data: DriveEngineErrorResponse } => {
       const mockCat = mockData.driveEngine.cats.find(

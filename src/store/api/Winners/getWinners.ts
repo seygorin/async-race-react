@@ -7,16 +7,16 @@ import {
 } from "../apiTypes";
 
 const getWinners = (
-  builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">
+  builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,
 ) =>
   builder.query<GetWinnersResponse, GetWinnersParams>({
     query: ({ page, limit }) => `winners?_page=${page}&_limit=${limit}`,
-    transformResponse: (response: Winner[], meta, arg) => {
+    transformResponse: (response: Winner[], meta) => {
       const totalCountHeader = meta?.response?.headers?.get("X-Total-Count");
       const totalCount = totalCountHeader ? parseInt(totalCountHeader, 10) : 0;
       return {
         winners: response,
-        totalCount: totalCount,
+        totalCount,
       };
     },
     providesTags: ["Winners"],

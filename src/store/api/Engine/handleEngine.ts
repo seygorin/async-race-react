@@ -1,34 +1,28 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
-import { ApiBuilder } from "../apiTypes";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import {
+  ApiBuilder,
+  EngineResponse,
+  EngineErrorResponse,
+  EngineResult,
+  EngineMutationDefinition,
+  EngineSuccessResponse,
+} from "../apiTypes";
 import handleApiError from "../ErrorHandler/apiErrorUtils";
-// import mockData from "../../../mocks/index";
-
-export interface EngineSuccessResponse {
-  velocity: number;
-  distance: number;
-}
-
-export interface EngineErrorResponse {
-  id: number;
-  velocity: number;
-  distance: number;
-}
-
-export type EngineResponse = EngineSuccessResponse & { id: number };
 
 const createEngineMutation =
   (status: "started" | "stopped") =>
   (
     builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,
-  ) =>
-    builder.mutation<EngineResponse, number>({
+  ): EngineMutationDefinition =>
+    builder.mutation<EngineResult, number>({
       query: (id) => ({
         url: `engine?id=${id}&status=${status}`,
         method: "PATCH",
       }),
       transformResponse: (
         response: EngineSuccessResponse,
-        meta,
+        _meta,
         arg: number,
       ): EngineResponse => ({
         id: Number(arg),
@@ -36,21 +30,15 @@ const createEngineMutation =
       }),
       transformErrorResponse: (
         error: FetchBaseQueryError | { status: number; data: string },
-        meta,
+        _meta,
         arg: number,
-      ): { data: EngineErrorResponse } => {
-        // const mockDataSource =
-        //   status === "started" ? mockData.startEngine : mockData.stopEngine;
-        // const mockCat = mockDataSource.cats.find(
-        //   (cat) => cat.id === Number(arg),
-        // );
+      ): EngineErrorResponse => {
         const result = handleApiError(error, {
           id: Number(arg),
-          // ...(mockCat || {}),
           velocity: 0,
           distance: 0,
-        }) as EngineErrorResponse;
-        return { data: result };
+        });
+        return result as EngineErrorResponse;
       },
     });
 
