@@ -1,26 +1,20 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@store/store";
+import { useDispatch } from "react-redux";
 import { setPage } from "@store/slices/winnersSlice";
+import useStateApp from "@hooks/useStateApp";
 import { useNavigate } from "react-router-dom";
 
 const useWinners = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const winners = useSelector((state: RootState) => state.winners.winners);
-  const currentPage = useSelector(
-    (state: RootState) => state.winners.currentPage,
-  );
-  const itemsPerPage = useSelector(
-    (state: RootState) => state.winners.itemsPerPage,
-  );
+  const { winners, currentPageWinners, itemsPerPageWinners } = useStateApp();
 
   const totalCount = winners.length;
-  const pageCount = Math.ceil(totalCount / itemsPerPage);
+  const pageCount = Math.ceil(totalCount / itemsPerPageWinners);
 
   const paginatedWinners = winners.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    (currentPageWinners - 1) * itemsPerPageWinners,
+    currentPageWinners * itemsPerPageWinners,
   );
 
   const handlePageChange = (newPage: number) => {
@@ -34,7 +28,7 @@ const useWinners = () => {
 
   return {
     winners: paginatedWinners,
-    currentPage,
+    currentPageWinners,
     totalCount,
     pageCount,
     handlePageChange,

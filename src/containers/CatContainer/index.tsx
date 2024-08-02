@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import CatIcon from "@components/Cat/CatIcon";
 import CatInfo from "@components/Cat/CatInfo";
 import { Cat as CatType } from "@store/slices/garageSlice";
-import { RootState } from "@store/store";
+import useStateApp from "@hooks/useStateApp";
 import "./index.css";
 
 interface CatProps {
@@ -16,10 +15,7 @@ interface CatProps {
 
 function Cat({ cat, position, totalDistance, trackWidth, velocity }: CatProps) {
   const catRef = useRef<HTMLDivElement>(null);
-
-  const result = useSelector(
-    (state: RootState) => state.engine.results[cat.id],
-  );
+  const { status } = useStateApp();
 
   useEffect(() => {
     if (catRef.current) {
@@ -41,7 +37,7 @@ function Cat({ cat, position, totalDistance, trackWidth, velocity }: CatProps) {
         cat={cat}
         catRef={catRef}
         position={position}
-        result={result}
+        status={status[cat.id]}
       />
       <CatInfo
         cat={cat}

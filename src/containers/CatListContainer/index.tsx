@@ -1,11 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
-
 import CatTrackContainer from "@containers/CatTrackContainer";
-import { RootState } from "@store/store";
 import { Cat as CatType } from "@store/slices/garageSlice";
-import useRace from "@hooks/useRace";
-import { useCatList } from "@containers/CatListContainer/hook/useCatList";
+import useStateApp from "@hooks/useStateApp";
+import useCatList from "@hooks/Cats/useCatList";
+
 import "./index.css";
 
 interface CatListContainerProps {
@@ -16,10 +14,8 @@ interface CatListContainerProps {
 const HEIGHT_FOR_CAT_TRACK = 70;
 
 function CatListContainer({ trackWidth, children }: CatListContainerProps) {
-  const { positions } = useRace();
+  const { positions, distances, velocities } = useStateApp();
   const { cats } = useCatList();
-  const distances = useSelector((state: RootState) => state.engine.distances);
-  const velocities = useSelector((state: RootState) => state.engine.velocities);
 
   const totalDistance = Math.max(...Object.values(distances));
 

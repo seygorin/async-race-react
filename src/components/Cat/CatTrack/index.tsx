@@ -3,20 +3,16 @@ import Cat from "@containers/CatContainer";
 import { Cat as CatType } from "@store/slices/garageSlice";
 import "./index.css";
 
-interface CatControlProps {
-  onStartEngine: () => void;
-  onStopEngine: () => void;
-  onEditCat: () => void;
-  onDeleteCat: () => void;
-}
-
 interface CatTrackProps {
   cat: CatType;
   trackWidth: number;
   position: number;
   totalDistance: number;
   velocity: number;
-  catControlProps: CatControlProps;
+  onStartEngine: () => void;
+  onStopEngine: () => void;
+  onEditCat: () => void;
+  onDeleteCat: () => void;
 }
 
 function CatTrack({
@@ -25,16 +21,19 @@ function CatTrack({
   position,
   totalDistance,
   velocity,
-  catControlProps,
+  onStartEngine,
+  onStopEngine,
+  onEditCat,
+  onDeleteCat,
 }: CatTrackProps) {
   return (
     <div className="cat-track-container">
       <div className="cat-track-controls">
         <CatButtons
-          onStartEngine={catControlProps.onStartEngine}
-          onStopEngine={catControlProps.onStopEngine}
-          onEditCat={catControlProps.onEditCat}
-          onDeleteCat={catControlProps.onDeleteCat}
+          onStartEngine={onStartEngine}
+          onStopEngine={onStopEngine}
+          onEditCat={onEditCat}
+          onDeleteCat={onDeleteCat}
           velocity={velocity}
         />
         <div

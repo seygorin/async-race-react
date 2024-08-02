@@ -10,14 +10,14 @@ export interface Winner {
 
 export interface WinnersState {
   winners: Winner[];
-  currentPage: number;
-  itemsPerPage: number;
+  currentPageWinners: number;
+  itemsPerPageWinners: number;
 }
 
 const initialState: WinnersState = {
   winners: [],
-  currentPage: 1,
-  itemsPerPage: 10,
+  currentPageWinners: 1,
+  itemsPerPageWinners: 10,
 };
 
 const winnersSlice = createSlice({
@@ -55,7 +55,7 @@ const winnersSlice = createSlice({
       };
     },
     setPage: (state, action: PayloadAction<number>) => {
-      return { ...state, currentPage: action.payload };
+      return { ...state, currentPageWinners: action.payload };
     },
   },
 });

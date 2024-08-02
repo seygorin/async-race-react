@@ -1,12 +1,12 @@
 import { Modal } from "antd";
-import { useSelector } from "react-redux";
-import useModal from "@containers/WinnerModalContainer/hook/useModal";
-import { RootState } from "@store/store";
+import useModal from "@hooks/Modal/useModal";
+import useStateApp from "@hooks/useStateApp";
+
 import "./index.css";
 
 function WinnerModalContainer() {
   const { isModalVisible, handleCloseModal } = useModal();
-  const winner = useSelector((state: RootState) => state.garage.winner);
+  const { winner } = useStateApp();
 
   return (
     <Modal

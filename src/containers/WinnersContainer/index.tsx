@@ -1,15 +1,16 @@
-import useWinners from "@hooks/useWinners";
+import useWinners from "@hooks/Winners/useWinners";
 import WinnersTable from "@components/Winners/WinnersTable";
 import WinnersPagination from "@components/Winners/WinnersPagination";
 
 function WinnersContainer() {
-  const { winners, currentPage, totalCount, handlePageChange } = useWinners();
+  const { winners, currentPageWinners, totalCount, handlePageChange } =
+    useWinners();
 
   return (
     <>
       <WinnersTable winners={winners} />
       <WinnersPagination
-        currentPage={currentPage}
+        currentPage={currentPageWinners}
         total={totalCount}
         onChange={handlePageChange}
       />

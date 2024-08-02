@@ -1,9 +1,9 @@
-import useTrackWidth from "@hooks/useTrackWidth";
+import useTrackWidth from "@hooks/Track/useTrackWidth";
 import StartLine from "@components/Track/StartLine";
 
 import FinishLine from "@components/Track/FinishLine";
 import CatListContainer from "@containers/CatListContainer";
-import { useCatList } from "@containers/CatListContainer/hook/useCatList";
+import useCatList from "@hooks/Cats/useCatList";
 import "./index.css";
 
 function TrackContainer() {

@@ -31,6 +31,43 @@ const initialState: GarageState = {
   startTime: {},
 };
 
+const handleGetCatsFulfilled = (
+  state: GarageState,
+  action: PayloadAction<{ data: Cat[]; totalCount: number }>,
+) => ({
+  ...state,
+  cats: action.payload.data,
+  totalCount: action.payload.totalCount,
+});
+
+const handleAddCatFulfilled = (
+  state: GarageState,
+  action: PayloadAction<Cat>,
+) => ({
+  ...state,
+  cats: [...state.cats, action.payload],
+  totalCount: state.totalCount + 1,
+});
+
+const handleUpdateCatFulfilled = (
+  state: GarageState,
+  action: PayloadAction<Cat>,
+) => ({
+  ...state,
+  cats: state.cats.map((cat) =>
+    cat.id === action.payload.id ? action.payload : cat,
+  ),
+});
+
+const handleDeleteCatFulfilled = (
+  state: GarageState,
+  action: PayloadAction<number>,
+) => ({
+  ...state,
+  cats: state.cats.filter((cat) => cat.id !== action.payload),
+  totalCount: state.totalCount - 1,
+});
+
 const garageSlice = createSlice({
   name: "garage",
   initialState,
@@ -56,50 +93,29 @@ const garageSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(apiBuilder.endpoints.getCats.matchPending, (state) => {
-        return state;
-      })
+      .addMatcher(apiBuilder.endpoints.getCats.matchPending, (state) => state)
       .addMatcher(
         apiBuilder.endpoints.getCats.matchFulfilled,
-        (state, action: PayloadAction<{ data: Cat[]; totalCount: number }>) => {
-          return {
-            ...state,
-            cats: action.payload.data,
-            totalCount: action.payload.totalCount,
-          };
-        },
+        handleGetCatsFulfilled,
       )
-      .addMatcher(apiBuilder.endpoints.getCats.matchRejected, (state, action) => {
-        return { ...state, error: action.error.message || null };
-      })
+      .addMatcher(
+        apiBuilder.endpoints.getCats.matchRejected,
+        (state, action) => ({
+          ...state,
+          error: action.error.message || null,
+        }),
+      )
       .addMatcher(
         apiBuilder.endpoints.addCat.matchFulfilled,
-        (state, action: PayloadAction<Cat>) => {
-          return {
-            ...state,
-            cats: [...state.cats, action.payload],
-            totalCount: state.totalCount + 1,
-          };
-        },
+        handleAddCatFulfilled,
       )
       .addMatcher(
         apiBuilder.endpoints.updateCat.matchFulfilled,
-        (state, action: PayloadAction<Cat>) => {
-          const newCats = state.cats.map((cat) =>
-            cat.id === action.payload.id ? action.payload : cat,
-          );
-          return { ...state, cats: newCats };
-        },
+        handleUpdateCatFulfilled,
       )
       .addMatcher(
         apiBuilder.endpoints.deleteCat.matchFulfilled,
-        (state, action: PayloadAction<number>) => {
-          return {
-            ...state,
-            cats: state.cats.filter((cat) => cat.id !== action.payload),
-            totalCount: state.totalCount - 1,
-          };
-        },
+        handleDeleteCatFulfilled,
       );
   },
 });

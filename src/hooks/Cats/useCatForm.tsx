@@ -1,19 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@store/store";
+import { useDispatch } from "react-redux";
 import {
   setCatName,
   setCatColor,
   setEditingCat,
   clearForm,
 } from "@store/slices/catFormSlice";
-
-import { useCatList } from "@containers/CatListContainer/hook/useCatList";
+import useCatList from "@hooks/Cats/useCatList";
+import useStateApp from "@hooks/useStateApp";
 
 const useCatForm = () => {
   const dispatch = useDispatch();
-  const { catName, catColor, editingCat } = useSelector(
-    (state: RootState) => state.catForm,
-  );
+  const { catName, catColor, editingCat } = useStateApp();
   const { handleAddCat, handleUpdateCat, cats } = useCatList();
 
   const handleAddOrUpdateCat = () => {

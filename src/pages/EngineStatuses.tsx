@@ -4,7 +4,7 @@ import { RootState } from "@store/store";
 
 const EngineStatuses: React.FC = () => {
   const engineStatuses = useSelector(
-    (state: RootState) => state.engine.statuses,
+    (state: RootState) => state.driveEngine.statuses,
   );
   const isRacing = useSelector((state: RootState) => state.garage.isRacing);
 

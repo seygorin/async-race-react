@@ -1,8 +1,8 @@
-import useRaceActions from "@hooks/useRaceActions";
-import useEditCat from "@hooks/useEditCat";
+import useRaceActions from "@hooks/Race/useRaceActions";
+import useEditCat from "@hooks/Cats/useEditCat";
 import CatTrack from "@components/Cat/CatTrack";
 import { Cat as CatType } from "@store/slices/garageSlice";
-import { useCatList } from "@containers/CatListContainer/hook/useCatList";
+import useCatList from "@hooks/Cats/useCatList";
 
 interface CatTrackContainerProps {
   cat: CatType;
@@ -21,14 +21,7 @@ function CatTrackContainer({
 }: CatTrackContainerProps) {
   const { handleDeleteCat } = useCatList();
   const { handleStartEngine, handleStopEngine } = useRaceActions();
-  const handleEditCat = useEditCat(useCatList.cats);
-
-  const catControlProps = {
-    onStartEngine: () => handleStartEngine(cat.id),
-    onStopEngine: () => handleStopEngine(cat.id),
-    onEditCat: () => handleEditCat(cat.id),
-    onDeleteCat: () => handleDeleteCat(cat.id),
-  };
+  const handleEditCat = useEditCat();
 
   return (
     <CatTrack
@@ -37,7 +30,10 @@ function CatTrackContainer({
       position={position}
       totalDistance={totalDistance}
       velocity={velocity}
-      catControlProps={catControlProps}
+      onStartEngine={() => handleStartEngine(cat.id)}
+      onStopEngine={() => handleStopEngine(cat.id)}
+      onEditCat={() => handleEditCat(cat)}
+      onDeleteCat={() => handleDeleteCat(cat.id)}
     />
   );
 }

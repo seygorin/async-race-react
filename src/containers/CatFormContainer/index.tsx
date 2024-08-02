@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import CatForm from "@components/Cat/CatForm";
-import useCatForm from "@hooks/useCatForm";
+import useCatForm from "@hooks/Cats/useCatForm";
 
 function CatFormContainer() {
   const {

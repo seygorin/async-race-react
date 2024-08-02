@@ -4,11 +4,11 @@ import {
   setWinner,
   setStoppedCats,
   setIsRacing,
-} from "../store/slices/garageSlice";
-import { addWinner } from "../store/slices/winnersSlice";
-import { showModal } from "../store/slices/modalSlice";
-import useRaceState from "./useRaceState";
-import useRaceActions from "./useRaceActions";
+} from "../../store/slices/garageSlice";
+import { addWinner } from "../../store/slices/winnersSlice";
+import { showModal } from "../../store/slices/modalSlice";
+import useRaceState from "../useStateApp";
+import useRaceActions from "../Race/useRaceActions";
 
 const ONE_SECOND = 1000;
 

@@ -12,7 +12,7 @@ interface CatIconProps {
   cat: CatType;
   catRef: RefObject<HTMLDivElement>;
   velocities: number;
-  result: { error?: boolean; errorMessage?: string; stopped?: boolean };
+  status: Record<number, "idle" | "loading" | "succeeded" | "failed">;
 }
 
 function CatIcon({
@@ -21,11 +21,11 @@ function CatIcon({
   cat,
   catRef,
   velocities,
-  result,
+  status,
 }: CatIconProps) {
   let IconComponent = null;
 
-  if (result?.error) {
+  if (status === "failed") {
     IconComponent = <CatCrashing color={cat.color} />;
   } else if (position >= totalDistance) {
     IconComponent = <CatSitting color={cat.color} />;

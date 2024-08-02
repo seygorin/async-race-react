@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/store";
+import useStateApp from "@hooks/useStateApp";
 
 const useTrackWidth = (): number => {
   const [trackWidth, setTrackWidth] = useState<number>(0);
-  const distances = useSelector((state: RootState) => state.engine.distances);
+  const distances = useStateApp();
 
   useEffect(() => {
     const maxDistance = Math.max(...Object.values(distances));

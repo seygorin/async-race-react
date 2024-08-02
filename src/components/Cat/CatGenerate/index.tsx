@@ -1,6 +1,6 @@
 import { Space } from "antd";
 import CustomButton from "@components/common/Button";
-import { useGenerateRandomCats } from "@containers/CatListContainer/hook/useCatList";
+import useGenerateRandomCats from "@hooks/Cats/useGenerateRandomCats";
 
 function CatGenerate() {
   const { handleGenerateRandomCats } = useGenerateRandomCats();

@@ -1,21 +1,18 @@
 import { useSelector, useDispatch } from "react-redux";
-import { hideModal } from "@store/slices/modalSlice";
-import { RootState, AppDispatch } from "@store/store";
+import { RootState } from "@store/store";
+import { closeModal } from "@store/slices/modalSlice";
 
 const useModal = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const isModalVisible = useSelector(
     (state: RootState) => state.modal.isModalVisible,
   );
 
   const handleCloseModal = () => {
-    dispatch(hideModal());
+    dispatch(closeModal());
   };
 
-  return {
-    isModalVisible,
-    handleCloseModal,
-  };
+  return { isModalVisible, handleCloseModal };
 };
 
 export default useModal;

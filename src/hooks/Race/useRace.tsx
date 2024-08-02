@@ -1,11 +1,11 @@
 import { useCallback } from "react";
-import { useCatList } from "@containers/CatListContainer/hook/useCatList";
+import useCatList from "@hooks/Cats/useCatList";
 import { setStartTime, setIsRacing } from "@store/slices/garageSlice";
-import useRaceState from "./useRaceState";
-import useRaceActions from "./useRaceActions";
-import useRaceAnimation from "./useRaceAnimation";
+import useRaceAnimation from "@hooks/Animation/useRaceAnimation";
 
-const useStartEngines = (handleStartEngine) => {
+import useRaceActions from "./useRaceActions";
+
+const useStartEnginesEffect = (handleStartEngine) => {
   return useCallback(
     async (cats) => {
       const newStartTimes = {};
@@ -36,7 +36,7 @@ const useStartEngines = (handleStartEngine) => {
   );
 };
 
-const useStopEngines = (handleStopEngine) => {
+const useStopEnginesEffect = (handleStopEngine) => {
   return useCallback(
     async (cats) => {
       const newIsRacingState = {};
@@ -58,30 +58,28 @@ const useStopEngines = (handleStopEngine) => {
 };
 
 const useRace = () => {
-  const raceState = useRaceState();
   const { handleStartEngine, handleStopEngine, resetRace, dispatch } =
     useRaceActions();
   const { cats } = useCatList();
   useRaceAnimation(cats);
 
-  const startEngines = useStartEngines(handleStartEngine);
-  const stopEngines = useStopEngines(handleStopEngine);
+  const startEnginesEffect = useStartEnginesEffect(handleStartEngine);
+  const stopEnginesEffect = useStopEnginesEffect(handleStopEngine);
 
   const handleStartRace = useCallback(async () => {
     resetRace();
-    const { newStartTimes, newIsRacingState } = await startEngines(cats);
+    const { newStartTimes, newIsRacingState } = await startEnginesEffect(cats);
     dispatch(setStartTime(newStartTimes));
     dispatch(setIsRacing(newIsRacingState));
-  }, [cats, dispatch, resetRace, startEngines]);
+  }, [cats, dispatch, resetRace, startEnginesEffect]);
 
   const handleStopRace = useCallback(async () => {
     resetRace();
-    const newIsRacingState = await stopEngines(cats);
+    const newIsRacingState = await stopEnginesEffect(cats);
     dispatch(setIsRacing(newIsRacingState));
-  }, [cats, dispatch, resetRace, stopEngines]);
+  }, [cats, dispatch, resetRace, stopEnginesEffect]);
 
   return {
-    ...raceState,
     handleStartRace,
     handleStopRace,
     handleStartEngine,

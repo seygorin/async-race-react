@@ -15,11 +15,11 @@ const modalSlice = createSlice({
     showModal: (state) => {
       return { ...state, isModalVisible: true };
     },
-    hideModal: (state) => {
+    closeModal: (state) => {
       return { ...state, isModalVisible: false };
     },
   },
 });
 
-export const { showModal, hideModal } = modalSlice.actions;
+export const { showModal, closeModal } = modalSlice.actions;
 export default modalSlice.reducer;
