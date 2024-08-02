@@ -12,12 +12,19 @@ function WinnersPagination({
   total,
   onChange,
 }: WinnersPaginationProps) {
+  const pageSize = 10;
+  const pageCount = Math.ceil(total / pageSize);
+
+  if (pageCount <= 1) {
+    return null;
+  }
+
   return (
     <Pagination
       className="winners-pagination"
       current={currentPage}
       total={total}
-      pageSize={10}
+      pageSize={pageSize}
       onChange={onChange}
     />
   );

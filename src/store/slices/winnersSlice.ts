@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { apiBuilder } from "../api/apiBuilder";
 
 export interface Winner {
   id: number;
@@ -12,54 +13,77 @@ export interface WinnersState {
   winners: Winner[];
   currentPageWinners: number;
   itemsPerPageWinners: number;
+  error: string | null;
 }
 
 const initialState: WinnersState = {
   winners: [],
   currentPageWinners: 1,
   itemsPerPageWinners: 10,
+  error: null,
 };
 
 const winnersSlice = createSlice({
   name: "winners",
   initialState,
   reducers: {
-    addWinner: (
-      state,
-      action: PayloadAction<Omit<Winner, "wins"> & { bestTime: number }>,
-    ) => {
-      const { id, name, color, bestTime } = action.payload;
-      const roundedBestTime = Number(bestTime.toFixed(1));
-
-      const existingWinner = state.winners.find((winner) => winner.id === id);
-
-      if (existingWinner) {
-        existingWinner.wins += 1;
-        if (roundedBestTime < existingWinner.bestTime) {
-          existingWinner.bestTime = roundedBestTime;
-        }
+    setPage: (state, action: PayloadAction<number>) => {
+      state.currentPageWinners = action.payload;
+    },
+    updateWinnerLocally: (state, action: PayloadAction<Winner>) => {
+      const index = state.winners.findIndex(
+        (winner) => winner.id === action.payload.id,
+      );
+      if (index !== -1) {
+        state.winners[index] = {
+          ...state.winners[index],
+          wins: action.payload.wins,
+          bestTime: Math.min(
+            state.winners[index].bestTime,
+            action.payload.bestTime,
+          ),
+        };
       } else {
-        state.winners.push({
-          id,
-          name,
-          color,
-          wins: 1,
-          bestTime: roundedBestTime,
-        });
+        state.winners.push(action.payload);
       }
     },
-    removeWinner: (state, action: PayloadAction<number>) => {
-      return {
-        ...state,
-        winners: state.winners.filter((winner) => winner.id !== action.payload),
-      };
-    },
-    setPage: (state, action: PayloadAction<number>) => {
-      return { ...state, currentPageWinners: action.payload };
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addMatcher(
+        apiBuilder.endpoints.getWinners.matchFulfilled,
+        (state, action) => {
+          state.winners = action.payload.winners;
+        },
+      )
+      .addMatcher(
+        apiBuilder.endpoints.createWinner.matchFulfilled,
+        (state, action) => {
+          state.winners.push(action.payload);
+        },
+      )
+      .addMatcher(
+        apiBuilder.endpoints.updateWinner.matchFulfilled,
+        (state, action) => {
+          const index = state.winners.findIndex(
+            (winner) => winner.id === action.payload.id,
+          );
+          if (index !== -1) {
+            state.winners[index] = action.payload;
+          }
+        },
+      )
+      .addMatcher(
+        apiBuilder.endpoints.deleteWinner.matchFulfilled,
+        (state, action) => {
+          state.winners = state.winners.filter(
+            (winner) => winner.id !== action.payload,
+          );
+        },
+      );
   },
 });
 
-export const { addWinner, removeWinner, setPage } = winnersSlice.actions;
+export const { setPage, updateWinnerLocally } = winnersSlice.actions;
 
 export default winnersSlice.reducer;

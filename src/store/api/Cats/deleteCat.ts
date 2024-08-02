@@ -1,20 +1,15 @@
-import { removeWinner } from "@store/slices/winnersSlice";
+import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
+import { ApiBuilder, DeleteCatResponse } from "../apiTypes";
 
-const deleteCat = (builder) =>
-  builder.mutation({
+const deleteCat = (
+  builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,
+) =>
+  builder.mutation<DeleteCatResponse, number>({
     query: (id) => ({
       url: `garage/${id}`,
       method: "DELETE",
     }),
     invalidatesTags: ["Cats"],
-    onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
-      try {
-        await queryFulfilled;
-        dispatch(removeWinner(id));
-      } catch {
-        console.error("Failed to delete cat");
-      }
-    },
   });
 
 export default deleteCat;

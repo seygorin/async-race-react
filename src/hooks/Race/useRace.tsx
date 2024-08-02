@@ -1,15 +1,30 @@
 import { useCallback } from "react";
-import useCatList from "@hooks/Cats/useCatList";
+import useCatList, { Cat } from "@hooks/Cats/useCatList";
 import { setStartTime, setIsRacing } from "@store/slices/garageSlice";
 import useRaceAnimation from "@hooks/Animation/useRaceAnimation";
+import useRaceActions, { EngineResult } from "./useRaceActions";
 
-import useRaceActions from "./useRaceActions";
+interface StartTimes {
+  [catId: number]: number;
+}
 
-const useStartEnginesEffect = (handleStartEngine) => {
+interface IsRacingState {
+  [catId: number]: boolean;
+}
+
+interface StartEngineResult {
+  newStartTimes: StartTimes;
+  newIsRacingState: IsRacingState;
+  results: EngineResult[];
+}
+
+const useStartEnginesEffect = (
+  handleStartEngine: (id: number) => Promise<EngineResult>,
+) => {
   return useCallback(
-    async (cats) => {
-      const newStartTimes = {};
-      const newIsRacingState = {};
+    async (cats: Cat[]): Promise<StartEngineResult> => {
+      const newStartTimes: StartTimes = {};
+      const newIsRacingState: IsRacingState = {};
 
       const startEnginePromises = cats.map(async (cat) => {
         try {
@@ -36,10 +51,12 @@ const useStartEnginesEffect = (handleStartEngine) => {
   );
 };
 
-const useStopEnginesEffect = (handleStopEngine) => {
+const useStopEnginesEffect = (
+  handleStopEngine: (id: number) => Promise<void>,
+) => {
   return useCallback(
-    async (cats) => {
-      const newIsRacingState = {};
+    async (cats: Cat[]): Promise<IsRacingState> => {
+      const newIsRacingState: IsRacingState = {};
       const stopPromises = cats.map(async (cat) => {
         try {
           await handleStopEngine(cat.id);

@@ -1,37 +1,37 @@
-import { useDispatch } from "react-redux";
-import { setPage } from "@store/slices/winnersSlice";
+import { useSelector } from "react-redux";
 import useStateApp from "@hooks/useStateApp";
-import { useNavigate } from "react-router-dom";
+import { RootState } from "@store/store";
+import useWinnersQuery from "./useWinnersQuery";
+import usePageChange from "./usePageChange";
+import useWinnerUpdate from "./useWinnerUpdate";
+import useWinnerDelete from "./useWinnerDelete";
 
 const useWinners = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { currentPageWinners, itemsPerPageWinners } = useStateApp();
+  const winners = useSelector((state: RootState) => state.winners.winners);
 
-  const { winners, currentPageWinners, itemsPerPageWinners } = useStateApp();
+  const { data, refetch } = useWinnersQuery();
 
-  const totalCount = winners.length;
+  const totalCount = data?.totalCount || 0;
   const pageCount = Math.ceil(totalCount / itemsPerPageWinners);
 
-  const paginatedWinners = winners.slice(
-    (currentPageWinners - 1) * itemsPerPageWinners,
-    currentPageWinners * itemsPerPageWinners,
+  const handlePageChange = usePageChange();
+  const handleWinnerUpdate = useWinnerUpdate(refetch);
+  const handleDeleteWinner = useWinnerDelete(
+    currentPageWinners,
+    winners,
+    handlePageChange,
+    refetch,
   );
 
-  const handlePageChange = (newPage: number) => {
-    dispatch(setPage(newPage));
-    if (newPage === 1) {
-      navigate("/winners");
-    } else {
-      navigate(`/winners/${newPage}`);
-    }
-  };
-
   return {
-    winners: paginatedWinners,
+    winners,
     currentPageWinners,
     totalCount,
     pageCount,
     handlePageChange,
+    handleWinnerUpdate,
+    handleDeleteWinner,
   };
 };
 

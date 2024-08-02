@@ -14,7 +14,6 @@ function GaragePagination({
   onPageChange,
 }: GaragePaginationProps) {
   const pageSize = 7;
-
   const totalPages = Math.ceil(totalCount / pageSize);
 
   useEffect(() => {
@@ -23,10 +22,9 @@ function GaragePagination({
     }
   }, [currentPage, onPageChange, totalPages]);
 
-  if (totalCount === 0) {
+  if (totalCount === 0 || totalPages <= 1) {
     return null;
   }
-
   return (
     <Pagination
       className="garage-pagination"

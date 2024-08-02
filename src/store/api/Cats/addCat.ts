@@ -1,5 +1,10 @@
-const addCat = (builder) =>
-  builder.mutation({
+import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
+import { ApiBuilder, NewCat, AddCatResponse } from "../apiTypes";
+
+const addCat = (
+  builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,
+) =>
+  builder.mutation<AddCatResponse, NewCat>({
     query: (newCat) => ({
       url: "garage",
       method: "POST",

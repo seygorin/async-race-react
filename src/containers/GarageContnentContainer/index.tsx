@@ -25,7 +25,11 @@ function GarageContentContainer() {
   };
 
   const toggleModal = () => {
-    isModalVisible ? handleCloseModal() : dispatch({ type: "modal/showModal" });
+    if (isModalVisible) {
+      handleCloseModal();
+    } else {
+      dispatch({ type: "modal/showModal" });
+    }
   };
 
   return (

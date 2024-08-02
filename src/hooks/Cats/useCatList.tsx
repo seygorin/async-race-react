@@ -6,13 +6,14 @@ import {
   useAddCatMutation,
   useUpdateCatMutation,
   useDeleteCatMutation,
+  useDeleteWinnerMutation,
 } from "@store/api/apiBuilder";
 import { AppDispatch } from "@store/store";
 import useStateApp from "@hooks/useStateApp";
 
 const CATS_PER_PAGE = 7;
 
-interface Cat {
+export interface Cat {
   id: number;
   name: string;
   color: string;
@@ -24,12 +25,9 @@ interface UseCatListResult {
   currentPage: number;
   isLoading: boolean;
   error: any;
-  handleAddCat: (newCat: Omit<Cat, "id">) => Promise<void>;
-  handleUpdateCat: (id: number, updatedCat: Partial<Cat>) => Promise<void>;
-  handleDeleteCat: (id: number) => Promise<void>;
 }
 
-const getCatData = () => {
+const useCatData = (): UseCatListResult => {
   const { currentPage } = useStateApp();
 
   const {
@@ -56,39 +54,56 @@ const getCatData = () => {
   };
 };
 
-const createAddCat = () => {
+interface UseCatMutationsResult {
+  handleAddCat: (newCat: Omit<Cat, "id">) => Promise<void>;
+  handleUpdateCat: (id: number, updatedCat: Partial<Cat>) => Promise<void>;
+  handleDeleteCat: (id: number) => Promise<void>;
+}
+
+const useAddCat = () => {
   const [addCatMutation] = useAddCatMutation();
 
-  return useCallback(
+  const handleAddCat = useCallback(
     async (newCat: Omit<Cat, "id">) => {
       await addCatMutation(newCat);
     },
     [addCatMutation],
   );
+
+  return handleAddCat;
 };
 
-const createUpdateCat = () => {
+const useUpdateCat = () => {
   const [updateCatMutation] = useUpdateCatMutation();
 
-  return useCallback(
+  const handleUpdateCat = useCallback(
     async (id: number, updatedCat: Partial<Cat>) => {
       await updateCatMutation({ id, ...updatedCat });
     },
     [updateCatMutation],
   );
+
+  return handleUpdateCat;
 };
 
-const createDeleteCat = (
+const useDeleteCat = (
   currentPage: number,
   totalCount: number,
   catsLength: number,
 ) => {
   const dispatch = useDispatch<AppDispatch>();
   const [deleteCatMutation] = useDeleteCatMutation();
-
-  return useCallback(
+  const [deleteWinnerMutation] = useDeleteWinnerMutation();
+  const { winners } = useStateApp();
+  const handleDeleteCat = useCallback(
     async (id: number) => {
       await deleteCatMutation(id);
+
+      const winnerToDelete = winners.find((winner) => winner.id === id);
+      if (winnerToDelete) {
+        await deleteWinnerMutation({ id });
+      }
+
       const newTotalCount = totalCount - 1;
       const totalPages = Math.ceil(newTotalCount / CATS_PER_PAGE);
 
@@ -98,18 +113,28 @@ const createDeleteCat = (
         dispatch(setCurrentPage(totalPages));
       }
     },
-    [deleteCatMutation, dispatch, currentPage, totalCount, catsLength],
+    [
+      deleteCatMutation,
+      deleteWinnerMutation,
+      dispatch,
+      currentPage,
+      totalCount,
+      catsLength,
+      winners,
+    ],
   );
+
+  return handleDeleteCat;
 };
 
-const createCatMutations = (
+const useCatMutations = (
   currentPage: number,
   totalCount: number,
   catsLength: number,
 ) => {
-  const handleAddCat = createAddCat();
-  const handleUpdateCat = createUpdateCat();
-  const handleDeleteCat = createDeleteCat(currentPage, totalCount, catsLength);
+  const handleAddCat = useAddCat();
+  const handleUpdateCat = useUpdateCat();
+  const handleDeleteCat = useDeleteCat(currentPage, totalCount, catsLength);
 
   return {
     handleAddCat,
@@ -118,9 +143,9 @@ const createCatMutations = (
   };
 };
 
-const useCatList = (): UseCatListResult => {
-  const catData = getCatData();
-  const catMutations = createCatMutations(
+const useCatList = (): UseCatListResult & UseCatMutationsResult => {
+  const catData = useCatData();
+  const catMutations = useCatMutations(
     catData.currentPage,
     catData.totalCount,
     catData.cats.length,

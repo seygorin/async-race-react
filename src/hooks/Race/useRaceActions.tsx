@@ -5,15 +5,15 @@ import {
   useStartEngineMutation,
   useStopEngineMutation,
   useDriveEngineMutation,
-} from "../../store/api/apiBuilder";
+} from "@store/api/apiBuilder";
 import {
   setIsRacing,
   setPositions,
   setWinner,
   setStoppedCats,
-} from "../../store/slices/garageSlice";
+} from "@store/slices/garageSlice";
 
-interface EngineResult {
+export interface EngineResult {
   error?: boolean;
   broken?: boolean;
   stopped?: boolean;

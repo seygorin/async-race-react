@@ -12,7 +12,7 @@ interface CatIconProps {
   cat: CatType;
   catRef: RefObject<HTMLDivElement>;
   velocities: number;
-  status: Record<number, "idle" | "loading" | "succeeded" | "failed">;
+  status: "idle" | "loading" | "succeeded" | "failed";
 }
 
 function CatIcon({
