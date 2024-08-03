@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { apiBuilder } from "../api/apiBuilder";
 
 export interface DriveEngineState {
-  statuses: Record<number, "idle" | "loading" | "succeeded" | "failed">;
+  statuses: Record<string, "idle" | "loading" | "succeeded" | "failed">;
 }
 
 const initialState: DriveEngineState = {
@@ -12,7 +12,36 @@ const initialState: DriveEngineState = {
 const driveEngineSlice = createSlice({
   name: "driveEngine",
   initialState,
-  reducers: {},
+  reducers: {
+    setDriveStatus: (
+      state,
+      action: PayloadAction<
+        { id: number; status: "idle" | "loading" | "succeeded" | "failed" } | "reset"
+      >,
+    ) => {
+      if (action.payload === "reset") {
+        return {
+          ...state,
+          statuses: Object.keys(state.statuses).reduce(
+            (acc, key) => {
+              acc[Number(key)] = "idle";
+              return acc;
+            },
+            {} as Record<number, "idle" | "loading" | "succeeded" | "failed">,
+          ),
+        };
+      }
+
+      const { id, status } = action.payload;
+      return {
+        ...state,
+        statuses: {
+          ...state.statuses,
+          [id]: status,
+        },
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(apiBuilder.endpoints.driveEngine.matchPending, (state, action) => {
@@ -51,4 +80,7 @@ const driveEngineSlice = createSlice({
   },
 });
 
-export default driveEngineSlice.reducer;
+export const { setDriveStatus } = driveEngineSlice.actions;
+
+const drivenReducer = driveEngineSlice.reducer;
+export default drivenReducer;

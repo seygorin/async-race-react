@@ -23,13 +23,10 @@ const handleApiError = <T extends MockResponse>(
       errorMessage = "Failed to connect to the server";
     } else if (typeof error.status === "number") {
       errorMessage = `Error ${error.status}`;
-      if (error.data && typeof error.data === "object" && "message" in error.data) {
-        errorMessage = error.data.message as string;
-      }
     }
   }
 
-  console.error("API Error:", errorMessage);
+  console.error("API Error:", error);
 
   return { ...mockResponse, error: true, errorMessage };
 };

@@ -35,13 +35,9 @@ function CatTrack({
           onEditCat={onEditCat}
           onDeleteCat={onDeleteCat}
           velocity={velocity}
+          cat={cat.id}
         />
-        <div
-          className="cat-track"
-          style={{
-            width: `${trackWidth}px`,
-          }}
-        >
+        <div className="cat-track" style={{ width: `${trackWidth}px` }}>
           <div className="cat-track-line" />
           <Cat
             cat={cat}

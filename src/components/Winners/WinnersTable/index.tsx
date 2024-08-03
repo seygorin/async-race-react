@@ -29,6 +29,7 @@ function WinnersTable({ winners }: WinnersTableProps) {
       columns={updatedColumns}
       pagination={false}
       rowKey="id"
+      scroll={{ x: "max-content" }}
     />
   );
 }

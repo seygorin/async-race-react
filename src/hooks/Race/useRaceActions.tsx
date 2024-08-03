@@ -14,6 +14,8 @@ import {
   setWinner,
   setStoppedCats,
 } from "@store/slices/garageSlice";
+import { setDriveStatus } from "@store/slices/driveEngineSlice";
+
 import { EngineResultType } from "@store/api/apiTypes";
 
 type EngineMutation = (id: number) => Promise<EngineResultType>;
@@ -82,6 +84,7 @@ const useResetRace = (dispatch: Dispatch) => {
     dispatch(setPositions({}));
     dispatch(setWinner(null));
     dispatch(setStoppedCats([]));
+    dispatch(setDriveStatus("reset"));
   }, [dispatch]);
 };
 

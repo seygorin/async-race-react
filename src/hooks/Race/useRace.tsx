@@ -11,6 +11,7 @@ interface StartTimes {
 interface IsRacingState {
   [catId: number]: boolean;
 }
+
 interface EngineResult {
   error?: boolean;
   broken?: boolean;
@@ -20,6 +21,7 @@ interface EngineResult {
   velocity?: number;
   distance?: number;
 }
+
 interface StartEngineResult {
   newStartTimes: StartTimes;
   newIsRacingState: IsRacingState;
@@ -98,9 +100,9 @@ const useRace = () => {
   }, [cats, dispatch, resetRace, startEnginesEffect]);
 
   const handleStopRace = useCallback(async () => {
-    resetRace();
     const newIsRacingState = await stopEnginesEffect(cats);
     dispatch(setIsRacing(newIsRacingState));
+    resetRace();
   }, [cats, dispatch, resetRace, stopEnginesEffect]);
 
   return {

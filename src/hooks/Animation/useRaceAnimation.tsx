@@ -61,6 +61,7 @@ const handleCatFinish = (
   handleWinnerUpdate: (winnerData: Winners) => Promise<void>,
 ): void => {
   const raceTime = (currentTime - startTime) / ONE_SECOND;
+
   dispatch(setWinner({ ...cat, bestTime: raceTime }));
 
   handleWinnerUpdate({
