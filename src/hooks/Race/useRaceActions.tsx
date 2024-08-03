@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-
 import {
   useStartEngineMutation,
   useStopEngineMutation,
@@ -10,6 +9,7 @@ import {
 
 import {
   setIsRacing,
+  resetIsRacing,
   setPositions,
   setWinner,
   setStoppedCats,
@@ -80,7 +80,7 @@ const useStopEngine = (
 
 const useResetRace = (dispatch: Dispatch) => {
   return useCallback(() => {
-    dispatch(setIsRacing({}));
+    dispatch(resetIsRacing());
     dispatch(setPositions({}));
     dispatch(setWinner(null));
     dispatch(setStoppedCats([]));

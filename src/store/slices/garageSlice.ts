@@ -112,6 +112,18 @@ const garageSlice = createSlice({
     setStartTime: (state, action: PayloadAction<Record<number, number>>) => {
       return { ...state, startTime: { ...state.startTime, ...action.payload } };
     },
+    resetIsRacing: (state) => {
+      return {
+        ...state,
+        isRacing: Object.keys(state.isRacing).reduce(
+          (acc, key) => {
+            acc[Number(key)] = false;
+            return acc;
+          },
+          {} as Record<number, boolean>,
+        ),
+      };
+    },
   },
   extraReducers: (builder) => {
     handleGetCatsMatchers(builder);
@@ -126,6 +138,7 @@ export const {
   setIsRacing,
   setStoppedCats,
   setStartTime,
+  resetIsRacing,
 } = garageSlice.actions;
 
 const garageReducer = garageSlice.reducer;
