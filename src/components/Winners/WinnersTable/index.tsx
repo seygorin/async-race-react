@@ -12,21 +12,11 @@ interface WinnersTableProps {
 function WinnersTable({ winners }: WinnersTableProps) {
   const { handleDeleteWinner } = useWinners();
 
-  const handleDelete = (id: number) => {
-    if (id !== undefined) {
-      handleDeleteWinner(id);
-    } else {
-      console.error("Attempted to delete a winner with undefined id");
-    }
-  };
-
   const deleteColumn = {
     title: "Action",
     dataIndex: "action",
-    render: (_: string, record: number) => (
-      <Button onClick={() => record !== undefined && handleDelete(record)}>
-        Delete
-      </Button>
+    render: (_: string, record: Winner) => (
+      <Button onClick={() => handleDeleteWinner(record)}>Delete</Button>
     ),
   };
 

@@ -50,6 +50,5 @@ const catFormSlice = createSlice({
   },
 });
 
-export const { setCatName, setCatColor, setEditingCat, clearForm } =
-  catFormSlice.actions;
+export const { setCatName, setCatColor, setEditingCat, clearForm } = catFormSlice.actions;
 export default catFormSlice.reducer;

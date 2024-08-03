@@ -23,8 +23,8 @@ function WinnerModalContainer() {
             <span className="winner-label">Name:</span> {winner.name}
           </p>
           <p className="winner-time">
-            <span className="winner-label">Time:</span>{" "}
-            {winner.bestTime.toFixed(1)} seconds
+            <span className="winner-label">Time:</span> {winner.bestTime.toFixed(1)}{" "}
+            seconds
           </p>
         </div>
       ) : (

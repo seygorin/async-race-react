@@ -1,10 +1,12 @@
 import { useCallback, useRef, useEffect } from "react";
+import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import {
   setPositions,
   setWinner,
   setStoppedCats,
   setIsRacing,
 } from "@store/slices/garageSlice";
+import { EngineResultType } from "@store/api/apiTypes";
 import useWinners from "@hooks/Winners/useWinners";
 import { showModal } from "@store/slices/modalSlice";
 import useRaceState from "../useStateApp";
@@ -18,7 +20,7 @@ interface Cat {
   color: string;
 }
 
-interface Winner {
+interface Winners {
   id: number;
   name: string;
   color: string;
@@ -37,8 +39,8 @@ interface RaceState {
 }
 
 interface RaceActions {
-  handleStopEngine: (id: number) => Promise<void>;
-  dispatch: (action: RaceActions) => void;
+  handleStopEngine: (id: number) => Promise<EngineResultType>;
+  dispatch: Dispatch<AnyAction>;
   resetRace: () => void;
 }
 
@@ -55,8 +57,8 @@ const handleCatFinish = (
   cat: Cat,
   currentTime: number,
   startTime: number,
-  dispatch: (action: unknown) => void,
-  handleWinnerUpdate: (winnerData: Winner) => Promise<void>,
+  dispatch: Dispatch<AnyAction>,
+  handleWinnerUpdate: (winnerData: Winners) => Promise<void>,
 ): void => {
   const raceTime = (currentTime - startTime) / ONE_SECOND;
   dispatch(setWinner({ ...cat, bestTime: raceTime }));
@@ -74,7 +76,7 @@ const handleCatFinish = (
 
 interface UpdateCatPositionProps extends RaceState, RaceActions {
   lastUpdateTimeRef: React.MutableRefObject<number>;
-  handleWinnerUpdate: (winnerData: Winner) => Promise<void>;
+  handleWinnerUpdate: (winnerData: Winners) => Promise<void>;
 }
 
 interface UpdateCatPositionResult {
@@ -111,31 +113,25 @@ const updateCatPosition = (
   if (newDistance >= distance) {
     handleStopEngine(cat.id);
     if (!winner) {
-      handleCatFinish(
-        cat,
-        currentTime,
-        startTime[cat.id], dispatch,
-        handleWinnerUpdate,
-      );
+      handleCatFinish(cat, currentTime, startTime[cat.id], dispatch, handleWinnerUpdate);
     }
     return { [cat.id]: distance, stopped: true };
   }
   return { [cat.id]: newDistance, stopped: false };
 };
 
-const updatePositions = (
-  cats: Cat[],
-  props: UpdateCatPositionProps,
-): boolean => {
+const updatePositions = (cats: Cat[], props: UpdateCatPositionProps): boolean => {
   const {
-    isRacing, positions,
-    stoppedCats, dispatch,
-    lastUpdateTimeRef, handleWinnerUpdate,
+    isRacing,
+    positions,
+    stoppedCats,
+    dispatch,
+    lastUpdateTimeRef,
+    handleWinnerUpdate,
   } = props;
   const currentTime = performance.now();
   const deltaTime = (currentTime - lastUpdateTimeRef.current) / ONE_SECOND;
   lastUpdateTimeRef.current = currentTime;
-
   const newPositions: Record<number, number> = { ...positions };
   const newStoppedCats = new Set(stoppedCats);
   let allCatsFinished = true;
@@ -146,7 +142,10 @@ const updatePositions = (
         cat,
         deltaTime,
         currentTime,
-        { ...props, handleWinnerUpdate },
+        {
+          ...props,
+          handleWinnerUpdate,
+        },
       );
       newPositions[cat.id] = newPosition;
       if (stopped) {
@@ -157,10 +156,8 @@ const updatePositions = (
       }
     }
   });
-
   dispatch(setPositions(newPositions));
   dispatch(setStoppedCats(Array.from(newStoppedCats)));
-
   return allCatsFinished;
 };
 
@@ -188,14 +185,13 @@ const useRaceAnimation = (cats: Cat[]) => {
     }
   }, [cats, raceState, raceActions, handleWinnerUpdate]);
   useEffect(() => {
-    const isAnyRacing = Object.values(raceState.isRacing).some(
-      (racing) => racing,
-    );
+    const isAnyRacing = Object.values(raceState.isRacing).some((racing) => racing);
     if (isAnyRacing) {
       lastUpdateTimeRef.current = performance.now();
       animationRef.current = requestAnimationFrame(updatePositionsCallback);
-    } else { if (animationRef.current !== null) {cancelAnimationFrame(animationRef.current);
-      }}
+    } else if (animationRef.current !== null) {
+      cancelAnimationFrame(animationRef.current);
+    }
     return () => {
       if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current);

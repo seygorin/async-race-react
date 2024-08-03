@@ -22,9 +22,7 @@ const useStateApp = (): StateApp => {
   const winnersState = useSelector((state: RootState) => state.winners);
   const status = useSelector((state: RootState) => state.driveEngine.statuses);
   const catFormState = useSelector((state: RootState) => state.catForm);
-  const isModalVisible = useSelector(
-    (state: RootState) => state.modal.isModalVisible,
-  );
+  const isModalVisible = useSelector((state: RootState) => state.modal.isModalVisible);
 
   return {
     ...garageState,

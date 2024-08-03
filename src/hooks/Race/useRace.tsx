@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import useCatList, { Cat } from "@hooks/Cats/useCatList";
 import { setStartTime, setIsRacing } from "@store/slices/garageSlice";
 import useRaceAnimation from "@hooks/Animation/useRaceAnimation";
-import useRaceActions, { EngineResult } from "./useRaceActions";
+import useRaceActions from "./useRaceActions";
 
 interface StartTimes {
   [catId: number]: number;
@@ -11,7 +11,15 @@ interface StartTimes {
 interface IsRacingState {
   [catId: number]: boolean;
 }
-
+interface EngineResult {
+  error?: boolean;
+  broken?: boolean;
+  stopped?: boolean;
+  id?: number;
+  errorMessage?: string;
+  velocity?: number;
+  distance?: number;
+}
 interface StartEngineResult {
   newStartTimes: StartTimes;
   newIsRacingState: IsRacingState;
@@ -75,8 +83,7 @@ const useStopEnginesEffect = (
 };
 
 const useRace = () => {
-  const { handleStartEngine, handleStopEngine, resetRace, dispatch } =
-    useRaceActions();
+  const { handleStartEngine, handleStopEngine, resetRace, dispatch } = useRaceActions();
   const { cats } = useCatList();
   useRaceAnimation(cats);
 

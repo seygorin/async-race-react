@@ -49,7 +49,7 @@ module.exports = {
         tsx: "never",
       },
     ],
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", { printWidth: 90 }],
     "import/no-extraneous-dependencies": [
       "error",
       {

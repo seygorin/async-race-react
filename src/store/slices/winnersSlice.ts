@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DeleteWinnerParams } from "@store/api/apiTypes";
 import { apiBuilder } from "../api/apiBuilder";
 
 export interface Winner {
@@ -8,6 +9,19 @@ export interface Winner {
   wins: number;
   bestTime: number;
 }
+
+type DeleteWinnerResult = PayloadAction<
+  void,
+  string,
+  {
+    arg: { originalArgs: DeleteWinnerParams };
+    requestId: string;
+    requestStatus: "fulfilled";
+  } & {
+    fulfilledTimeStamp: number;
+    baseQueryMeta: unknown;
+  }
+>;
 
 export interface WinnersState {
   winners: Winner[];
@@ -22,6 +36,7 @@ const initialState: WinnersState = {
   itemsPerPageWinners: 10,
   error: null,
 };
+
 const handleGetWinnersFulfilled = (
   state: WinnersState,
   action: PayloadAction<{ winners: Winner[] }>,
@@ -42,15 +57,11 @@ const handleUpdateWinnerFulfilled = (
   state: WinnersState,
   action: PayloadAction<Winner>,
 ) => {
-  const index = state.winners.findIndex(
-    (winner) => winner.id === action.payload.id,
-  );
+  const index = state.winners.findIndex((winner) => winner.id === action.payload.id);
   if (index !== -1) {
     return {
       ...state,
-      winners: state.winners.map((winner, i) =>
-        i === index ? action.payload : winner,
-      ),
+      winners: state.winners.map((winner, i) => (i === index ? action.payload : winner)),
     };
   }
   return state;
@@ -58,10 +69,12 @@ const handleUpdateWinnerFulfilled = (
 
 const handleDeleteWinnerFulfilled = (
   state: WinnersState,
-  action: PayloadAction<number>,
+  action: DeleteWinnerResult,
 ) => ({
   ...state,
-  winners: state.winners.filter((winner) => winner.id !== action.payload),
+  winners: state.winners.filter(
+    (winner) => winner.id !== action.meta.arg.originalArgs.id,
+  ),
 });
 
 const winnersSlice = createSlice({
@@ -73,9 +86,7 @@ const winnersSlice = createSlice({
       currentPageWinners: action.payload,
     }),
     updateWinnerLocally: (state, action: PayloadAction<Winner>) => {
-      const index = state.winners.findIndex(
-        (winner) => winner.id === action.payload.id,
-      );
+      const index = state.winners.findIndex((winner) => winner.id === action.payload.id);
       if (index !== -1) {
         return {
           ...state,

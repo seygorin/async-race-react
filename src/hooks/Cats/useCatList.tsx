@@ -35,10 +35,7 @@ const useCatData = (): UseCatListResult => {
   });
 
   const cats = useMemo(() => responseData?.data || [], [responseData]);
-  const totalCount = useMemo(
-    () => responseData?.totalCount || 0,
-    [responseData],
-  );
+  const totalCount = useMemo(() => responseData?.totalCount || 0, [responseData]);
 
   return {
     cats,
@@ -80,11 +77,7 @@ const useUpdateCat = () => {
   return handleUpdateCat;
 };
 
-const useDeleteCat = (
-  currentPage: number,
-  totalCount: number,
-  catsLength: number,
-) => {
+const useDeleteCat = (currentPage: number, totalCount: number, catsLength: number) => {
   const dispatch = useDispatch<AppDispatch>();
   const [deleteCatMutation] = useDeleteCatMutation();
   const [deleteWinnerMutation] = useDeleteWinnerMutation();
@@ -121,11 +114,7 @@ const useDeleteCat = (
   return handleDeleteCat;
 };
 
-const useCatMutations = (
-  currentPage: number,
-  totalCount: number,
-  catsLength: number,
-) => {
+const useCatMutations = (currentPage: number, totalCount: number, catsLength: number) => {
   const handleAddCat = useAddCat();
   const handleUpdateCat = useUpdateCat();
   const handleDeleteCat = useDeleteCat(currentPage, totalCount, catsLength);

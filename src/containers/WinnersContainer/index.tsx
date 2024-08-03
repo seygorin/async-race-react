@@ -3,8 +3,7 @@ import WinnersTable from "@components/Winners/WinnersTable";
 import WinnersPagination from "@components/Winners/WinnersPagination";
 
 function WinnersContainer() {
-  const { winners, currentPageWinners, totalCount, handlePageChange } =
-    useWinners();
+  const { winners, currentPageWinners, totalCount, handlePageChange } = useWinners();
 
   return (
     <>

@@ -7,11 +7,7 @@ interface WinnersPaginationProps {
   onChange: (page: number) => void;
 }
 
-function WinnersPagination({
-  currentPage,
-  total,
-  onChange,
-}: WinnersPaginationProps) {
+function WinnersPagination({ currentPage, total, onChange }: WinnersPaginationProps) {
   const pageSize = 10;
   const pageCount = Math.ceil(total / pageSize);
 

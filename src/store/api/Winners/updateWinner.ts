@@ -1,9 +1,5 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
-import {
-  ApiBuilder,
-  UpdateWinnerResponse,
-  UpdateWinnerParams,
-} from "../apiTypes";
+import { ApiBuilder, UpdateWinnerResponse, UpdateWinnerParams } from "../apiTypes";
 
 const updateWinner = (
   builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,

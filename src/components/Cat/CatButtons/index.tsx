@@ -27,18 +27,10 @@ function CatButtons({
         </CustomButton>
       </div>
       <div className="cat-buttons-column">
-        <CustomButton
-          onClick={onStartEngine}
-          disabled={velocity > 0}
-          size="small"
-        >
+        <CustomButton onClick={onStartEngine} disabled={velocity > 0} size="small">
           Start
         </CustomButton>
-        <CustomButton
-          onClick={onStopEngine}
-          disabled={velocity === 0}
-          size="small"
-        >
+        <CustomButton onClick={onStopEngine} disabled={velocity === 0} size="small">
           Stop
         </CustomButton>
       </div>

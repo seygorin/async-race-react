@@ -7,10 +7,10 @@ export interface MockResponse {
   [key: string]: unknown;
 }
 
-export interface HandleApiErrorResponse<T extends MockResponse> extends T {
+export type HandleApiErrorResponse<T extends MockResponse> = T & {
   error: boolean;
   errorMessage: string;
-}
+};
 
 const handleApiError = <T extends MockResponse>(
   error: ApiError,
@@ -23,11 +23,7 @@ const handleApiError = <T extends MockResponse>(
       errorMessage = "Failed to connect to the server";
     } else if (typeof error.status === "number") {
       errorMessage = `Error ${error.status}`;
-      if (
-        error.data &&
-        typeof error.data === "object" &&
-        "message" in error.data
-      ) {
+      if (error.data && typeof error.data === "object" && "message" in error.data) {
         errorMessage = error.data.message as string;
       }
     }
@@ -35,7 +31,7 @@ const handleApiError = <T extends MockResponse>(
 
   console.error("API Error:", errorMessage);
 
-  return { error: true, errorMessage, ...mockResponse };
+  return { ...mockResponse, error: true, errorMessage };
 };
 
 export default handleApiError;

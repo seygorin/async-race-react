@@ -16,11 +16,7 @@ interface CatNameInputProps {
   setIsNameValid: (isValid: boolean) => void;
 }
 
-function CatNameInput({
-  catName,
-  setCatName,
-  setIsNameValid,
-}: CatNameInputProps) {
+function CatNameInput({ catName, setCatName, setIsNameValid }: CatNameInputProps) {
   return (
     <CustomValidationInput
       placeholder="Cat Name"

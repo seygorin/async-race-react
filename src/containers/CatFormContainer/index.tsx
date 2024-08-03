@@ -4,14 +4,8 @@ import CatForm from "@components/Cat/CatForm";
 import useCatForm from "@hooks/Cats/useCatForm";
 
 function CatFormContainer() {
-  const {
-    catName,
-    catColor,
-    setCatName,
-    setCatColor,
-    handleAddOrUpdateCat,
-    editingCat,
-  } = useCatForm();
+  const { catName, catColor, setCatName, setCatColor, handleAddOrUpdateCat, editingCat } =
+    useCatForm();
 
   const [isNameValid, setIsNameValid] = useState(true);
 

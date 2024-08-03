@@ -14,9 +14,7 @@ function CustomMenu() {
             key={item.key}
             to={item.to}
             className={({ isActive }) =>
-              isActive
-                ? "custom-menu-item custom-menu-item-active"
-                : "custom-menu-item"
+              isActive ? "custom-menu-item custom-menu-item-active" : "custom-menu-item"
             }
           >
             <span className="menu-item-text">{item.label}</span>

@@ -19,13 +19,7 @@ const useWinnerDelete = (
         refetch();
       }
     },
-    [
-      deleteWinner,
-      winners.length,
-      currentPageWinners,
-      handlePageChange,
-      refetch,
-    ],
+    [deleteWinner, winners.length, currentPageWinners, handlePageChange, refetch],
   );
 };
 

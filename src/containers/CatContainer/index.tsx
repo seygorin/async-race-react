@@ -19,7 +19,7 @@ function Cat({ cat, position, totalDistance, trackWidth, velocity }: CatProps) {
 
   useEffect(() => {
     if (catRef.current) {
-      const catWidth = 290;
+      const catWidth = 300;
       const maxPosition = trackWidth - catWidth;
       const scaledPosition = Math.min(
         (position / totalDistance) * maxPosition,

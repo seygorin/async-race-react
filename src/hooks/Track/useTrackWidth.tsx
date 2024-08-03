@@ -11,9 +11,7 @@ const useTrackWidth = (): number => {
     const updateTrackWidth = () => {
       const windowWidth = window.innerWidth;
       const newTrackWidth =
-        maxDistance > 0
-          ? (windowWidth / maxDistance) * maxDistance
-          : windowWidth;
+        maxDistance > 0 ? (windowWidth / maxDistance) * maxDistance : windowWidth;
       setTrackWidth(newTrackWidth);
     };
 

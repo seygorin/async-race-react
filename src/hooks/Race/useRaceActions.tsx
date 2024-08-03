@@ -1,103 +1,78 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
+
 import {
   useStartEngineMutation,
   useStopEngineMutation,
   useDriveEngineMutation,
 } from "@store/api/apiBuilder";
+
 import {
   setIsRacing,
   setPositions,
   setWinner,
   setStoppedCats,
 } from "@store/slices/garageSlice";
+import { EngineResultType } from "@store/api/apiTypes";
 
-export interface EngineResult {
-  error?: boolean;
-  broken?: boolean;
-  stopped?: boolean;
-  id?: number;
-  errorMessage?: string;
-  velocity?: number;
-  distance?: number;
-}
+type EngineMutation = (id: number) => Promise<EngineResultType>;
 
-type EngineMutation = (id: number) => Promise<EngineResult>;
-
-const useEngineAction = (
-  dispatch: Dispatch,
-  stopEngineMutation: EngineMutation,
-) => {
+const useEngineAction = (dispatch: Dispatch) => {
   return useCallback(
-    async (action: EngineMutation, id: number): Promise<EngineResult> => {
+    async (action: EngineMutation, id: number): Promise<EngineResultType> => {
       try {
         const result = await action(id);
-        if (result.error || result.broken) {
+
+        if (result.error) {
           dispatch(setIsRacing({ [id]: false }));
-          if (action !== stopEngineMutation) {
-            await stopEngineMutation(id);
-          }
           return { ...result, stopped: true };
         }
         return result;
       } catch (err: unknown) {
         console.error(`Error in engine action for id ${id}:`, err);
         dispatch(setIsRacing({ [id]: false }));
-        if (action !== stopEngineMutation) {
-          try {
-            await stopEngineMutation(id);
-          } catch (stopErr) {
-            console.error(`Error stopping engine for id ${id}:`, stopErr);
-          }
-        }
         return {
-          error: true,
-          errorMessage:
-            err instanceof Error ? err.message : "An unknown error occurred",
-          stopped: true,
           id,
+          velocity: 0,
+          distance: 0,
+          error: true,
+          errorMessage: "An error occurred",
         };
       }
     },
-    [dispatch, stopEngineMutation],
+    [dispatch],
   );
 };
 
 const useStartEngine = (
-  handleEngineAction: (
-    action: EngineMutation,
-    id: number,
-  ) => Promise<EngineResult>,
+  handleEngineAction: (action: EngineMutation, id: number) => Promise<EngineResultType>,
   dispatch: Dispatch,
-  startEngineMutation: EngineMutation,
-  driveEngineMutation: EngineMutation,
+  startEngineMutationTyped: EngineMutation,
+  driveEngineMutationTyped: EngineMutation,
 ) => {
   return useCallback(
-    async (id: number): Promise<EngineResult> => {
-      await handleEngineAction(startEngineMutation, id);
+    async (id: number): Promise<EngineResultType> => {
+      await handleEngineAction(startEngineMutationTyped, id);
       dispatch(setIsRacing({ [id]: true }));
-      return handleEngineAction(driveEngineMutation, id);
+      return handleEngineAction(driveEngineMutationTyped, id);
     },
-    [handleEngineAction, dispatch, startEngineMutation, driveEngineMutation],
+    [handleEngineAction, dispatch, startEngineMutationTyped, driveEngineMutationTyped],
   );
 };
 
 const useStopEngine = (
-  handleEngineAction: (
-    action: EngineMutation,
-    id: number,
-  ) => Promise<EngineResult>,
+  handleEngineAction: (action: EngineMutation, id: number) => Promise<EngineResultType>,
   dispatch: Dispatch,
-  stopEngineMutation: EngineMutation,
+  stopEngineMutationTyped: EngineMutation,
 ) => {
   return useCallback(
-    async (id: number): Promise<EngineResult> => {
-      const result = await handleEngineAction(stopEngineMutation, id);
+    async (id: number): Promise<EngineResultType> => {
+      const result = await handleEngineAction(stopEngineMutationTyped, id);
       dispatch(setIsRacing({ [id]: false }));
       return result;
     },
-    [handleEngineAction, dispatch, stopEngineMutation],
+    [handleEngineAction, dispatch, stopEngineMutationTyped],
   );
 };
 
@@ -113,29 +88,41 @@ const useResetRace = (dispatch: Dispatch) => {
 const useRaceActions = () => {
   const dispatch = useDispatch();
   const [startEngineMutation] = useStartEngineMutation();
+  const startEngineMutationTyped: EngineMutation = async (id) => {
+    const result = await startEngineMutation(id);
+    return result.data as EngineResultType;
+  };
   const [stopEngineMutation] = useStopEngineMutation();
+  const stopEngineMutationTyped: EngineMutation = async (id) => {
+    const result = await stopEngineMutation(id);
+    return result.data as EngineResultType;
+  };
   const [driveEngineMutation] = useDriveEngineMutation();
+  const driveEngineMutationTyped: EngineMutation = async (id) => {
+    const result = await driveEngineMutation(id);
 
-  const handleEngineAction = useEngineAction(dispatch, stopEngineMutation);
+    const engineResult: EngineResultType = {
+      id,
+      velocity: 0,
+      distance: 0,
+      error: !(result.data?.success ?? false),
+    };
+    return engineResult;
+  };
+  const handleEngineAction = useEngineAction(dispatch);
   const handleStartEngine = useStartEngine(
     handleEngineAction,
     dispatch,
-    startEngineMutation,
-    driveEngineMutation,
+    startEngineMutationTyped,
+    driveEngineMutationTyped,
   );
   const handleStopEngine = useStopEngine(
     handleEngineAction,
     dispatch,
-    stopEngineMutation,
+    stopEngineMutationTyped,
   );
   const resetRace = useResetRace(dispatch);
-
-  return {
-    handleStartEngine,
-    handleStopEngine,
-    resetRace,
-    dispatch,
-  };
+  return { handleStartEngine, handleStopEngine, resetRace, dispatch };
 };
 
 export default useRaceActions;

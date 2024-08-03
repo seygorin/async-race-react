@@ -35,9 +35,7 @@ const driveEngine = (
       _meta,
       arg: number,
     ): { data: DriveEngineErrorResponse } => {
-      const mockCat = mockData.driveEngine.cats.find(
-        (cat) => cat.id === Number(arg),
-      );
+      const mockCat = mockData.driveEngine.cats.find((cat) => cat.id === Number(arg));
       return {
         data: handleApiError(error, {
           id: Number(arg),

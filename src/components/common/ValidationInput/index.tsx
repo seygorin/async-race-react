@@ -20,9 +20,7 @@ function handleFocus(
   }
 }
 
-function handleBlur(
-  setIsTooltipVisible: React.Dispatch<React.SetStateAction<boolean>>,
-) {
+function handleBlur(setIsTooltipVisible: React.Dispatch<React.SetStateAction<boolean>>) {
   setIsTooltipVisible(false);
 }
 

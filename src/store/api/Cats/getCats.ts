@@ -1,10 +1,5 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
-import {
-  ApiBuilder,
-  GetCatsQueryParams,
-  GetCatsResponse,
-  Cat,
-} from "../apiTypes";
+import { ApiBuilder, GetCatsQueryParams, GetCatsResponse, Cat } from "../apiTypes";
 
 const getCats = (
   builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,

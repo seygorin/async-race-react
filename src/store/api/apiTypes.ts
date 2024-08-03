@@ -3,13 +3,14 @@ import {
   FetchArgs,
   FetchBaseQueryError,
   FetchBaseQueryMeta,
-} from "@reduxjs/toolkit/query/react";
+  MutationDefinition,
+} from "@reduxjs/toolkit/query";
 
 export type ApiBuilder = BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError,
-  {},
+  NonNullable<unknown>,
   FetchBaseQueryMeta
 >;
 
@@ -25,8 +26,6 @@ export interface NewCat {
 }
 
 export interface AddCatResponse extends Cat {}
-
-export type DeleteCatResponse = {};
 
 export interface GetCatsQueryParams {
   page: number;
@@ -56,6 +55,7 @@ export interface ApiError {
 export interface MockResponse {
   [key: string]: boolean | string | number;
 }
+export type DeleteCatResponse = NonNullable<unknown>;
 
 export type HandleApiErrorResponse<T> = T & {
   error: boolean;
@@ -82,8 +82,10 @@ export interface GetWinnerResponse {
 
 export interface CreateWinnerParams {
   id: number;
+  name: string;
+  color: string;
   wins: number;
-  time: number;
+  bestTime: number;
 }
 
 export interface CreateWinnerResponse {
@@ -123,15 +125,17 @@ export interface GetWinnersResponse {
 
 export interface Winners {
   id: number;
-  wins: number;
   name: string;
   color: string;
+  wins: number;
   bestTime: number;
 }
 
 export interface EngineSuccessResponse {
   velocity: number;
   distance: number;
+  error?: boolean;
+  stopped?: boolean;
 }
 
 export interface EngineErrorResponse {
@@ -146,23 +150,12 @@ export type EngineResponse = EngineSuccessResponse & { id: number };
 
 export type EngineResult = EngineResponse | EngineErrorResponse;
 
-export type EngineMutation = (arg: number) => Promise<EngineResult>;
+export type { EngineResult as EngineResultType };
 
-export function handleApiError<T extends MockResponse>(
-  error: ApiError,
-  mockResponse: T,
-): HandleApiErrorResponse<T>;
-
-// Определение типа для мутаций двигателя
-export type EngineMutationDefinition = MutationDefinition<
-  number,
-  ApiBuilder,
-  "Engine" | "Cats" | "Winners",
-  EngineResponse,
-  "api"
->;
+export type EngineMutation = (arg: number) => Promise<EngineResponse | undefined>;
 
 export interface DriveEngineSuccessResponse {
+  id: number;
   success: boolean;
 }
 
@@ -173,9 +166,10 @@ export interface DriveEngineErrorResponse {
 
 export type DriveEngineResponse = DriveEngineSuccessResponse & { id: number };
 
-type EngineMutationResult = {
-  data?: DriveEngineResponse;
-  error?: FetchBaseQueryError | SerializedError;
-};
-
-type EngineMutation = (id: number) => Promise<EngineMutationResult>;
+export type EngineMutationDefinition = MutationDefinition<
+  number,
+  ApiBuilder,
+  "Engine" | "Cats" | "Winners",
+  EngineResponse,
+  "api"
+>;

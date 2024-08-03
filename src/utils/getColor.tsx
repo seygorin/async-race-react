@@ -19,8 +19,7 @@ const getColor = (progress: number) => {
   const lowerColor = rainbowColors[lowerIndex];
   const upperColor = rainbowColors[upperIndex];
 
-  const lerp = (start: number, end: number, t: number) =>
-    start + (end - start) * t;
+  const lerp = (start: number, end: number, t: number) => start + (end - start) * t;
   const t = index - lowerIndex;
 
   const hue = lerp(lowerColor.hue, upperColor.hue, t);
