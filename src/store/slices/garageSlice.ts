@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction, ActionReducerMapBuilder } from "@reduxjs/toolkit";
+import { Cat } from "@type/catsTypes";
+import { Winners } from "@type/winnersTypes";
 import { apiBuilder } from "../api/apiBuilder";
-
-export interface Cat {
-  id: number;
-  name: string;
-  color: string;
-}
-
-export interface Winner extends Cat {
-  bestTime: number;
-}
 
 export interface GarageState {
   cats: Cat[];
@@ -17,7 +9,7 @@ export interface GarageState {
   error: string | null;
   currentPage: number;
   positions: Record<number, number>;
-  winner: Winner | null;
+  winner: Winners | null;
   isRacing: Record<number, boolean>;
   stoppedCats: number[];
   startTime: Record<number, number>;
@@ -100,7 +92,7 @@ const garageSlice = createSlice({
     setPositions: (state, action: PayloadAction<Record<number, number>>) => {
       return { ...state, positions: action.payload };
     },
-    setWinner: (state, action: PayloadAction<Winner | null>) => {
+    setWinner: (state, action: PayloadAction<Winners | null>) => {
       return { ...state, winner: action.payload };
     },
     setIsRacing: (state, action: PayloadAction<Record<number, boolean>>) => {

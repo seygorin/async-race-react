@@ -1,13 +1,13 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { ApiBuilder } from "@type/apiTypes";
 import {
-  ApiBuilder,
   EngineResponse,
   EngineErrorResponse,
   EngineResult,
   EngineMutationDefinition,
   EngineSuccessResponse,
-} from "../apiTypes";
+} from "@type/engineTypes";
 import handleApiError from "../ErrorHandler/apiErrorUtils";
 
 const createEngineMutation =

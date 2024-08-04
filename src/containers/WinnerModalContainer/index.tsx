@@ -8,6 +8,13 @@ function WinnerModalContainer() {
   const { isModalVisible, handleCloseModal } = useModal();
   const { winner } = useStateApp();
 
+  const renderTime = (time: number | undefined) => {
+    if (time === undefined || Number.isNaN(time)) {
+      return "We don't know";
+    }
+    return `${time.toFixed(1)} seconds`;
+  };
+
   return (
     <Modal
       title="Winner"
@@ -23,8 +30,7 @@ function WinnerModalContainer() {
             <span className="winner-label">Name:</span> {winner.name}
           </p>
           <p className="winner-time">
-            <span className="winner-label">Time:</span> {winner.bestTime.toFixed(1)}{" "}
-            seconds
+            <span className="winner-label">Time:</span> {renderTime(winner.bestTime)}
           </p>
         </div>
       ) : (

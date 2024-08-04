@@ -1,5 +1,6 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
-import { ApiBuilder, DeleteWinnerParams } from "../apiTypes";
+import { ApiBuilder } from "@type/apiTypes";
+import { DeleteWinnerParams } from "@type/winnersTypes";
 
 const deleteWinner = (
   builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,

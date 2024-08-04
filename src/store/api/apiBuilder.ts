@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ApiBuilder } from "@type/apiTypes";
+import { DriveEngineResponse } from "@type/engineTypes";
 import { startEngine, stopEngine } from "./Engine/handleEngine";
-import driveEngine, { DriveEngineResponse } from "./Engine/driveEngine";
+import driveEngine from "./Engine/driveEngine";
 import getCats from "./Cats/getCats";
 import addCat from "./Cats/addCat";
 import updateCat from "./Cats/updateCat";
@@ -9,8 +11,6 @@ import getWinners from "./Winners/getWinners";
 import createWinner from "./Winners/createWinner";
 import deleteWinner from "./Winners/deleteWinner";
 import updateWinner from "./Winners/updateWinner";
-
-import { ApiBuilder } from "./apiTypes";
 
 export const apiBuilder = createApi({
   reducerPath: "api",

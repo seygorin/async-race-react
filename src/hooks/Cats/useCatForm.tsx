@@ -8,7 +8,7 @@ import {
 import useCatList from "@hooks/Cats/useCatList";
 import useStateApp from "@hooks/useStateApp";
 import { AppDispatch } from "@store/store";
-import { Cat } from "@store/slices/garageSlice";
+import { Cat } from "@type/catsTypes";
 
 interface UseCatFormReturn {
   catName: string;

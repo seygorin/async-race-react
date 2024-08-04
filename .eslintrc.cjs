@@ -34,6 +34,7 @@ module.exports = {
           ["@assets", "./src/assets"],
           ["@store", "./src/store"],
           ["@utils", "./src/utils"],
+          ["@type", "./src/types"],
         ],
         extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
       },

@@ -1,6 +1,6 @@
 import CatButtons from "@components/Cat/CatButtons";
 import Cat from "@containers/CatContainer";
-import { Cat as CatType } from "@store/slices/garageSlice";
+import { Cat as CatType } from "@type/catsTypes";
 import "./index.css";
 
 interface CatTrackProps {

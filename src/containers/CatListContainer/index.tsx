@@ -1,8 +1,8 @@
 import React from "react";
 import CatTrackContainer from "@containers/CatTrackContainer";
-import { Cat as CatType } from "@store/slices/garageSlice";
 import useStateApp from "@hooks/useStateApp";
 import useCatList from "@hooks/Cats/useCatList";
+import { Cat as CatType } from "@type/catsTypes";
 
 import "./index.css";
 

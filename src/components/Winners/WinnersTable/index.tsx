@@ -1,8 +1,9 @@
 import { Table } from "antd";
-import { Winner } from "@store/slices/winnersSlice";
 import useWinners from "@hooks/Winners/useWinners";
 import Button from "@components/common/Button";
+import { Winner } from "@type/winnersTypes";
 import columns from "./WinnersTableColumns";
+
 import "./index.css";
 
 interface WinnersTableProps {

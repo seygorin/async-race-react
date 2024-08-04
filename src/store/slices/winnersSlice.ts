@@ -1,14 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DeleteWinnerParams } from "@store/api/apiTypes";
+import { DeleteWinnerParams, Winner } from "@type/winnersTypes";
 import { apiBuilder } from "../api/apiBuilder";
-
-export interface Winner {
-  id: number;
-  name: string;
-  color: string;
-  wins: number;
-  bestTime: number;
-}
 
 type DeleteWinnerResult = PayloadAction<
   void,

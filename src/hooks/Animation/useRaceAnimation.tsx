@@ -6,27 +6,15 @@ import {
   setStoppedCats,
   setIsRacing,
 } from "@store/slices/garageSlice";
-import { EngineResultType } from "@store/api/apiTypes";
 import useWinners from "@hooks/Winners/useWinners";
 import { showModal } from "@store/slices/modalSlice";
+import { EngineResultType } from "@type/engineTypes";
+import { Cat } from "@type/catsTypes";
+import { Winner } from "@type/winnersTypes";
 import useRaceState from "../useStateApp";
 import useRaceActions from "../Race/useRaceActions";
 
 const ONE_SECOND = 1000;
-
-interface Cat {
-  id: number;
-  name: string;
-  color: string;
-}
-
-interface Winners {
-  id: number;
-  name: string;
-  color: string;
-  wins: number;
-  bestTime: number;
-}
 
 interface RaceState {
   velocities: Record<number, number>;
@@ -58,7 +46,7 @@ const handleCatFinish = (
   currentTime: number,
   startTime: number,
   dispatch: Dispatch<AnyAction>,
-  handleWinnerUpdate: (winnerData: Winners) => Promise<void>,
+  handleWinnerUpdate: (winnerData: Winner) => Promise<void>,
 ): void => {
   const raceTime = (currentTime - startTime) / ONE_SECOND;
 
@@ -77,7 +65,7 @@ const handleCatFinish = (
 
 interface UpdateCatPositionProps extends RaceState, RaceActions {
   lastUpdateTimeRef: React.MutableRefObject<number>;
-  handleWinnerUpdate: (winnerData: Winners) => Promise<void>;
+  handleWinnerUpdate: (winnerData: Winner) => Promise<void>;
 }
 
 interface UpdateCatPositionResult {

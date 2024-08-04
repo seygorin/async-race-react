@@ -1,6 +1,6 @@
 import { ColumnProps } from "antd/lib/table";
 import CatSitting from "@assets/CatSitting";
-import { Winner } from "@store/slices/winnersSlice";
+import { Winner } from "@type/winnersTypes";
 
 const columns: ColumnProps<Winner>[] = [
   {

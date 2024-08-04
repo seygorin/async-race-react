@@ -10,14 +10,10 @@ import {
 } from "@store/api/apiBuilder";
 import { AppDispatch } from "@store/store";
 import useStateApp from "@hooks/useStateApp";
+import { Cat } from "@type/catsTypes";
+import mockData from "../../mocks/index";
 
 const CATS_PER_PAGE = 7;
-
-export interface Cat {
-  id: number;
-  name: string;
-  color: string;
-}
 
 interface UseCatListResult {
   cats: Cat[];
@@ -29,13 +25,30 @@ interface UseCatListResult {
 const useCatData = (): UseCatListResult => {
   const { currentPage } = useStateApp();
 
-  const { data: responseData, isLoading } = useGetCatsQuery({
+  const {
+    data: responseData,
+    isLoading,
+    error,
+  } = useGetCatsQuery({
     page: currentPage,
     limit: CATS_PER_PAGE,
   });
 
-  const cats = useMemo(() => responseData?.data || [], [responseData]);
-  const totalCount = useMemo(() => responseData?.totalCount || 0, [responseData]);
+  const cats = useMemo(() => {
+    if (error) {
+      const start = (currentPage - 1) * CATS_PER_PAGE;
+      const end = start + CATS_PER_PAGE;
+      return mockData.cats.slice(start, end);
+    }
+    return responseData?.data || [];
+  }, [responseData, error, currentPage]);
+
+  const totalCount = useMemo(() => {
+    if (error) {
+      return mockData.totalCount;
+    }
+    return responseData?.totalCount || 0;
+  }, [responseData, error]);
 
   return {
     cats,

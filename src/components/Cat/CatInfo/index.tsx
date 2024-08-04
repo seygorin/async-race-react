@@ -1,5 +1,5 @@
-import { Cat as CatType } from "@store/slices/garageSlice";
 import getColor from "@utils/getColor";
+import { Cat as CatType } from "@type/catsTypes";
 import "./index.css";
 
 const PROGRESS_BASE = 100;

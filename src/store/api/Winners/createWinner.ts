@@ -1,5 +1,6 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
-import { ApiBuilder, CreateWinnerParams, CreateWinnerResponse } from "../apiTypes";
+import { CreateWinnerParams, CreateWinnerResponse } from "@type/winnersTypes";
+import { ApiBuilder } from "@type/apiTypes";
 
 const createWinner = (
   builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,

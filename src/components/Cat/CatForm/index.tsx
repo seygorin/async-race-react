@@ -1,7 +1,7 @@
 import { Form, ColorPicker } from "antd";
 import CustomButton from "@components/common/Button";
 import CustomValidationInput from "@components/common/ValidationInput";
-import { Cat as CatType } from "@store/slices/garageSlice";
+import { Cat as CatType } from "@type/catsTypes";
 import "./index.css";
 
 const VALIDATION_MIN_LENGTH = 3;

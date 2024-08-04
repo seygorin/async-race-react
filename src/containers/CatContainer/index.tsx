@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import CatIcon from "@components/Cat/CatIcon";
 import CatInfo from "@components/Cat/CatInfo";
-import { Cat as CatType } from "@store/slices/garageSlice";
 import useStateApp from "@hooks/useStateApp";
+import { Cat as CatType } from "@type/catsTypes";
 import "./index.css";
 
 interface CatProps {

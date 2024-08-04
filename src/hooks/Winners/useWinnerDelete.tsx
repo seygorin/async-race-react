@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Winner } from "@store/api/apiTypes";
+import { Winner } from "@type/winnersTypes";
 import { useDeleteWinner } from "./useMutations";
 
 const useWinnerDelete = (

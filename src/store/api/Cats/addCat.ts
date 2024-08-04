@@ -1,5 +1,6 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
-import { ApiBuilder, NewCat, AddCatResponse } from "../apiTypes";
+import { ApiBuilder } from "@type/apiTypes";
+import { AddCatResponse, NewCat } from "@type/catsTypes";
 
 const addCat = (
   builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,

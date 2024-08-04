@@ -15,8 +15,7 @@ import {
   setStoppedCats,
 } from "@store/slices/garageSlice";
 import { setDriveStatus } from "@store/slices/driveEngineSlice";
-
-import { EngineResultType } from "@store/api/apiTypes";
+import { EngineResultType } from "@type/engineTypes";
 
 type EngineMutation = (id: number) => Promise<EngineResultType>;
 

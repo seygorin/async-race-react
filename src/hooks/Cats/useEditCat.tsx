@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setEditingCat } from "@store/slices/catFormSlice";
-import { Cat as CatType } from "@store/slices/garageSlice";
+import { Cat as CatType } from "@type/catsTypes";
 
 const useEditCat = () => {
   const dispatch = useDispatch();

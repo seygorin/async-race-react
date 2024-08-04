@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface Cat {
-  id: number;
-  name: string;
-  color: string;
-}
+import { Cat } from "@type/catsTypes";
 
 export interface CatFormState {
   catName: string;

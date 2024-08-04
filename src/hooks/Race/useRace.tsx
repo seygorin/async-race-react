@@ -1,7 +1,8 @@
 import { useCallback } from "react";
-import useCatList, { Cat } from "@hooks/Cats/useCatList";
+import useCatList from "@hooks/Cats/useCatList";
 import { setStartTime, setIsRacing } from "@store/slices/garageSlice";
 import useRaceAnimation from "@hooks/Animation/useRaceAnimation";
+import { Cat } from "@type/catsTypes";
 import useRaceActions from "./useRaceActions";
 
 interface StartTimes {

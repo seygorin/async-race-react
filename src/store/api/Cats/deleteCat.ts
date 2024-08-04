@@ -1,5 +1,6 @@
 import { EndpointBuilder } from "@reduxjs/toolkit/query/react";
-import { ApiBuilder, DeleteCatResponse } from "../apiTypes";
+import { ApiBuilder } from "@type/apiTypes";
+import { DeleteCatResponse } from "@type/catsTypes";
 
 const deleteCat = (
   builder: EndpointBuilder<ApiBuilder, "Engine" | "Cats" | "Winners", "api">,
