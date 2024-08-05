@@ -1,3 +1,6 @@
+import { ColumnType } from "antd/es/table";
+import { ReactNode } from "react";
+
 export interface Winner {
   id: number;
   name: string;
@@ -58,3 +61,11 @@ export interface GetWinnersResponse {
   winners: Winner[];
   totalCount: number;
 }
+
+export type WinnerColumnType = ColumnType<Winner>;
+
+export type ActionColumnType = Omit<WinnerColumnType, "render"> & {
+  render: (value: unknown, record: Winner, index: number) => ReactNode;
+};
+
+export type WinnerColumnsType = (WinnerColumnType | ActionColumnType)[];

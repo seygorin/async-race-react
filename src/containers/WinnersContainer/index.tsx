@@ -1,7 +1,7 @@
 import useWinners from "@hooks/Winners/useWinners";
 import WinnersTable from "@components/Winners/WinnersTable";
 import WinnersPagination from "@components/Winners/WinnersPagination";
-import useWinnersTableColumns from "@components/Winners/WinnersTable/WinnersTableColumns";
+import useWinnersTableColumns from "@components/Winners/WinnersColumns";
 import { SorterResult } from "antd/lib/table/interface";
 import { Winner } from "@type/winnersTypes";
 
