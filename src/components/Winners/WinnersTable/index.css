@@ -8,6 +8,14 @@
     4px 4px #638e9e;
 }
 
+.winners-table {
+  margin-bottom: 1rem;
+  border-top-right-radius: 10px;
+  box-shadow:
+    2px 2px #f5e5ff,
+    4px 4px #638e9e;
+}
+
 .winners-table.ant-table-wrapper .ant-table-tbody > tr > td:nth-child(2) > svg {
   margin-top: 0.5rem;
 }
@@ -25,8 +33,4 @@
 
 .winners-table.ant-table-wrapper .ant-table-thead > tr > th:nth-child(2):hover {
   background-color: #a8acf3;
-}
-
-.winners-table {
-  margin-bottom: 1rem;
 }

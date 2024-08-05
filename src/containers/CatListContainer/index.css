@@ -1,13 +1,15 @@
 .no-data {
   font-size: 24px;
   color: #323582;
-	background-color: #c0c3f8;
-	border-radius: 10px;
+  background-color: #c0c3f8;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40vh;
-
+  box-shadow:
+    2px 2px #f5e5ff,
+    4px 4px #638e9e;
 }
 
 .cat-list-container {

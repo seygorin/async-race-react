@@ -50,6 +50,8 @@ export interface UpdateWinnerResponse {
 export interface GetWinnersParams {
   page: number;
   limit: number;
+  sort?: "id" | "wins" | "time";
+  order?: "ASC" | "DESC";
 }
 
 export interface GetWinnersResponse {

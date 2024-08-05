@@ -19,6 +19,8 @@ export interface WinnersState {
   winners: Winner[];
   currentPageWinners: number;
   itemsPerPageWinners: number;
+  sortField: "id" | "wins" | "time";
+  sortOrder: "ASC" | "DESC";
   error: string | null;
 }
 
@@ -26,6 +28,8 @@ const initialState: WinnersState = {
   winners: [],
   currentPageWinners: 1,
   itemsPerPageWinners: 10,
+  sortField: "id",
+  sortOrder: "ASC",
   error: null,
 };
 
@@ -77,6 +81,14 @@ const winnersSlice = createSlice({
       ...state,
       currentPageWinners: action.payload,
     }),
+    setSort: (
+      state,
+      action: PayloadAction<{ field: "id" | "wins" | "time"; order: "ASC" | "DESC" }>,
+    ) => ({
+      ...state,
+      sortField: action.payload.field,
+      sortOrder: action.payload.order,
+    }),
     updateWinnerLocally: (state, action: PayloadAction<Winner>) => {
       const index = state.winners.findIndex((winner) => winner.id === action.payload.id);
       if (index !== -1) {
@@ -120,6 +132,6 @@ const winnersSlice = createSlice({
   },
 });
 
-export const { setPage, updateWinnerLocally } = winnersSlice.actions;
+export const { setPage, updateWinnerLocally, setSort } = winnersSlice.actions;
 
 export default winnersSlice.reducer;
