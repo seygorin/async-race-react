@@ -21,9 +21,10 @@ function CatButtons({
   onDeleteCat,
   velocity,
 }: CatButtonsProps) {
-  const { status } = useStateApp();
+  const { status, stoppedCats } = useStateApp();
   const isCatLoading = status[cat] === "loading";
-  const isStartButtonDisabled = isCatLoading || velocity > 0;
+  const isCatStopped = stoppedCats.includes(cat);
+  const isStartButtonDisabled = isCatLoading || velocity > 0 || isCatStopped;
   const isStopButtonDisabled = isCatLoading || velocity === 0;
   const isDeleteButtonDisabled = isCatLoading;
 
