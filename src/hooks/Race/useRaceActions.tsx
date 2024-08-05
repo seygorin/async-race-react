@@ -53,15 +53,16 @@ const useStartEngine = (
   driveEngineMutationTyped: EngineMutation,
 ) => {
   return useCallback(
-    async (id: number): Promise<EngineResultType> => {
-      await handleEngineAction(startEngineMutationTyped, id);
-      dispatch(setIsRacing({ [id]: true }));
-      return handleEngineAction(driveEngineMutationTyped, id);
+    (id: number): Promise<EngineResultType> => {
+      return handleEngineAction(startEngineMutationTyped, id).then((result) => {
+        dispatch(setIsRacing({ [id]: true }));
+        handleEngineAction(driveEngineMutationTyped, id);
+        return result;
+      });
     },
     [handleEngineAction, dispatch, startEngineMutationTyped, driveEngineMutationTyped],
   );
 };
-
 const useStopEngine = (
   handleEngineAction: (action: EngineMutation, id: number) => Promise<EngineResultType>,
   dispatch: Dispatch,
