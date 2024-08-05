@@ -2,7 +2,7 @@
 
 🏆 Score: 400/400
 
-🌐 [Deployed UI Link]()
+🌐 [Deployed UI Link](https://async-race-seygorin.netlify.app/)
 
 ## 🎥 Demo Video
 
